@@ -5,7 +5,7 @@ This is a ODA LOGISTICS WEBSITE DEVELOPMENT PROJECT
 ## Instructions to clone repository
 1.Clone repo from github to local:  
 ``` git clone https://github.com/SridharVoleti/ODA.git ```  
-2. Create new Virtual environment:
+2. Create new Virtual environment:  
 ``` python -m venv .venv ```  
 3. Install python dependencies:  
 ``` pip install -r requirements.txt ```  
