@@ -13,7 +13,7 @@ This is a ODA LOGISTICS WEBSITE DEVELOPMENT PROJECT
 ``` npm install ```  
 
 ## Instructions to use 
-1. Use below command to watch for any changes in tailwind classes
-``` npm run tailwind ```
-2. Use below command to run Flask App
-``` python run.py ```
+1. Use below command to watch for any changes in tailwind classes  
+``` npm run tailwind ```  
+2. Use below command to run Flask App  
+``` python run.py ```  
