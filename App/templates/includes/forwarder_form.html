@@ -1,0 +1,502 @@
+<form action="">
+  <div class="m-5 grid grid-cols-1 gap-5 gap-y-3 md:grid-cols-3">
+    <div class="flex flex-col gap-2">
+      <label for="Shipment_ID">Shipment ID</label>
+      <input
+        id="Shipment_ID"
+        type="text"
+        class="form-input"
+        value="sadhd12231"
+        disabled
+      />
+    </div>
+    <div class="col-start-1 flex flex-col gap-2">
+      <label for="Shipment_Company">Shipment Company</label>
+      <input
+        id="Shipment_Company"
+        type="text"
+        class="form-input"
+        placeholder="Shipment Company"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Sender_Name">Sender Name</label>
+      <input
+        id="Sender_Name"
+        type="text"
+        class="form-input"
+        placeholder="Sender Name"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Sender_Address">Sender Address</label>
+      <input
+        id="Sender_Address"
+        type="text"
+        class="form-input"
+        placeholder="Sender Address"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Consignee">Consignee</label>
+      <input
+        id="Consignee"
+        type="text"
+        class="form-input"
+        placeholder="Consignee"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Consignee_Address">Consignee Address</label>
+      <input
+        id="Consignee_Address"
+        type="text"
+        class="form-input"
+        placeholder="Consignee Address"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Package_Type">Package Type</label>
+      <select name="Package_Type" id="Package_Type" class="form-input-dropdown">
+        <option value="">option 1</option>
+        <option value="">option 2</option>
+        <option value="">option 3</option>
+        <option value="">option 4</option>
+        <option value="">option 5</option>
+        <option value="">option 6</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Weight">Weight</label>
+      <input id="Weight" type="text" class="form-input" placeholder="Weight" />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Dimensions">Dimensions</label>
+      <input
+        id="Dimensions"
+        type="text"
+        class="form-input"
+        placeholder="Dimensions"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Shipping_Date">Shipping Date</label>
+      <input
+        id="Shipping_Date"
+        type="date"
+        class="form-input"
+        placeholder="Shipping Date"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Delivery_Date">Delivery Date</label>
+      <input
+        id="Delivery_Date"
+        type="date"
+        class="form-input"
+        placeholder="Delivery Date"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Shipping_Method">Shipping Method</label>
+      <select
+        name="Shipping_Method"
+        id="Shipping_Method"
+        class="form-input-dropdown"
+      >
+        <option value="">option 1</option>
+        <option value="">option 2</option>
+        <option value="">option 3</option>
+        <option value="">option 4</option>
+        <option value="">option 5</option>
+        <option value="">option 6</option>
+      </select>
+    </div>
+    <div class="flex flex-col justify-center gap-2">
+      <div class="flex flex-col items-start">
+        <label for="Insurance">Insurance</label>
+        <div class="form-input flex w-full items-center gap-5">
+          <input
+            id="Insurance"
+            type="checkbox"
+            class="h-10"
+            placeholder="Insurance"
+          />
+          <p>Does package have insurance?</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Declared_Value">Declared Value</label>
+      <input
+        id="Declared_Value"
+        type="text"
+        class="form-input"
+        placeholder="Declared Value"
+      />
+    </div>
+    <div class="row-span-2 flex flex-col gap-2">
+      <label for="Special_Instructions">Special Instructions</label>
+      <textarea
+        id="Special_Instructions"
+        type="text"
+        class="form-input h-full"
+        placeholder="Special Instructions"
+      ></textarea>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Bill_of_Lading">Bill of Lading</label>
+      <select
+        name="Bill_of_Lading"
+        id="Bill_of_Lading"
+        class="form-input-dropdown"
+      >
+        <option value="">Master BL</option>
+        <option value="">House BL</option>
+        <option value="">Negotiable BL</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Carting_Point">Carting Point</label>
+      <input
+        id="Carting_Point"
+        type="text"
+        class="form-input"
+        placeholder="Carting Point"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="CBM">CBM</label>
+      <input id="CBM" type="text" class="form-input" placeholder="CBM" />
+    </div>
+    <div class="row-span-2 flex flex-col gap-2">
+      <label for="CHA">CHA</label>
+      <textarea
+        id="CHA"
+        type="text"
+        class="form-input h-full"
+        placeholder="CHA"
+      ></textarea>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Clearance_Place">Clearance Place</label>
+      <select
+        name="Clearance_Place"
+        id="Clearance_Place"
+        class="form-input-dropdown"
+      >
+        <option value="">option 1</option>
+        <option value="">option 2</option>
+        <option value="">option 3</option>
+        <option value="">option 4</option>
+        <option value="">option 5</option>
+        <option value="">option 6</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Co-Loader">Co-Loader</label>
+      <input
+        id="Co-Loader"
+        type="text"
+        class="form-input"
+        placeholder="Co-Loader"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Container_Stuffing">Container Stuffing</label>
+      <input
+        id="Container_Stuffing"
+        type="text"
+        class="form-input"
+        placeholder="Container Stuffing"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="File_Reference_Number">File Reference Number</label>
+      <input
+        id="File_Reference_Number"
+        type="text"
+        class="form-input"
+        placeholder="File Reference Number"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Forwarder">Forwarder</label>
+      <input
+        id="Forwarder"
+        type="text"
+        class="form-input"
+        placeholder="Forwarder"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="FPOD">FPOD</label>
+      <input id="FPOD" type="text" class="form-input" placeholder="FPOD" />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Gross_Weight">Gross Weight</label>
+      <input
+        id="Gross_Weight"
+        type="text"
+        class="form-input"
+        placeholder="Gross Weight"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Invoice_Currency">Invoice Currency</label>
+      <select
+        name="Invoice_Currency_Value"
+        id="Invoice_Currency_Value"
+        class="form-input-dropdown"
+      >
+        <option value="">option 1</option>
+        <option value="">option 2</option>
+        <option value="">option 3</option>
+        <option value="">option 4</option>
+        <option value="">option 5</option>
+        <option value="">option 6</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Invoice_Currency_Value">Invoice Currency Value</label>
+      <input
+        id="Invoice_Currency_Value"
+        type="text"
+        class="form-input"
+        placeholder="Invoice Currency Value"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Invoice_Date">Invoice Date</label>
+      <input
+        id="Invoice_Date"
+        type="date"
+        class="form-input"
+        placeholder="Invoice Date"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Invoice_Number">Invoice Number</label>
+      <input
+        id="Invoice_Number"
+        type="text"
+        class="form-input"
+        placeholder="Invoice Number"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Invoice_Type">Invoice Type</label>
+      <select name="Invoice_Type" id="Invoice_Type" class="form-input-dropdown">
+        <option value="">option 1</option>
+        <option value="">option 2</option>
+        <option value="">option 3</option>
+        <option value="">option 4</option>
+        <option value="">option 5</option>
+        <option value="">option 6</option>
+      </select>
+    </div>
+    <div class="row-span-2 flex flex-col gap-2">
+      <label for="Item_Description">Item Description</label>
+      <textarea
+        id="Item_Description"
+        type="text"
+        class="form-input h-full"
+        placeholder="Item Description"
+      ></textarea>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Job_Date">Job Date</label>
+      <input
+        id="Job_Date"
+        type="date"
+        class="form-input"
+        placeholder="Job Date"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Job_Number">Job Number</label>
+      <input
+        id="Job_Number"
+        type="text"
+        class="form-input"
+        placeholder="Job Number"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Job_Type">Job Type</label>
+      <select name="Job_Type" id="Job_Type" class="form-input-dropdown">
+        <option value="">option 1</option>
+        <option value="">option 2</option>
+        <option value="">option 3</option>
+        <option value="">option 4</option>
+        <option value="">option 5</option>
+        <option value="">option 6</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Nature_of_Contract">Nature of Contract</label>
+      <input
+        id="Nature_of_Contract"
+        type="text"
+        class="form-input"
+        placeholder="Nature of Contract"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Nature_of_Payment">Nature of Payment</label>
+      <input
+        id="Nature_of_Payment"
+        type="text"
+        class="form-input"
+        placeholder="Nature of Payment"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Net_Weight">Net Weight</label>
+      <input
+        id="Net_Weight"
+        type="text"
+        class="form-input"
+        placeholder="Net Weight"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Number_of_Packages">Number of Packages</label>
+      <input
+        id="Number_of_Packages"
+        type="text"
+        class="form-input"
+        placeholder="Number of Packages"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Operation_Handle_By">Operation Handle By</label>
+      <input
+        id="Operation_Handle_By"
+        type="text"
+        class="form-input"
+        placeholder="Operation Handle By"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Plan_Date">Plan Date</label>
+      <input
+        id="Plan_Date"
+        type="date"
+        class="form-input"
+        placeholder="Plan Date"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="POD">POD</label>
+      <input id="POD" type="text" class="form-input" placeholder="POD" />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="POL">POL</label>
+      <input id="POL" type="text" class="form-input" placeholder="POL" />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="POR">POR</label>
+      <input id="POR" type="text" class="form-input" placeholder="POR" />
+    </div>
+    <div class="row-span-2 flex flex-col gap-2">
+      <label for="Remarks">Remarks</label>
+      <textarea
+        id="Remarks"
+        type="text"
+        class="form-input h-full"
+        placeholder="Remarks"
+      ></textarea>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Sales_Person_Name">Sales Person Name</label>
+      <input
+        id="Sales_Person_Name"
+        type="text"
+        class="form-input"
+        placeholder="Sales Person Name"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="SB_Number">SB Number</label>
+      <input
+        id="SB_Number"
+        type="text"
+        class="form-input"
+        placeholder="SB Number"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="SB_Number_Date">SB Number Date</label>
+      <input
+        id="SB_Number_Date"
+        type="text"
+        class="form-input"
+        placeholder="SB Number Date"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Select_Job">Select Job</label>
+      <select name="Select_Job" id="Select_Job" class="form-input-dropdown">
+        <option value="">option 1</option>
+        <option value="">option 2</option>
+        <option value="">option 3</option>
+        <option value="">option 4</option>
+        <option value="">option 5</option>
+        <option value="">option 6</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Series">Series</label>
+      <input id="Series" type="text" class="form-input" placeholder="Series" />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Shipper_Exporter">Shipper/Exporter</label>
+      <input
+        id="Shipper_Exporter"
+        type="text"
+        class="form-input"
+        placeholder="Shipper/Exporter"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Shipping_Line">Shipping Line</label>
+      <input
+        id="Shipping_Line"
+        type="text"
+        class="form-input"
+        placeholder="Shipping Line"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Types_of_Shipment">Types of Shipment</label>
+      <input
+        id="Types_of_Shipment"
+        type="text"
+        class="form-input"
+        placeholder="Types of Shipment"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Unit">Unit</label>
+      <input id="Unit" type="text" class="form-input" placeholder="Unit" />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="Unit_Type">Unit Type</label>
+      <input
+        id="Unit_Type"
+        type="text"
+        class="form-input"
+        placeholder="Unit Type"
+      />
+    </div>
+  </div>
+  <div class="mb-5 flex justify-center">
+    <button
+      type="submit"
+      class="rounded-lg bg-ocean-green px-4 py-2 text-white"
+    >
+      Submit
+    </button>
+  </div>
+</form>
