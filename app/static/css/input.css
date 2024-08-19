@@ -3,11 +3,17 @@
 @tailwind utilities;
 
 @layer components {
-  .form-input {
+  .booking-form {
+    @apply mt-5 grid w-full grid-cols-1 gap-5 md:grid-cols-3;
+  }
+  .form-group {
+    @apply flex flex-col;
+  }
+  .form-control {
     @apply h-10 rounded-lg border-[1px] bg-gray-100 px-4 py-2 disabled:bg-gray-300;
   }
-  .form-input-dropdown {
-    @apply h-10 rounded-lg border-[1px] bg-gray-100 px-4 py-2 disabled:bg-gray-300;
+  .booking-submit {
+    @apply mt-5 w-40 rounded-lg bg-ocean-green px-4 py-2 text-white;
   }
   .menu-bar {
     @apply relative flex justify-around bg-ocean-blue font-bold text-black;
@@ -16,7 +22,7 @@
     @apply cursor-pointer p-5 text-center;
   }
   .submenu {
-    @apply absolute left-0 top-[100%] hidden w-full gap-5 bg-ocean-green py-5 text-black;
+    @apply absolute left-0 top-[100%] hidden h-16 w-full items-center gap-5 bg-ocean-green py-5 text-black;
   }
   .submenu-item {
     @apply border-r-2 p-5;
