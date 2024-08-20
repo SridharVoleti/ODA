@@ -26,6 +26,6 @@ def booking():
         create_booking(shipment_id, shipping_company, sender_name, sender_address, consignee, consignee_address, package_type)
         
         flash('Booking created successfully!', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('booking'))
     
     return render_template('booking.html', form=form)

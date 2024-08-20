@@ -1,6 +1,6 @@
 // Selecting all the menu items and assigning them to menuItems variable
 const menuItems = document.querySelectorAll(".menu-item");
-console.log("javascript");
+
 menuItems.forEach((item) => {
   item.addEventListener("click", () => {
     // Remove the active class from all menu items
