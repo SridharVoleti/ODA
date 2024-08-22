@@ -2,7 +2,7 @@
 
 from flask import render_template, request, redirect, url_for, flash
 from app import app
-from app.forms import BookingForm
+from app.forms.booking_form import BookingForm
 from app.models import create_booking
 
 @app.route('/booking', methods=['GET', 'POST'])
