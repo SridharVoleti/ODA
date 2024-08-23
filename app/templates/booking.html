@@ -54,8 +54,11 @@
         form.shipping_method(class="form-control") }}
       </div>
       <div class="form-group">
-        {{ form.insurance.label(class="form-label") }} {{
-        form.insurance(class="form-control") }}
+        {{ form.insurance.label(class="form-label") }}
+        <div class="form-control flex items-center gap-5">
+          {{ form.insurance(class="form-control") }}
+          <p>Is Insured?</p>
+        </div>
       </div>
       <div class="form-group">
         {{ form.declared_value.label(class="form-label") }} {{

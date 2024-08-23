@@ -2,9 +2,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,IntegerField,SelectField,DateField,BooleanField,SubmitField
 from wtforms.validators import DataRequired,Length,Regexp,NumberRange,Optional,AnyOf
-from wtforms import StringField, ValidationError
+from wtforms import StringField
 from datetime import datetime 
-
+from app.forms.choices_config import *
+from app.forms.custom_validations import *
 class BookingForm(FlaskForm):
     """
     Form for creating a new booking with validation.
@@ -16,7 +17,7 @@ class BookingForm(FlaskForm):
 
     # Shipping Company Field
     shipping_company = StringField(
-        'Shipping Company ID',
+        'Shipping Company',
         validators=[
             DataRequired("Shipping company is required"),  # Not Null validation
             Length(max=200, message="Must have a maximum of 200 characters"),  # Maximum 200 characters
@@ -30,7 +31,6 @@ class BookingForm(FlaskForm):
         validators=[
             DataRequired("Sender name is required"),  # Not Null validation
             Length(max=50, message="Must have a maximum of 50 characters"),  # Maximum 50 characters
-            Regexp(r'^[a-zA-Z0-9]+$', message="Must be alphanumeric")  # Alpha Numeric validation
         ]
     )
 
@@ -52,7 +52,6 @@ class BookingForm(FlaskForm):
         validators=[
             DataRequired("Consignee is required"),  # Not Null validation
             Length(max=200, message="Must have a maximum of 200 characters"),  # Maximum 200 characters
-            Regexp(r'^[a-zA-Z0-9]+$', message="Must be alphanumeric")  # Alpha Numeric validation
         ]
     )
 
@@ -70,17 +69,14 @@ class BookingForm(FlaskForm):
 
     #Package Field
     package_type = SelectField(
-        'Package Type',
-        choices=[
-            ('Option1', 'Option1'),
-            ('Option2', 'Option2'),
-            ('Option3', 'Option3')
-        ],
+        'Package Types',
+        choices=PACKAGE_TYPES,
         validators=[
-            DataRequired(message="Package type is required."),  # Ensures a selection is made
-            AnyOf(['Option1', 'Option2', 'Option3'], message="Must be a valid Package Type.")  # Validates selection
+            DataRequired(message="This field is required."),
+            AnyOf([choice for choice in PACKAGE_TYPES], message="Must be a valid Clearance Place"),
+            Length(max=200, message="Must have a maximum of 200 characters")
         ]
-    )
+    ) 
     
     #Weight Field
     weight = IntegerField(
@@ -92,18 +88,6 @@ class BookingForm(FlaskForm):
     )
 
     # Dimensions Field
-    # Define a custom validator to check if the input is a positive number
-    def validate_positive_number(form, field):
-        try:
-            # Attempt to convert the field's data to a float
-            value = float(field.data)
-            # Raise a validation error if the value is not positive
-            if value <= 0:
-                raise ValidationError("Dimensions must be a positive number.")
-        except ValueError:
-            # Raise a validation error if the conversion to float fails (input is not a number)
-            raise ValidationError("Dimensions must be a positive number.")
-    # Define the 'dimensions' field as a StringField
     dimensions = StringField(
         'Dimensions',  # Label for the field
         validators=[
@@ -120,10 +104,6 @@ class BookingForm(FlaskForm):
         ]
     )
 
-    # Define a custom validator to check if the date is in the future
-    def validate_future_date(form, field):
-        if field.data <= datetime.today().date():  # Check if the date is today or in the past
-            raise ValidationError("Delivery date must be in the future.")  # Raise an error if the date is not in the future
     # Define the 'delivery_date' field as a DateField
     delivery_date = DateField(
         'Delivery Date',  # Label for the field
@@ -134,18 +114,17 @@ class BookingForm(FlaskForm):
     )
 
     # Define the 'shipping_method' field as a StringField
-    shipping_method = StringField(
-        'Shipping Method',  # Label for the field
+    shipping_method = SelectField(
+        'Shipping Methods',
+        choices=SHIPPING_METHODS,
         validators=[
-            DataRequired("Shipping method is required"),  # Ensure the field is not empty
-            AnyOf(
-                values=["Standard", "Express", "Overnight"],  # Predefined valid options
-                message="Must be a valid value from pre-defined options: Standard, Express, Overnight."  # Error message if the value is not in the predefined options
-            )
+            DataRequired(message="This field is required."),
+            AnyOf([choice for choice in SHIPPING_METHODS], message="Must be a valid  shipping method"),
+            Length(max=200, message="Must have a maximum of 200 characters")
         ]
-    )
+    ) 
 
-    # Define the 'insurance' field as a BooleanField
+    # insurance field
     insurance = BooleanField(
         'Insurance',  # Label for the field
         validators=[
@@ -153,12 +132,7 @@ class BookingForm(FlaskForm):
         ]
     )
 
-    # Define a custom validator to check if the declared value is positive when insurance is selected
-    def validate_declared_value(form, field):
-        if form.insurance.data:  # Check if the 'insurance' field is selected (True)
-            if field.data is None or field.data <= 0:  # Validate that the 'declared_value' is positive
-                raise ValidationError("Declared value must be a positive number if Insurance is selected.")
-    # Define the 'declared_value' field as an IntegerField
+    # declared value field 
     declared_value = IntegerField(
         'Declared Value',  # Label for the field
         validators=[
@@ -167,7 +141,7 @@ class BookingForm(FlaskForm):
         ]
     )
 
-    # Define the 'special_instructions' field as a StringField
+    # special instructions field 
     special_instructions = StringField(
         'Special Instructions',  # Label for the field
         validators=[
@@ -176,40 +150,31 @@ class BookingForm(FlaskForm):
         ]
     )
 
-    # Define the 'bill_of_lading' field as a SelectField
+    # bill_of_lading' field 
     bill_of_lading = SelectField(
-        'Bill of Lading (BL)',  # Label for the field
-        choices=[  # Predefined valid options
-            ('Master BL', 'Master BL'),
-            ('House of BL', 'House of BL'),
-            ('Negotiable BL', 'Negotiable BL')
-        ],
+        'Bill of Ladinf(BL)',
+        choices=BL_TYPES,
         validators=[
-            DataRequired(message="This field is required."),  # Ensure the field is not empty
-            AnyOf(
-                ['Master BL', 'House of BL', 'Negotiable BL'],  # Valid options for the field
-                message="Must be a valid BL type: Master BL, House of BL, or Negotiable BL."  # Error message if the input does not match the predefined options
-            )
+            DataRequired(message="This field is required."),
+            AnyOf([choice for choice in BL_TYPES], message="Must be a valid Clearance Place"),
+            Length(max=200, message="Must have a maximum of 200 characters")
         ]
-    )
+    ) 
     
-    # Custom validator function to check if the address format is valid
-    def validate_address(form, field):
-        # In this example, the validation logic checks if the address is not just numbers.
-        # You can customize this to use regex or other logic to enforce a specific address format.
-        if field.data.isdigit():
-            # If the data is only digits, raise a ValidationError with a custom message
-            raise ValidationError("Please enter a valid address format.")
-    # Define the 'carting_point' field as a StringField (text input)
+
+    # carting point field
     carting_point = StringField(
         'Carting Point',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Carting Point is required"),  # Ensures the field is not left empty
-            validate_address  # Applies the custom address validation logic
+             Regexp(
+                r'^[a-zA-Z0-9\s,.-]+$',
+                message="Must be a valid address format"
+            )  # Valid Address Format validation
         ]
     )
     
-    # Define the 'cbm' field as a StringField (text input)
+    # 'cbm' field
     cbm = StringField(
         'CBM',  # The label for the field
         validators=[  # A list of validators to apply to this field
@@ -218,7 +183,7 @@ class BookingForm(FlaskForm):
         ]
     )
 
-    # Define the 'cha' field as a SelectField with choices
+    # 'cha' field
     cha = SelectField(
         'CHA',  # The label for the field
         choices=[  # Predefined choices for the SelectField
@@ -231,59 +196,27 @@ class BookingForm(FlaskForm):
             AnyOf(  # Ensures the selected value is one of the predefined choices
                 ['ABC Customs Services Ltd', 'Global Trade Brokers Inc', 'XYZ Logistics and Customs'],
                 message="Must be a valid CHA"
-            ),
-            Length(max=200, message="Must have a maximum of 200 characters"),  # Ensures the field value doesn't exceed 200 characters
-            Regexp(  # Regex to ensure the value is alphanumeric and can include spaces
-                regex=r'^[a-zA-Z0-9 ]+$',
-                message="CHA must be alphanumeric (letters, numbers, and spaces only)."
             )
         ]
     )
            
-    # Predefined choices for the SelectField
-    predefined_choices = [
-        ('Port of New York', 'Port of New York'),
-        ('Los Angeles International Airport', 'Los Angeles International Airport'),
-        ('Singapore Customs Office', 'Singapore Customs Office')
-    ]
-    # Define the 'clearance_place' field as a SelectField with choices
+
+    # clearance place field 
     clearance_place = SelectField(
         'Clearance Place',
-        choices=predefined_choices,
+        choices=PREDEFINED_CHOICES,
         validators=[
             DataRequired(message="This field is required."),
-            AnyOf([choice[0] for choice in predefined_choices], message="Must be a valid Clearance Place"),
+            AnyOf([choice[0] for choice in PREDEFINED_CHOICES], message="Must be a valid Clearance Place"),
             Length(max=200, message="Must have a maximum of 200 characters")
         ]
     )  
-    # Define a 'custom_clearance_place' field for manual entry
-    custom_clearance_place = StringField(
-        'Custom Clearance Place',
-        validators=[
-            Length(max=200, message="Must have a maximum of 200 characters"),
-            Regexp(r'^[a-zA-Z0-9 ]+$', message="Must be alphanumeric (letters, numbers, and spaces only).")
-        ]
-    )
-    # Optional: Add validation to ensure either one of the fields is filled
-    def validate(self):
-        # First, run the default validation
-        rv = FlaskForm.validate(self)
-        if not rv:
-            return False     
-        # Ensure that either a predefined or a custom value is provided
-        if not self.clearance_place.data and not self.custom_clearance_place.data:
-            self.clearance_place.errors.append('You must select or enter a Clearance Place.')
-            return False
-        # If a custom value is provided, ensure the predefined field is not selected
-        if self.custom_clearance_place.data:
-            self.clearance_place.data = None
-        return True
-    
+   
     # Co-Loader Field
     co_loader = StringField('Co-Loader',validators=[DataRequired("Co-Loader is required")])
     
     # Container Stuffing
-    container_stuffing = StringField('Co-Loader',validators=[DataRequired("Co-Loader is required")])
+    container_stuffing = StringField('Container Stuffing',validators=[DataRequired("Co-Loader is required")])
     
     # Define the 'file_reference_number' field as a StringField
     file_reference_number = StringField(
@@ -322,63 +255,268 @@ class BookingForm(FlaskForm):
         ]
     )
 
-    # gross_weight= IntegerField('Gross Weight', validators=[DataRequired("gross_weight is required")])
+    # Gross Weight Field
+    gross_weight= StringField(
+        'Gross Weight',  # The label for the field
+        validators=[  # A list of validators to apply to this field
+            DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
+            validate_positive_number  # Applies the custom positive number validation logic
+        ]
+    )
 
-    # invoice_currency = StringField('Invoice Currency', validators=[DataRequired("invoice_currency is required")])
+    # Invoice Currency Field
+    invoice_currency = SelectField(
+        'Invoice Currency',
+        choices=[(choice, choice) for choice in CURRENCY_CHOICES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("invoice_type is required"),
+            AnyOf(CURRENCY_CHOICES, message="Invalid invoice type")
+        ]
+    )
 
-    # invoice_currency_value = StringField('Invoice Currency Value', validators=[DataRequired("invoice_currency_value is required")])
+    # Invoice Currency Value Field
+    invoice_currency_value = StringField(
+        'Invoice Currency Value',  # The label for the field
+        validators=[  # A list of validators to apply to this field
+            DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
+            validate_positive_number  # Applies the custom positive number validation logic
+        ]
+    )
 
-    # invoice_date= StringField('Invoice Date', validators=[DataRequired("invoice_date is required")])
+    # Invoice Date Field
+    invoice_date= DateField(
+        'Invoice Date',  # Label for the field
+        validators=[
+            DataRequired("Must be a valid date")  # Ensure the field is not empty and contains a valid date
+        ]
+    )
 
-    # invoice_number= StringField('Invoice Number', validators=[DataRequired("invoice_number is required")])
+    # Defining the invoice_number field as a StringField with two validators
+    invoice_number = StringField(
+        'Invoice Number',  # Label for the form field
+        validators=[
+            # First validator ensures that the field is not empty
+            DataRequired("invoice_number is required"),
+            # Second validator enforces the specific format using a regular expression
+            Regexp(
+                r'^INV-\d{6}-[A-Z]{3}-\d+$',  # Regex pattern to match the format INV-YYMMDD-CLI-1            
+                # Custom error message to be shown if the input doesn't match the pattern
+                message=("Invalid format for invoice number. The correct format is "
+                         "INV-YYMMDD-CLI-1, e.g., INV-240823-CLI-1.")
+            )
+        ]
+    )
 
-    # invoice_type= StringField('Invoice Type', validators=[DataRequired("invoice_type is required")])
 
-    # item_description = StringField('Item Description', validators=[DataRequired("item_description is required")])
 
-    # job_date = StringField('Job Date', validators=[DataRequired("job_date is required")])
+    # Define the invoice_type field with a SelectField and use AnyOf for validation
+    invoice_type = SelectField(
+        'Invoice Type',
+        choices=[(choice, choice) for choice in INVOICE_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("invoice_type is required"),
+            AnyOf(INVOICE_TYPES, message="Invalid invoice type")
+        ]
+    )
 
-    # job_number = StringField('Job Number', validators=[DataRequired("job_number is required")])
+    # Item Description Field
+    item_description = StringField('Item Description', validators=[DataRequired("item_description is required")])
 
-    # job_type = StringField('Job Type', validators=[DataRequired("job_type is required")])
+    #Job Date Field
+    job_date = DateField(
+        'Job Date',  # Label for the field
+        validators=[
+            DataRequired("Must be a valid date")  # Ensure the field is not empty and contains a valid date
+        ]
+    )
 
-    # nature_of_contract = StringField('Nature of Contract', validators=[DataRequired("nature_of_contract is required")])
+    # job Number field 
+    job_number = StringField(
+        'Job Number',
+        validators=[
+            DataRequired("job_number is required"),  # Ensure the field is not left empty
+            Regexp(
+                r'^[A-Za-z0-9]+$',  # Regex pattern to match alphanumeric characters only
+                message="Job number must be alphanumeric (letters and numbers only)."
+            )
+        ]
+    )
 
-    # nature_of_payment = StringField('Nature of Payment', validators=[DataRequired("nature_of_payment is required")])
+    # Job Type Field
+    job_type = SelectField(
+        'Job Type',
+        choices=[(choice, choice) for choice in JOB_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("invoice_type is required"),
+            AnyOf(JOB_TYPES, message="Invalid Job Type")
+        ]
+    )
 
-    # net_weight = StringField('Net Weight', validators=[DataRequired("net_weight is required")])
+    # Nature of Contract Field
+    nature_of_contract = SelectField(
+        'Nature of Contract',
+        choices=[(choice, choice) for choice in CONTRACT_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("invoice_type is required"),
+            AnyOf(CONTRACT_TYPES, message="Invalid Nature of Contract")
+        ]
+    )
 
-    # number_of_packages = StringField('Number_of_Packages', validators=[DataRequired("number_of_packages is required")])
+    # Nature of Payment Field
+    nature_of_payment = SelectField(
+        'Nature of Payment',
+        choices=[(choice, choice) for choice in PAYMENT_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("invoice_type is required"),
+            AnyOf(PAYMENT_TYPES, message="Invalid Nature of Payment")
+        ]
+    )
 
-    # operation_handle_by = StringField('Operation Handle By', validators=[DataRequired("operation_handle_by is required")])
+    # Net Weight Field
+    net_weight = StringField(
+        'Invoice Currency Value',  # The label for the field
+        validators=[  # A list of validators to apply to this field
+            DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
+            validate_positive_number  # Applies the custom positive number validation logic
+        ]
+    )
 
-    # plan_date = StringField('Plan Date', validators=[DataRequired("plan_date is required")])
+    # Number of Packages
+    number_of_packages = IntegerField('Number of Packages', validators=[DataRequired("number_of_packages is required")])
 
-    # pod = StringField('POD', validators=[DataRequired("pod is required")])
+    # Operations Handled By Field
+    operation_handle_by = SelectField(
+        'Nature of Payment',
+        choices=[(choice, choice) for choice in OPERATION_HANDLED_BY],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(OPERATION_HANDLED_BY, message="Invalid Operation team")
+        ]
+    )
 
-    # pol = StringField('POL', validators=[DataRequired("pol is required")])
+    # Plan Date Field
+    plan_date = DateField(
+        'Plan Date',  # Label for the field
+        validators=[
+            DataRequired("Must be a valid date")  # Ensure the field is not empty and contains a valid date
+        ]
+    )
 
-    # por = StringField('POR', validators=[DataRequired("por is required")])
+    # Port of Discharge Field
+    pod = SelectField(
+        'Port of Discharge',
+        choices=[(choice, choice) for choice in PORTS_CHOICES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(PORTS_CHOICES, message="Invalid Port")
+        ]
+    )
 
-    # remarks = StringField('Remarks', validators=[DataRequired("remarks is required")])
+    # Port of Landing Field
+    pol = SelectField(
+        'Port of Landing',
+        choices=[(choice, choice) for choice in PORTS_CHOICES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(PORTS_CHOICES, message="Invalid Port")
+        ]
+    )
 
-    # sales_person_name = StringField('Sales Person Name', validators=[DataRequired("sales_person_name is required")])
+    # Port of Reciept Field
+    por = SelectField(
+        'Port of Reciept',
+        choices=[(choice, choice) for choice in PORTS_CHOICES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(PORTS_CHOICES, message="Invalid Port")
+        ]
+    )
 
-    # sb_number = StringField('SB Number', validators=[DataRequired("sb_number is required")])
+    # Remarks Field
+    remarks = StringField('Remarks', validators=[DataRequired("remarks is required")])
 
-    # sb_number_date = StringField('SB Number Date', validators=[DataRequired("sb_number_date is required")])
+    # Sales Person Field
+    sales_person_name = StringField('Sales Person Name', validators=[DataRequired("sales_person_name is required")])
 
-    # select_job = StringField('Select Job', validators=[DataRequired("select_job is required")])
+    # Define the sb_number field with a StringField and validators
+    sb_number = StringField(
+        'SB Number',
+        validators=[
+            DataRequired("sb_number is required"),  # Ensure the field is not left empty
+            Regexp(
+                r'^SB\d+$',  # Regex pattern to match 'SB' followed by one or more digits
+                message="SB number must start with 'SB' followed by digits."
+            )
+        ]
+    )
 
-    # series = StringField('Series', validators=[DataRequired("series is required")])
+    # SB Number Date Field
+    sb_number_date = DateField(
+        'SB Number Date',  # Label for the field
+        validators=[
+            DataRequired("Must be a valid date")  # Ensure the field is not empty and contains a valid date
+        ]
+    )
 
-    # shipper_or_exporter = StringField('Shipper/Exporter', validators=[DataRequired("shipper_or_exporter is required")])
+    # Select Job Field
+    select_job = SelectField(
+        'Select Job',
+        choices=[(choice, choice) for choice in JOBS],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(JOBS, message="Invalid JOB")
+        ]
+    )
 
-    # shipping_line = StringField('Shipping Line', validators=[DataRequired("shipping_line is required")])
+    # SERIES Field
+    series = SelectField(
+        'SERIES',
+        choices=[(choice, choice) for choice in SERIES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(SERIES, message="Invalid SERIES")
+        ]
+    )
 
-    # type_of_shipment = StringField('Type of Shipment', validators=[DataRequired("type_of_shipment is required")])
+    # Shipper/Exporter Field
+    shipper_or_exporter = SelectField(
+        'Shipper/Exporter',
+        choices=[(choice, choice) for choice in EXPORTERS],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(EXPORTERS, message="Invalid Shipper/Exporter")
+        ]
+    )
 
-    # unit = StringField('Unit', validators=[DataRequired("unit is required")])
+    # Shipping Line Field
+    shipping_line = SelectField(
+        'Shipping Lines',
+        choices=[(choice, choice) for choice in SHIPPING_LINES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(SHIPPING_LINES, message="Invalid Shipping Line")
+        ]
+    )
 
-    # unit_type = StringField('Unit Type', validators=[DataRequired("unit_type is required")])
+    # Type of Shipment Field
+    type_of_shipment = SelectField(
+        'Type of Shipment',
+        choices=[(choice, choice) for choice in SHIPPING_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(SHIPPING_TYPES, message="Invalid Type of Shipment")
+        ]
+    )
+
+    # Unit Field
+    unit = SelectField(
+        'Type of Shipment',
+        choices=[(choice, choice) for choice in UNIT_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        validators=[
+            DataRequired("Operations Handled By is required"),
+            AnyOf(UNIT_TYPES, message="Invalid Type of Shipment")
+        ]
+    )
+
+    unit_type = StringField('Unit Type', validators=[DataRequired("unit_type is required")])
     submit = SubmitField('Next')

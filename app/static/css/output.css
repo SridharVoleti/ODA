@@ -675,6 +675,10 @@ video {
   align-items: center;
 }
 
+.gap-5 {
+  gap: 1.25rem;
+}
+
 .p-10 {
   padding: 2.5rem;
 }
