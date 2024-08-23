@@ -508,9 +508,12 @@ class BookingForm(FlaskForm):
         ]
     )
 
+    # unit Field
+    unit = StringField('Unit', validators=[DataRequired("unit_type is required")])
+
     # Unit Field
-    unit = SelectField(
-        'Type of Shipment',
+    unit_type = SelectField(
+        'Unit Type',
         choices=[(choice, choice) for choice in UNIT_TYPES],  # Creates a list of tuples from INVOICE_TYPES
         validators=[
             DataRequired("Operations Handled By is required"),
@@ -518,5 +521,4 @@ class BookingForm(FlaskForm):
         ]
     )
 
-    unit_type = StringField('Unit Type', validators=[DataRequired("unit_type is required")])
     submit = SubmitField('Next')
