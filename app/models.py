@@ -1,8 +1,7 @@
 # app/models.py
 
-from app import mongo
 from app.helper import db_helper
-
+from flask import flash
 def create_booking(shipment_id, shipping_company, sender_name, sender_address, consignee, consignee_address, package_type,weight,dimensions,shipping_date,delivery_date,shipping_method,insurance,declared_value,special_instructions,bill_of_lading,carting_point,cbm,cha,clearance_place,co_loader,container_stuffing,file_reference_number,forwarder,fpod,gross_weight,invoice_currency,invoice_currency_value,invoice_date,invoice_number,invoice_type,item_description,job_date,job_number,job_type,nature_of_contract,nature_of_payment,net_weight,number_of_packages,operation_handle_by,plan_date,pod,pol,por,remarks,sales_person_name,sb_number,sb_number_date,select_job,series,shipper_or_exporter,shipping_line,type_of_shipment,unit,unit_type):
     """
     Insert a new booking record into the 'bookings' collection in MongoDB.
@@ -62,6 +61,9 @@ def create_booking(shipment_id, shipping_company, sender_name, sender_address, c
         "shipping_line": shipping_line,
         "type_of_shipment": type_of_shipment,
         "unit": unit,
-        "unit_type": unit_type,
+        "unit_type": unit_type
     }
-    return db_helper.insert_booking(booking) #used helper class instead of mangodb ; added by rachana
+    try:
+        return db_helper.insert_booking(booking) #used helper class instead of mangodb ; added by rachana
+    except:
+        flash('error in insert_booking', 'danger')

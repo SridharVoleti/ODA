@@ -11,9 +11,14 @@ class BookingForm(FlaskForm):
     Form for creating a new booking with validation.
     """
     # Shipment Id Field
-    shipment_id = StringField('Shipment ID', validators=[DataRequired("shipment_id is required"), # Not Null validation
-    Regexp(r'^[a-zA-Z0-9]+$', message="Must be alphanumeric") # Alpha Numeric validation
-    ])
+    shipment_id = StringField(
+        'Shipment ID', 
+        validators=[
+            DataRequired(), 
+            Length(min=6, max=12),
+            Regexp(r'^[A-Za-z0-9]*$', message="Shipment ID must be alphanumeric.")
+        ]
+    )
 
     # Shipping Company Field
     shipping_company = StringField(
@@ -73,7 +78,7 @@ class BookingForm(FlaskForm):
         choices=PACKAGE_TYPES,
         validators=[
             DataRequired(message="This field is required."),
-            AnyOf([choice for choice in PACKAGE_TYPES], message="Must be a valid Clearance Place"),
+            AnyOf([choice[0] for choice in PACKAGE_TYPES], message="Must be a valid Clearance Place"),
             Length(max=200, message="Must have a maximum of 200 characters")
         ]
     ) 
@@ -92,7 +97,21 @@ class BookingForm(FlaskForm):
         'Dimensions',  # Label for the field
         validators=[
             DataRequired("Dimensions is required"),  # Ensure the field is not empty (null)
-            validate_positive_number  # Use the custom validator to check for a positive number
+            Regexp(r'^\d+(\.\d+)?\*\d+(\.\d+)?\*\d+(\.\d+)?$',message='invalid format')
+            # ^: Anchors the match at the beginning of the string.
+            # \d+: Matches one or more digits (representing the integer part of the number).
+            # (\.\d+)?: Matches an optional decimal part. The \. matches the decimal point, and \d+ matches one or more digits after the decimal. The entire group is optional due to the ?.
+            # \*: Matches the literal * character separating the dimensions.
+            # \d+(\.\d+)?: The same pattern is repeated for width and height.
+            # $: Anchors the match at the end of the string.
+            # Examples:
+            # 12*15*20 → Matches
+            # 12.5*15*20.1 → Matches
+            # 12.5*15.5*20.5 → Matches
+            # 12*15.5*20 → Matches
+            # 12*15*20*25 → Doesn't match (too many dimensions)
+            # 12.5.5*15*20 → Doesn't match (invalid number format)
+
         ]
     )
 
@@ -127,9 +146,6 @@ class BookingForm(FlaskForm):
     # insurance field
     insurance = BooleanField(
         'Insurance',  # Label for the field
-        validators=[
-            DataRequired("Must be a boolean value")  # Ensure the field is not empty and contains a valid boolean value (True/False)
-        ]
     )
 
     # declared value field 
@@ -175,26 +191,21 @@ class BookingForm(FlaskForm):
     )
     
     # 'cbm' field
-    cbm = StringField(
+    cbm = IntegerField(
         'CBM',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="CBM is required"),  # Ensures the field is not left empty
-            validate_positive_number  # Applies the custom positive number validation logic
         ]
     )
 
     # 'cha' field
     cha = SelectField(
         'CHA',  # The label for the field
-        choices=[  # Predefined choices for the SelectField
-            ('ABC Customs Services Ltd', 'ABC Customs Services Ltd'),
-            ('Global Trade Brokers Inc', 'Global Trade Brokers Inc'),
-            ('XYZ Logistics and Customs', 'XYZ Logistics and Customs')
-        ],
+        choices=CHA_CHOICES,
         validators=[  # A list of validators to apply to this field
             DataRequired(message="This field is required."),  # Ensures the field is not left empty
             AnyOf(  # Ensures the selected value is one of the predefined choices
-                ['ABC Customs Services Ltd', 'Global Trade Brokers Inc', 'XYZ Logistics and Customs'],
+                [choice[0] for choice in CHA_CHOICES],
                 message="Must be a valid CHA"
             )
         ]
@@ -204,10 +215,10 @@ class BookingForm(FlaskForm):
     # clearance place field 
     clearance_place = SelectField(
         'Clearance Place',
-        choices=PREDEFINED_CHOICES,
+        choices=CLEARANCE_CHOICES,
         validators=[
             DataRequired(message="This field is required."),
-            AnyOf([choice[0] for choice in PREDEFINED_CHOICES], message="Must be a valid Clearance Place"),
+            AnyOf([choice[0] for choice in CLEARANCE_CHOICES], message="Must be a valid Clearance Place"),
             Length(max=200, message="Must have a maximum of 200 characters")
         ]
     )  
@@ -224,9 +235,19 @@ class BookingForm(FlaskForm):
         validators=[
             DataRequired(message="File Reference Number is required"),  # Ensures the field is not left empty
             Regexp(  # Regex to ensure the value is alphanumeric
-                regex=r'^[a-zA-Z0-9]+$',
+                regex=r'^[A-Z]{3}\d{5}$',
                 message="File Reference Number must be alphanumeric (letters and numbers only)."
             )
+        # ^: Anchors the match at the beginning of the string.
+        # [A-Z]{3}: Matches exactly three uppercase letters (A to Z).
+        # \d{5}: Matches exactly five digits (0 to 9).
+        # $: Anchors the match at the end of the string.
+        # Examples:
+        # FRN12345 → Matches
+        # REF67890 → Matches
+        # ABC123 → Doesn't match (only 3 digits)
+        # REF123456 → Doesn't match (6 digits instead of 5)
+        # frn12345 → Doesn't match (lowercase letters)
         ])
 
     # Define the 'forwarder' field as a StringField
@@ -256,11 +277,11 @@ class BookingForm(FlaskForm):
     )
 
     # Gross Weight Field
-    gross_weight= StringField(
+    gross_weight= IntegerField(
         'Gross Weight',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
-            validate_positive_number  # Applies the custom positive number validation logic
+            #  postive integer validation should be added
         ]
     )
 
@@ -275,11 +296,11 @@ class BookingForm(FlaskForm):
     )
 
     # Invoice Currency Value Field
-    invoice_currency_value = StringField(
+    invoice_currency_value = IntegerField(
         'Invoice Currency Value',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
-            validate_positive_number  # Applies the custom positive number validation logic
+            #  postive integer validation should be added
         ]
     )
 
@@ -307,12 +328,10 @@ class BookingForm(FlaskForm):
         ]
     )
 
-
-
     # Define the invoice_type field with a SelectField and use AnyOf for validation
     invoice_type = SelectField(
         'Invoice Type',
-        choices=[(choice, choice) for choice in INVOICE_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        choices=INVOICE_TYPES, 
         validators=[
             DataRequired("invoice_type is required"),
             AnyOf(INVOICE_TYPES, message="Invalid invoice type")
@@ -345,7 +364,7 @@ class BookingForm(FlaskForm):
     # Job Type Field
     job_type = SelectField(
         'Job Type',
-        choices=[(choice, choice) for choice in JOB_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        choices=JOB_TYPES,  
         validators=[
             DataRequired("invoice_type is required"),
             AnyOf(JOB_TYPES, message="Invalid Job Type")
@@ -355,7 +374,7 @@ class BookingForm(FlaskForm):
     # Nature of Contract Field
     nature_of_contract = SelectField(
         'Nature of Contract',
-        choices=[(choice, choice) for choice in CONTRACT_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        choices=CONTRACT_TYPES,  
         validators=[
             DataRequired("invoice_type is required"),
             AnyOf(CONTRACT_TYPES, message="Invalid Nature of Contract")
@@ -365,7 +384,7 @@ class BookingForm(FlaskForm):
     # Nature of Payment Field
     nature_of_payment = SelectField(
         'Nature of Payment',
-        choices=[(choice, choice) for choice in PAYMENT_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        choices=PAYMENT_TYPES,
         validators=[
             DataRequired("invoice_type is required"),
             AnyOf(PAYMENT_TYPES, message="Invalid Nature of Payment")
@@ -373,11 +392,11 @@ class BookingForm(FlaskForm):
     )
 
     # Net Weight Field
-    net_weight = StringField(
-        'Invoice Currency Value',  # The label for the field
+    net_weight = IntegerField(
+        'Net Weight',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
-            validate_positive_number  # Applies the custom positive number validation logic
+            # positive number validation  should be added
         ]
     )
 
@@ -405,7 +424,7 @@ class BookingForm(FlaskForm):
     # Port of Discharge Field
     pod = SelectField(
         'Port of Discharge',
-        choices=[(choice, choice) for choice in PORTS_CHOICES],  # Creates a list of tuples from INVOICE_TYPES
+        choices=PORTS_CHOICES,
         validators=[
             DataRequired("Operations Handled By is required"),
             AnyOf(PORTS_CHOICES, message="Invalid Port")
@@ -461,7 +480,7 @@ class BookingForm(FlaskForm):
     # Select Job Field
     select_job = SelectField(
         'Select Job',
-        choices=[(choice, choice) for choice in JOBS],  # Creates a list of tuples from INVOICE_TYPES
+        choices=JOBS,  # Creates a list of tuples from INVOICE_TYPES
         validators=[
             DataRequired("Operations Handled By is required"),
             AnyOf(JOBS, message="Invalid JOB")
@@ -471,7 +490,7 @@ class BookingForm(FlaskForm):
     # SERIES Field
     series = SelectField(
         'SERIES',
-        choices=[(choice, choice) for choice in SERIES],  # Creates a list of tuples from INVOICE_TYPES
+        choices=SERIES,  # Creates a list of tuples from INVOICE_TYPES
         validators=[
             DataRequired("Operations Handled By is required"),
             AnyOf(SERIES, message="Invalid SERIES")
@@ -481,7 +500,7 @@ class BookingForm(FlaskForm):
     # Shipper/Exporter Field
     shipper_or_exporter = SelectField(
         'Shipper/Exporter',
-        choices=[(choice, choice) for choice in EXPORTERS],  # Creates a list of tuples from INVOICE_TYPES
+        choices=EXPORTERS,  # Creates a list of tuples from INVOICE_TYPES
         validators=[
             DataRequired("Operations Handled By is required"),
             AnyOf(EXPORTERS, message="Invalid Shipper/Exporter")
@@ -491,7 +510,7 @@ class BookingForm(FlaskForm):
     # Shipping Line Field
     shipping_line = SelectField(
         'Shipping Lines',
-        choices=[(choice, choice) for choice in SHIPPING_LINES],  # Creates a list of tuples from INVOICE_TYPES
+        choices=SHIPPING_LINES,  # Creates a list of tuples from INVOICE_TYPES
         validators=[
             DataRequired("Operations Handled By is required"),
             AnyOf(SHIPPING_LINES, message="Invalid Shipping Line")
@@ -501,7 +520,7 @@ class BookingForm(FlaskForm):
     # Type of Shipment Field
     type_of_shipment = SelectField(
         'Type of Shipment',
-        choices=[(choice, choice) for choice in SHIPPING_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        choices=SHIPPING_TYPES,  # Creates a list of tuples from INVOICE_TYPES
         validators=[
             DataRequired("Operations Handled By is required"),
             AnyOf(SHIPPING_TYPES, message="Invalid Type of Shipment")
@@ -514,11 +533,11 @@ class BookingForm(FlaskForm):
     # Unit Field
     unit_type = SelectField(
         'Unit Type',
-        choices=[(choice, choice) for choice in UNIT_TYPES],  # Creates a list of tuples from INVOICE_TYPES
+        choices=UNIT_TYPES,  # Creates a list of tuples from INVOICE_TYPES
         validators=[
             DataRequired("Operations Handled By is required"),
             AnyOf(UNIT_TYPES, message="Invalid Type of Shipment")
         ]
     )
 
-    submit = SubmitField('Next')
+    submit = SubmitField('Submit')

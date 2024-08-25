@@ -1,12 +1,14 @@
 # app/db_helper.py
 
 from app import mongo
+from flask import flash
 
 def insert_booking(booking):
     """
     Insert a booking record into the MongoDB collection.
     """
     return mongo.db.bookings.insert_one(booking)
+
 
 def get_booking_by_id(shipment_id):
     """

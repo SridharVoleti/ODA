@@ -14,8 +14,17 @@ def validate_positive_number(form, field):
     
     # Define a custom validator to check if the date is in the future
 def validate_future_date(form, field):
-    if field.data <= datetime.today().date():  # Check if the date is today or in the past
-        raise ValidationError("Delivery date must be in the future.")  # Raise an error if the date is not in the future
+    # Convert the string to a datetime.date object
+    # try:
+    #     date = datetime.strptime(field.data, '%Y-%m-%d').date()  # Adjust format if necessary
+    # except ValueError:
+    #     raise ValidationError("Invalid date format. Please use YYYY-MM-DD.")
+    
+    # # Check if the date is today or in the past
+    # if date <= datetime.today().date():
+    #     raise ValidationError("Delivery date must be in the future.")
+    pass
+    
 # Define a custom validator to check if the declared value is positive when insurance is selected
 def validate_declared_value(form, field):
     if form.insurance.data:  # Check if the 'insurance' field is selected (True)
