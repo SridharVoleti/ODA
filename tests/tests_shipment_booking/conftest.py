@@ -1,7 +1,7 @@
 import pytest
 from flask import Flask, request
 from app import app as create_app
-from app.forms.booking_form import BookingForm 
+
 # Fixture to create the Flask app instance
 @pytest.fixture
 def app():
@@ -85,17 +85,3 @@ def form_data():
         "unit": "Kilograms",
         "unit_type": "STANDARD"
     }
-
-# Test case for validating a form with all required fields provided
-def test_valid_form(request_context,form_data):
-    form = BookingForm(data=form_data)
-    assert form.validate() is True  # Assert that the form should be valid with the given data
-
-# Test case for validating a form with a missing shipment_id
-def test_invalid_shipment_id(request_context,form_data):
-    form_data['shipment_id']='1234'
-    form = BookingForm(data=form_data)  # Initialize the form with the provided data
-    assert form.validate() is False  # Assert that the form should be invalid
-    print("Error messagfe:---------------->")
-    print(form.errors)
-    assert 'shipment_id' in form.errors  # Assert that the 'shipment_id' field should have an error
