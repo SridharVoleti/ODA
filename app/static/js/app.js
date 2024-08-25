@@ -36,3 +36,16 @@ document.addEventListener("click", (event) => {
     });
   }
 });
+
+// Timeout function to hide flash messages after 5 seconds with fade-out animation
+setTimeout(function () {
+  var flashMessages = document.querySelectorAll(".flash-message");
+  flashMessages.forEach(function (message) {
+    message.style.opacity = "0"; // Start fade out
+
+    // After the transition ends, set display to none
+    message.addEventListener("transitionend", function () {
+      message.style.display = "none";
+    });
+  });
+}, 3000); // 5000ms = 5 seconds

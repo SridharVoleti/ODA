@@ -10,15 +10,6 @@ class BookingForm(FlaskForm):
     """
     Form for creating a new booking with validation.
     """
-    # Shipment Id Field
-    shipment_id = StringField(
-        'Shipment ID', 
-        validators=[
-            DataRequired(), 
-            Length(min=6, max=12),
-            Regexp(r'^[A-Za-z0-9]*$', message="Shipment ID must be alphanumeric.")
-        ]
-    )
 
     # Shipping Company Field
     shipping_company = StringField(
@@ -304,30 +295,6 @@ class BookingForm(FlaskForm):
         ]
     )
 
-    # Invoice Date Field
-    invoice_date= DateField(
-        'Invoice Date',  # Label for the field
-        validators=[
-            DataRequired("Must be a valid date")  # Ensure the field is not empty and contains a valid date
-        ]
-    )
-
-    # Defining the invoice_number field as a StringField with two validators
-    invoice_number = StringField(
-        'Invoice Number',  # Label for the form field
-        validators=[
-            # First validator ensures that the field is not empty
-            DataRequired("invoice_number is required"),
-            # Second validator enforces the specific format using a regular expression
-            Regexp(
-                r'^INV-\d{6}-[A-Z]{3}-\d+$',  # Regex pattern to match the format INV-YYMMDD-CLI-1            
-                # Custom error message to be shown if the input doesn't match the pattern
-                message=("Invalid format for invoice number. The correct format is "
-                         "INV-YYMMDD-CLI-1, e.g., INV-240823-CLI-1.")
-            )
-        ]
-    )
-
     # Define the invoice_type field with a SelectField and use AnyOf for validation
     invoice_type = SelectField(
         'Invoice Type',
@@ -340,26 +307,6 @@ class BookingForm(FlaskForm):
 
     # Item Description Field
     item_description = StringField('Item Description', validators=[DataRequired("item_description is required")])
-
-    #Job Date Field
-    job_date = DateField(
-        'Job Date',  # Label for the field
-        validators=[
-            DataRequired("Must be a valid date")  # Ensure the field is not empty and contains a valid date
-        ]
-    )
-
-    # job Number field 
-    job_number = StringField(
-        'Job Number',
-        validators=[
-            DataRequired("job_number is required"),  # Ensure the field is not left empty
-            Regexp(
-                r'^[A-Za-z0-9]+$',  # Regex pattern to match alphanumeric characters only
-                message="Job number must be alphanumeric (letters and numbers only)."
-            )
-        ]
-    )
 
     # Job Type Field
     job_type = SelectField(
@@ -456,26 +403,6 @@ class BookingForm(FlaskForm):
 
     # Sales Person Field
     sales_person_name = StringField('Sales Person Name', validators=[DataRequired("sales_person_name is required")])
-
-    # Define the sb_number field with a StringField and validators
-    sb_number = StringField(
-        'SB Number',
-        validators=[
-            DataRequired("sb_number is required"),  # Ensure the field is not left empty
-            Regexp(
-                r'^SB\d+$',  # Regex pattern to match 'SB' followed by one or more digits
-                message="SB number must start with 'SB' followed by digits."
-            )
-        ]
-    )
-
-    # SB Number Date Field
-    sb_number_date = DateField(
-        'SB Number Date',  # Label for the field
-        validators=[
-            DataRequired("Must be a valid date")  # Ensure the field is not empty and contains a valid date
-        ]
-    )
 
     # Select Job Field
     select_job = SelectField(
