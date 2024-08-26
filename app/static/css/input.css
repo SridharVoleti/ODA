@@ -6,14 +6,26 @@
   .booking-form {
     @apply mt-5 grid w-full grid-cols-1 gap-5 md:grid-cols-3;
   }
+  .container-form {
+    @apply mt-5 grid w-full grid-cols-1 gap-5 md:grid-cols-6 lg:grid-cols-11;
+  }
   .form-group {
     @apply flex flex-col;
+  }
+  .container-form-group {
+    @apply flex flex-col text-sm;
   }
   .form-control {
     @apply h-10 rounded-lg border-[1px] bg-gray-100 px-4 py-2 disabled:bg-gray-300;
   }
+  .button {
+    @apply mt-5 w-40 cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-white;
+  }
   .booking-submit {
-    @apply mt-5 w-40 rounded-lg bg-ocean-green px-4 py-2 text-white;
+    @apply bg-ocean-green;
+  }
+  .booking-remove {
+    @apply bg-red-500;
   }
   .menu-bar {
     @apply relative flex justify-around bg-ocean-blue font-bold text-black;

@@ -49,3 +49,31 @@ setTimeout(function () {
     });
   });
 }, 3000); // 5000ms = 5 seconds
+
+document.getElementById("add-form").addEventListener("click", function () {
+  var formContainer = document.getElementById("form-container");
+  var newFormWrapper = formContainer
+    .querySelector(".form-wrapper")
+    .cloneNode(true);
+
+  // Reset form fields in the cloned form
+  var inputs = newFormWrapper.querySelectorAll("input, select, textarea");
+  inputs.forEach(function (input) {
+    input.value = ""; // Clear the input values
+  });
+
+  // Add Remove button to the cloned form
+  var removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.className = "button booking-remove";
+  removeBtn.innerText = "Remove";
+  newFormWrapper.appendChild(removeBtn);
+
+  // Attach event listener to the new Remove button
+  removeBtn.addEventListener("click", function () {
+    newFormWrapper.remove();
+  });
+
+  // Add the cloned form to the container
+  formContainer.appendChild(newFormWrapper);
+});

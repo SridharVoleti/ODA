@@ -48,3 +48,11 @@ SHIPPING_METHODS=['Standard','Express']
 SHIPPING_TYPES=['FCL','LCL','AIR FREIGHT']
 
 UNIT_TYPES=['STANDARD', 'PALLET','BOXES']
+
+CONTAINER_TYPES = [('20FT','20'),('40FT','40')]
+
+CONTAINER_STATUS = ['Empty','Loaded','In-Transit']
+
+CONTAINER_CONDITION = ['Clean','Damaged']
+
+CARGO_TYPES = ['General','Hazardous']

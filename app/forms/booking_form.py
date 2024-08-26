@@ -467,4 +467,4 @@ class BookingForm(FlaskForm):
         ]
     )
 
-    submit = SubmitField('Submit')
+    submit = SubmitField('Next')

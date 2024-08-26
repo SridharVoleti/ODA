@@ -1,14 +1,118 @@
 {% extends 'base.html' %} {% block content %}
-<!-- Display Flash Messages -->
-{% with messages = get_flashed_messages(with_categories=true) %} {% if messages
-%}
-<div class="flash-message m-5">
-  {% for category, message in messages %}
-  <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
-  {% endfor %}
-</div>
-{% endif %} {% endwith %}
-<div>
-  <h1 class="text-center">Container Form</h1>
+<div class="w-screen p-10">
+  <h1 class="mt-5 text-center text-2xl font-bold">Container Form</h1>
+  <!-- Display Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %}
+  <div class="flash-message m-5">
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %} {% endwith %}
+
+  <!-- Main Form Container -->
+  <div id="form-container" class="relative">
+    <div class="form-wrapper">
+      <form method="post" class="flex flex-col items-center">
+        {{ form.hidden_tag() }}
+        <div class="container-form border-[1px] border-gray-400 p-3">
+          <div class="container-form-group">
+            {{ form.container_type.label(class="form-label") }} {{
+            form.container_type(class="form-control") }} {% for error in
+            form.container_type.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.container_size.label(class="form-label") }} {{
+            form.container_size(class="form-control") }} {% for error in
+            form.container_size.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.container_weight.label(class="form-label") }} {{
+            form.container_weight(class="form-control") }} {% for error in
+            form.container_weight.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.max_gross_weight.label(class="form-label") }} {{
+            form.max_gross_weight(class="form-control") }} {% for error in
+            form.max_gross_weight.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.owner_or_operator_code.label(class="form-label") }} {{
+            form.owner_or_operator_code(class="form-control") }} {% for error in
+            form.owner_or_operator_code.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.container_status.label(class="form-label") }} {{
+            form.container_status(class="form-control") }} {% for error in
+            form.container_status.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.iso_code.label(class="form-label") }} {{
+            form.iso_code(class="form-control") }} {% for error in
+            form.iso_code.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.container_condtition.label(class="form-label") }} {{
+            form.container_condtition(class="form-control") }} {% for error in
+            form.container_condtition.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.date_of_manufacture.label(class="form-label") }} {{
+            form.date_of_manufacture(class="form-control") }} {% for error in
+            form.date_of_manufacture.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.last_date_inspection.label(class="form-label") }} {{
+            form.last_date_inspection(class="form-control") }} {% for error in
+            form.last_date_inspection.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.cargo_type.label(class="form-label") }} {{
+            form.cargo_type(class="form-control") }} {% for error in
+            form.cargo_type.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Another Form Button -->
+  <div class="mt-5 flex justify-center">
+    <button
+      type="button"
+      id="add-form"
+      class="button absolute right-10 top-[80%] rounded-full"
+    >
+      Add Container
+    </button>
+  </div>
+  <div class="flex justify-center">
+    <div class="container-form-group">
+      {{ form.submit(class="button booking-submit") }}
+    </div>
+  </div>
 </div>
 {% endblock %}

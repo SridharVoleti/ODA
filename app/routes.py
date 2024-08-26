@@ -1,9 +1,9 @@
 # # app/routes.py
-
 import uuid
 from flask import render_template, request, redirect, url_for, flash
 from app import app
 from app.forms.booking_form import BookingForm
+from app.forms.container_form import ContainerForm
 from datetime import datetime
 from app.models import create_booking
 from app.utils.auto_gen_id import *
@@ -86,5 +86,6 @@ def booking():
 
 @app.route('/container')
 def container():
- return render_template('container.html')
+ form = ContainerForm()
+ return render_template('container.html',form=form)
 
