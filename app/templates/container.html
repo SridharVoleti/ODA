@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<div class="w-screen p-10">
+<div class="relative w-screen p-10">
   <h1 class="mt-5 text-center text-2xl font-bold">Container Form</h1>
   <!-- Display Flash Messages -->
   {% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -12,7 +12,7 @@
   {% endif %} {% endwith %}
 
   <!-- Main Form Container -->
-  <div id="form-container" class="relative">
+  <div id="form-container" class="mt-10">
     <div class="form-wrapper">
       <form method="post" class="flex flex-col items-center">
         {{ form.hidden_tag() }}
@@ -104,9 +104,9 @@
     <button
       type="button"
       id="add-form"
-      class="button absolute right-10 top-[80%] rounded-full"
+      class="button absolute right-10 top-20 rounded-full"
     >
-      Add Container
+      Add
     </button>
   </div>
   <div class="flex justify-center">

@@ -4,12 +4,6 @@ def test_valid_form(request_context,form_data):
     form = BookingForm(data=form_data)
     assert form.validate() is True  # Assert that the form should be valid with the given data
 
-# Test case for validating a form with a invalid shipment_id
-# def test_invalid_shipment_id(request_context, form_data):
-#     form_data['shipment_id'] = '@23456'
-#     form = BookingForm(data=form_data)
-#     assert form.validate() is False
-#     assert 'shipment_id' in form.errors
 
 # Test case for validating a form with a invalid shipping_company
 def test_invalid_shipping_company(request_context, form_data):
