@@ -40,7 +40,7 @@ class ContainerForm(FlaskForm):
         'Container Status',
         choices=CONTAINER_STATUS,
         validators=[DataRequired('Container Status is required'),
-            AnyOf([choice[0] for choice in CONTAINER_STATUS],message='Select valid Container status')
+            AnyOf([choice for choice in CONTAINER_STATUS],message='Select valid Container status')
         ]
     )
 
@@ -53,7 +53,7 @@ class ContainerForm(FlaskForm):
         'Container Condition',
         choices=CONTAINER_CONDITION,
         validators=[
-            AnyOf([choice[0] for choice in CONTAINER_CONDITION],message='Select valid Container condition')
+            AnyOf([choice for choice in CONTAINER_CONDITION],message='Select valid Container condition')
         ]
 
     )
@@ -73,7 +73,7 @@ class ContainerForm(FlaskForm):
         choices=CARGO_TYPES,
         validators=[
             DataRequired('Cargo type is required'),
-            AnyOf([choice[0] for choice in CARGO_TYPES],message='Select valid Cargo type')
+            AnyOf([choice for choice in CARGO_TYPES],message='Select valid Cargo type')
         ]
     )
 

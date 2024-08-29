@@ -39,7 +39,7 @@ def form_data():
         "weight": 200,
         "dimensions": "12.5*15*20",
         "shipping_date": "2024-08-20",
-        "delivery_date": "2024-08-23",
+        "delivery_date": "2025-08-23",
         "shipping_method": "Standard",
         "insurance": True,
         "declared_value": 1234,

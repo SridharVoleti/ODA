@@ -79,7 +79,8 @@ class BookingForm(FlaskForm):
         'Weight',
         validators=[
             DataRequired("Weight is required"),  # Not Null validation
-            NumberRange(min=1, max=1000, message="Weight must be a positive number within the allowed carrier range")  # Positive number and within range
+            NumberRange(min=1, max=1000, message="Weight must be a positive number within the allowed carrier range"),  # Positive number and within range
+            validate_positive_number #Custom validation to check for positive number
         ]
     )
 
@@ -144,7 +145,7 @@ class BookingForm(FlaskForm):
         'Declared Value',  # Label for the field
         validators=[
             Optional(),  # Allow the field to be empty if insurance is not selected
-            validate_declared_value  # Apply the custom validator to check the condition
+            validate_positive_number #Custom validation to check for positive number
         ]
     )
 
@@ -159,7 +160,7 @@ class BookingForm(FlaskForm):
 
     # bill_of_lading' field 
     bill_of_lading = SelectField(
-        'Bill of Ladinf(BL)',
+        'Bill of Ladding(BL)',
         choices=BL_TYPES,
         validators=[
             DataRequired(message="This field is required."),
@@ -186,6 +187,7 @@ class BookingForm(FlaskForm):
         'CBM',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="CBM is required"),  # Ensures the field is not left empty
+            validate_positive_number #Custom validation to check for positive number
         ]
     )
 
@@ -272,7 +274,7 @@ class BookingForm(FlaskForm):
         'Gross Weight',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
-            #  postive integer validation should be added
+            validate_positive_number #Custom validation to check for positive number
         ]
     )
 
@@ -291,7 +293,7 @@ class BookingForm(FlaskForm):
         'Invoice Currency Value',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
-            #  postive integer validation should be added
+            validate_positive_number #Custom validation to check for positive number
         ]
     )
 
@@ -343,12 +345,14 @@ class BookingForm(FlaskForm):
         'Net Weight',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
-            # positive number validation  should be added
+            validate_positive_number #Custom validation to check for positive number
         ]
     )
 
     # Number of Packages
-    number_of_packages = IntegerField('Number of Packages', validators=[DataRequired("number_of_packages is required")])
+    number_of_packages = IntegerField('Number of Packages', validators=[DataRequired("number_of_packages is required"),
+                                                                        validate_positive_number #Custom validation to check for positive number
+                                                                        ])
 
     # Operations Handled By Field
     operation_handle_by = SelectField(

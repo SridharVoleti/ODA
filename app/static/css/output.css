@@ -756,6 +756,11 @@ video {
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
 
+.bg-ocean-blue {
+  --tw-bg-opacity: 1;
+  background-color: rgb(94 182 238 / var(--tw-bg-opacity));
+}
+
 .p-10 {
   padding: 2.5rem;
 }

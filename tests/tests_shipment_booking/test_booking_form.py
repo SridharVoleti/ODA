@@ -86,19 +86,22 @@ def test_invalid_shipping_method(request_context, form_data):
 def test_invalid_insurance(request_context, form_data):
     form_data['insurance'] = ''
     form = BookingForm(data=form_data)
-    assert form.validate() is True
+    form.validate()
+    assert 'insurance' not in form.errors 
 
 # Test case for validating a form with a invalid declared_value
 def test_invalid_declared_value(request_context, form_data):
     form_data['declared_value'] = ''
     form = BookingForm(data=form_data)
-    assert form.validate() is True
+    form.validate()
+    assert 'declared_value' not in form.errors 
 
 # Test case for validating a form with a invalid special_instructions
 def test_invalid_special_instructions(request_context, form_data):
     form_data['special_instructions'] = ''
     form = BookingForm(data=form_data)
-    assert form.validate() is True
+    form.validate()
+    assert 'special_instructions' not in form.errors 
 
 # Test case for validating a form with a invalid bill_of_lading
 def test_invalid_bill_of_lading(request_context, form_data):

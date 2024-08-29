@@ -2,6 +2,8 @@ from app.forms.container_form import ContainerForm
 # Test case for validating a form with all required fields provided
 def test_valid_form(request_context,form_data):
     form = ContainerForm(data=form_data)
+    form.validate()
+    print(form.errors,flush=True)
     assert form.validate() is True  # Assert that the form should be valid with the given data
 
 # Test case for validating a form with a invalid container_type
@@ -65,11 +67,12 @@ def test_invalid_container_condition(request_context, form_data):
     form_data['container_condtition'] = ''  
     form = ContainerForm(data=form_data)
     assert form.validate() is False
+    print(form.errors)
     assert 'container_condtition' in form.errors
 
 # Test case for validating a form with an invalid date_of_manufacture (future date)
 def test_invalid_date_of_manufacture(request_context, form_data):
-    form_data['date_of_manufacture'] = ''  
+    form_data['date_of_manufacture'] =''  
     form = ContainerForm(data=form_data)
     assert form.validate() is False
     assert 'date_of_manufacture' in form.errors
