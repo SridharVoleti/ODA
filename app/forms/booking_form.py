@@ -7,9 +7,8 @@ from datetime import datetime
 from app.forms.choices_config import *
 from app.forms.custom_validations import *
 class BookingForm(FlaskForm):
-    """
-    Form for creating a new booking with validation.
-    """
+
+    #Form for creating a new booking with validation.
 
     # Shipping Company Field
     shipping_company = StringField(
@@ -89,7 +88,7 @@ class BookingForm(FlaskForm):
         'Dimensions',  # Label for the field
         validators=[
             DataRequired("Dimensions is required"),  # Ensure the field is not empty (null)
-            Regexp(r'^\d+(\.\d+)?\*\d+(\.\d+)?\*\d+(\.\d+)?$',message='invalid format')
+            Regexp(r'^\d+(\.\d+)?\*\d+(\.\d+)?\*\d+(\.\d+)?$',message='Value should be in 12*15*20 format')
             # ^: Anchors the match at the beginning of the string.
             # \d+: Matches one or more digits (representing the integer part of the number).
             # (\.\d+)?: Matches an optional decimal part. The \. matches the decimal point, and \d+ matches one or more digits after the decimal. The entire group is optional due to the ?.

@@ -1,7 +1,6 @@
 # app/db_helper.py
 
 from app import mongo
-from flask import flash
 
 def insert_booking(booking):
     """

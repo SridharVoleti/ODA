@@ -1,14 +1,12 @@
 # # app/routes.py
-import uuid
 from flask import render_template, request, redirect, url_for, flash
 from app import app
 from app.forms.booking_form import BookingForm
 from app.forms.container_form import ContainerForm
-from datetime import datetime
-from app.models import create_booking
-from app.utils.auto_gen_id import *
-@app.route('/booking', methods=['GET', 'POST'])
-def booking():
+from app.models import create_shipment
+
+@app.route('/shipment', methods=['GET', 'POST'])
+def shipment():
     form = BookingForm()
 
     if request.method == 'POST':
@@ -16,7 +14,6 @@ def booking():
             # Process the valid form data
             # For example, save the data to the database or perform other actions
             # Extract data from form
-            shipment_id = uuid.uuid1()
             shipping_company = form.shipping_company.data
             sender_name = form.sender_name.data
             sender_address = form.sender_address.data
@@ -44,12 +41,8 @@ def booking():
             gross_weight = form.gross_weight.data
             invoice_currency = form.invoice_currency.data
             invoice_currency_value = form.invoice_currency_value.data
-            invoice_date = datetime.today().date()
-            invoice_number = generate_invoice_number()
             invoice_type = form.invoice_type.data
             item_description = form.item_description.data
-            job_date = datetime.today().date()
-            job_number = generate_job_id()
             job_type = form.job_type.data
             nature_of_contract = form.nature_of_contract.data
             nature_of_payment = form.nature_of_payment.data
@@ -62,8 +55,6 @@ def booking():
             por = form.por.data
             remarks = form.remarks.data
             sales_person_name = form.sales_person_name.data
-            sb_number = generate_sb_id()
-            sb_number_date = datetime.today().date()
             select_job = form.select_job.data
             series = form.series.data
             shipper_or_exporter = form.shipper_or_exporter.data
@@ -73,7 +64,7 @@ def booking():
             unit_type = form.unit_type.data
             try:
                 # Save the data in MongoDB
-                create_booking(shipment_id, shipping_company, sender_name, sender_address, consignee, consignee_address, package_type,weight,dimensions,shipping_date,delivery_date,shipping_method,insurance,declared_value,special_instructions,bill_of_lading,carting_point,cbm,cha,clearance_place,co_loader,container_stuffing,file_reference_number,forwarder,fpod,gross_weight,invoice_currency,invoice_currency_value,invoice_date,invoice_number,invoice_type,item_description,job_date,job_number,job_type,nature_of_contract,nature_of_payment,net_weight,number_of_packages,operation_handle_by,plan_date,pod,pol,por,remarks,sales_person_name,sb_number,sb_number_date,select_job,series,shipper_or_exporter,shipping_line,type_of_shipment,unit,unit_type)
+                create_shipment(shipping_company, sender_name, sender_address, consignee, consignee_address, package_type,weight,dimensions,shipping_date,delivery_date,shipping_method,insurance,declared_value,special_instructions,bill_of_lading,carting_point,cbm,cha,clearance_place,co_loader,container_stuffing,file_reference_number,forwarder,fpod,gross_weight,invoice_currency,invoice_currency_value,invoice_type,item_description,job_type,nature_of_contract,nature_of_payment,net_weight,number_of_packages,operation_handle_by,plan_date,pod,pol,por,remarks,sales_person_name,select_job,series,shipper_or_exporter,shipping_line,type_of_shipment,unit,unit_type)
                 flash('Booking created successfully!', 'success')
                 return redirect(url_for('container'))
             except:
@@ -87,5 +78,18 @@ def booking():
 @app.route('/container')
 def container():
  form = ContainerForm()
+ if request.method == "POST":
+     if form.validate_on_submit():
+         container_type = form.container_type.data
+         container_size = form.container_size.data
+         container_weight = form.container_weight.data
+         max_gross_weight = form.max_gross_weight.data
+         owner_or_operator_code= form.owner_or_operator_code.data
+         container_status = form.container_status.data
+         iso_code = form.iso_code.data
+         container_condtition = form.container_condtition.data
+         date_of_manufacture = form.date_of_manufacture.data
+         last_date_inspection = form.last_date_inspection.data
+         cargo_type = form.cargo_type.data
  return render_template('container.html',form=form)
 

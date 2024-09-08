@@ -1,13 +1,23 @@
 # app/models.py
-
+import uuid
+from app.utils.auto_gen_id import *
+from datetime import datetime
 from app.helper import db_helper
 from flask import flash
-def create_booking(shipment_id, shipping_company, sender_name, sender_address, consignee, consignee_address, package_type,weight,dimensions,shipping_date,delivery_date,shipping_method,insurance,declared_value,special_instructions,bill_of_lading,carting_point,cbm,cha,clearance_place,co_loader,container_stuffing,file_reference_number,forwarder,fpod,gross_weight,invoice_currency,invoice_currency_value,invoice_date,invoice_number,invoice_type,item_description,job_date,job_number,job_type,nature_of_contract,nature_of_payment,net_weight,number_of_packages,operation_handle_by,plan_date,pod,pol,por,remarks,sales_person_name,sb_number,sb_number_date,select_job,series,shipper_or_exporter,shipping_line,type_of_shipment,unit,unit_type):
+def create_shipment(shipping_company, sender_name, sender_address, consignee, consignee_address, package_type,weight,dimensions,shipping_date,delivery_date,shipping_method,insurance,declared_value,special_instructions,bill_of_lading,carting_point,cbm,cha,clearance_place,co_loader,container_stuffing,file_reference_number,forwarder,fpod,gross_weight,invoice_currency,invoice_currency_value,invoice_type,item_description,job_type,nature_of_contract,nature_of_payment,net_weight,number_of_packages,operation_handle_by,plan_date,pod,pol,por,remarks,sales_person_name,select_job,series,shipper_or_exporter,shipping_line,type_of_shipment,unit,unit_type):
     """
     Insert a new booking record into the 'bookings' collection in MongoDB.
     """
-    booking = {
-        "shipment_id": str(shipment_id),
+    shipment = {
+        # Auto generated fields
+        "_id" : uuid.uuid1(),
+        "invoice_date" : str(datetime.today().date()),
+        "invoice_number" : generate_invoice_number(),
+        "job_date" : str(datetime.today().date()),
+        "job_number" : generate_job_id(),
+        "sb_number" : generate_sb_id(),
+        "sb_number_date" : str(datetime.today().date()),
+        # Fields from form data
         "shipping_company": shipping_company,
         "sender_name": sender_name,
         "sender_address": sender_address,
@@ -35,12 +45,8 @@ def create_booking(shipment_id, shipping_company, sender_name, sender_address, c
         "gross_weight": gross_weight,
         "invoice_currency": invoice_currency,
         "invoice_currency_value": invoice_currency_value,
-        "invoice_date": str(invoice_date),
-        "invoice_number": invoice_number,
         "invoice_type": invoice_type,
         "item_description": item_description,
-        "job_date": str(job_date),
-        "job_number": job_number,
         "job_type": job_type,
         "nature_of_contract": nature_of_contract,
         "nature_of_payment": nature_of_payment,
@@ -53,8 +59,6 @@ def create_booking(shipment_id, shipping_company, sender_name, sender_address, c
         "por": por,
         "remarks": remarks,
         "sales_person_name": sales_person_name,
-        "sb_number": str(sb_number),
-        "sb_number_date": str(sb_number_date),
         "select_job": select_job,
         "series": series,
         "shipper_or_exporter": shipper_or_exporter,
@@ -64,6 +68,22 @@ def create_booking(shipment_id, shipping_company, sender_name, sender_address, c
         "unit_type": unit_type
     }
     try:
-        return db_helper.insert_booking(booking) #used helper class instead of mangodb ; added by rachana
+        return db_helper.insert_booking(shipment) #used helper class instead of mangodb ; added by rachana
     except:
         flash('error in insert_booking', 'danger')
+
+def create_container(container_type,container_size,container_weight,max_gross_weight,owner_or_operator_code,container_status,iso_code,container_condtition,date_of_manufacture,last_date_inspection,cargo_type):
+    container = {
+        "_id":uuid.uuid1(),
+        "container_type":container_type,
+        "container_size":container_size,
+        "container_weight":container_weight,
+        "max_gross_weight":max_gross_weight,
+        "owner_or_operator_code":owner_or_operator_code,
+        "container_status":container_status,
+        "iso_code":iso_code,
+        "container_condtition":container_condtition,
+        "date_of_manufacture":date_of_manufacture,
+        "last_date_inspection":last_date_inspection,
+        "cargo_type":cargo_type
+    }
