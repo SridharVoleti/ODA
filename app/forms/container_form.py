@@ -1,4 +1,4 @@
-from wtforms import SelectField,StringField,IntegerField,DateField,SubmitField
+from wtforms import SelectField,StringField,IntegerField,DateField,SubmitField,FieldList,FormField
 from wtforms.validators import DataRequired,AnyOf,Regexp
 from flask_wtf import FlaskForm
 from app.forms.choices_config import *
@@ -28,6 +28,11 @@ class ContainerForm(FlaskForm):
     max_gross_weight = IntegerField(
         'Max Gross Weight',
         validators=[DataRequired('Max Gross Weight is required')]
+    )
+
+    container_seal_number = StringField(
+        'Container Seal Number',
+        validators=[DataRequired("Container Seal Number is required")]
     )
 
     # Owner/Operator Code
@@ -67,7 +72,7 @@ class ContainerForm(FlaskForm):
         'Last Inspection Date',
         validators=[DataRequired('Last Inspection Date is required')]
     )
-
+    
     cargo_type = SelectField(
         'Cargo type',
         choices=CARGO_TYPES,
@@ -77,4 +82,8 @@ class ContainerForm(FlaskForm):
         ]
     )
 
-    submit = SubmitField('Next')
+    submit = SubmitField('Submit')
+
+class ContainerFormList(FlaskForm):
+    containers = FieldList(FormField(ContainerForm),min_entries=1)
+    submit = SubmitField('Submit All')

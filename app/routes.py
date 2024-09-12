@@ -1,95 +1,67 @@
 # # app/routes.py
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, flash,url_for
 from app import app
 from app.forms.booking_form import BookingForm
-from app.forms.container_form import ContainerForm
-from app.models import create_shipment
+from app.forms.container_form import ContainerForm,ContainerFormList
+from app.services.shipment import get_shipments,create_shipment,update_shipment
+from app.services.container import create_container,create_containers
+from app.models.shipment import Shipment
+from app.models.container import Container
+from app.utils.auto_gen_id import *
+from datetime import datetime,timezone
+from flask import session
+from app.forms.choices_config import *
+import json
+@app.route('/')
+def dashboard():
+    shipments = get_shipments()
+    return render_template('dashboard.html',shipments = shipments)
 
 @app.route('/shipment', methods=['GET', 'POST'])
 def shipment():
     form = BookingForm()
+    if form.validate_on_submit():
+       current_datetime = datetime.now(timezone.utc)
+       formatted_datetime = current_datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
+       shipment = Shipment.form_to_shipment(form)
+       shipment._id = generate_shipment_id()
+       shipment.invoice_date = formatted_datetime
+       shipment.invoice_number = generate_invoice_number()
+       shipment.job_number = generate_job_id()
+       shipment.job_date = formatted_datetime
+       shipment.sb_number = generate_sb_id()
+       shipment.sb_number_date = formatted_datetime
+       response = create_shipment(shipment.to_json())
+       if response:
+          session["shipment_id"]=shipment._id
+          flash("Shipment created succesfully",'success')
+          return redirect(url_for('container'))
+       else:
+          return shipment.to_json()
+    return render_template('booking.html',form = form)
 
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            # Process the valid form data
-            # For example, save the data to the database or perform other actions
-            # Extract data from form
-            shipping_company = form.shipping_company.data
-            sender_name = form.sender_name.data
-            sender_address = form.sender_address.data
-            consignee = form.consignee.data
-            consignee_address = form.consignee_address.data
-            package_type = form.package_type.data
-            weight = form.weight.data
-            dimensions = form.dimensions.data
-            shipping_date = form.shipping_date.data
-            delivery_date = form.delivery_date.data
-            shipping_method = form.shipping_method.data
-            insurance = form.insurance.data
-            declared_value = form.declared_value.data
-            special_instructions = form.special_instructions.data
-            bill_of_lading = form.bill_of_lading.data
-            carting_point = form.carting_point.data
-            cbm = form.cbm.data
-            cha = form.cha.data
-            clearance_place = form.clearance_place.data
-            co_loader = form.co_loader.data
-            container_stuffing = form.container_stuffing.data
-            file_reference_number = form.file_reference_number.data
-            forwarder = form.forwarder.data
-            fpod = form.fpod.data
-            gross_weight = form.gross_weight.data
-            invoice_currency = form.invoice_currency.data
-            invoice_currency_value = form.invoice_currency_value.data
-            invoice_type = form.invoice_type.data
-            item_description = form.item_description.data
-            job_type = form.job_type.data
-            nature_of_contract = form.nature_of_contract.data
-            nature_of_payment = form.nature_of_payment.data
-            net_weight = form.net_weight.data
-            number_of_packages = form.number_of_packages.data
-            operation_handle_by = form.operation_handle_by.data
-            plan_date = form.plan_date.data
-            pod = form.pod.data
-            pol = form.pol.data
-            por = form.por.data
-            remarks = form.remarks.data
-            sales_person_name = form.sales_person_name.data
-            select_job = form.select_job.data
-            series = form.series.data
-            shipper_or_exporter = form.shipper_or_exporter.data
-            shipping_line = form.shipping_line.data
-            type_of_shipment = form.type_of_shipment.data
-            unit = form.unit.data
-            unit_type = form.unit_type.data
-            try:
-                # Save the data in MongoDB
-                create_shipment(shipping_company, sender_name, sender_address, consignee, consignee_address, package_type,weight,dimensions,shipping_date,delivery_date,shipping_method,insurance,declared_value,special_instructions,bill_of_lading,carting_point,cbm,cha,clearance_place,co_loader,container_stuffing,file_reference_number,forwarder,fpod,gross_weight,invoice_currency,invoice_currency_value,invoice_type,item_description,job_type,nature_of_contract,nature_of_payment,net_weight,number_of_packages,operation_handle_by,plan_date,pod,pol,por,remarks,sales_person_name,select_job,series,shipper_or_exporter,shipping_line,type_of_shipment,unit,unit_type)
-                flash('Booking created successfully!', 'success')
-                return redirect(url_for('container'))
-            except:
-                flash('An error occurred while creating the booking. Please try again.', 'danger')
-                return redirect(url_for('booking'))
-        else:
-            flash("something went wrong",'danger')
-    # If it's a GET request or form validation failed, render the form template
-    return render_template('booking.html', form=form)
-
-@app.route('/container')
+@app.route('/container',methods=['GET', 'POST'])
 def container():
- form = ContainerForm()
- if request.method == "POST":
-     if form.validate_on_submit():
-         container_type = form.container_type.data
-         container_size = form.container_size.data
-         container_weight = form.container_weight.data
-         max_gross_weight = form.max_gross_weight.data
-         owner_or_operator_code= form.owner_or_operator_code.data
-         container_status = form.container_status.data
-         iso_code = form.iso_code.data
-         container_condtition = form.container_condtition.data
-         date_of_manufacture = form.date_of_manufacture.data
-         last_date_inspection = form.last_date_inspection.data
-         cargo_type = form.cargo_type.data
- return render_template('container.html',form=form)
+ form = ContainerFormList()
+ if form.validate_on_submit(): 
+   containers =[]
+   container_ids =[]
+   for container_form in form.containers:
+      if container_form.validate():        
+         container = Container.form_to_container(container_form)
+         container._id = generate_container_id()
+         container_ids.append(container._id)
+         containers.append(container.to_json())
+   response = create_containers(containers)
+   if response:
+      shipment_id = session.get("shipment_id",None)
+      update_shipment(shipment_id,{"container":container_ids})
+      flash("Container Added Successfully")
+      return redirect(url_for('dashboard'))
+ return render_template('containerform.html',form=form,
+                                             container_types=CONTAINER_TYPES, 
+                                             container_status=CONTAINER_STATUS,
+                                             container_condition=CONTAINER_CONDITION,
+                                             cargo_types=CARGO_TYPES)
+
 

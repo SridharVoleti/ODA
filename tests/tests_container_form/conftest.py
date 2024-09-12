@@ -36,5 +36,6 @@ def form_data():
         'container_condtition' : "Clean",
         'date_of_manufacture' : "2024-08-20",
         'last_date_inspection' : "2025-07-30",
-        'cargo_type' : "General"
+        'cargo_type' : "General",
+        'container_seal_number':"Seal123"
      }

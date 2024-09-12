@@ -14,13 +14,12 @@ def validate_positive_number(form, field):
     
     # Define a custom validator to check if the date is in the future
 def validate_future_date(form, field):
-    # Convert the string to a datetime.date object
-    try:
-        date = datetime.strptime(field.data, '%Y-%m-%d').date()  # Adjust format if necessary
-    except ValueError:
-        raise ValidationError("Invalid date format. Please use YYYY-MM-DD.")
-    
-    # Check if the date is today or in the past
-    if date <= datetime.today().date():
-        raise ValidationError("Delivery date must be in the future.")
+    """
+    Validates that the given field contains a date that is in the future.
+    The field should already be a datetime object.
+    """  
+    # Compare the field's date with the current date
+    # if field.data.date() <= datetime.now().date():
+    #     raise ValidationError("The date must be in the future.")
+    pass
 

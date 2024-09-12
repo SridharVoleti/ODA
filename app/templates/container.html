@@ -5,12 +5,13 @@
   {% with messages = get_flashed_messages(with_categories=true) %} {% if
   messages %}
   <div class="flash-message m-5">
-    {% for category, message in messages %}
-    <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
-    {% endfor %}
+    {% for category, message in messages %} {% if category == "success" %}
+    <div class="alert alert-success" role="alert">{{ message }}</div>
+    {% endif %} {% if category == "danger" %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endif %} {% endfor %}
   </div>
   {% endif %} {% endwith %}
-
   <!-- Main Form Container -->
   <div id="form-container" class="mt-10">
     <div class="form-wrapper">
@@ -42,6 +43,13 @@
             {{ form.max_gross_weight.label(class="form-label") }} {{
             form.max_gross_weight(class="form-control") }} {% for error in
             form.max_gross_weight.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+          <div class="container-form-group">
+            {{ form.container_seal_number.label(class="form-label") }} {{
+            form.container_seal_number(class="form-control") }} {% for error in
+            form.container_seal_number.errors %}
             <span style="color: red">[{{ error }}]</span>
             {% endfor %}
           </div>
@@ -95,6 +103,11 @@
             {% endfor %}
           </div>
         </div>
+        <div class="flex justify-center">
+          <div class="container-form-group">
+            {{ form.submit(class="button booking-submit") }}
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -108,11 +121,6 @@
     >
       Add
     </button>
-  </div>
-  <div class="flex justify-center">
-    <div class="container-form-group">
-      {{ form.submit(class="button booking-submit") }}
-    </div>
   </div>
 </div>
 {% endblock %}

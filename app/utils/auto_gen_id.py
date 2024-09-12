@@ -1,5 +1,6 @@
 import random
 import string
+from datetime import datetime
 
 def generate_invoice_number():
     # Generate a random 6-digit number
@@ -33,3 +34,20 @@ def generate_sb_id():
     sb_id = f"SB{random_digits}"
     
     return sb_id
+
+def generate_shipment_id() -> str:
+    """
+    Generate a unique ID in the format SHIPMENTYYYYMMDDHHMMSS, using the current date and time.
+    """
+    current_time = datetime.now()
+    # Format the time as YYYYMMDDHHMMSS (year, month, day, hour, minute, second)
+    time_str = current_time.strftime("%Y%m%d%H%M%S")
+    return f"SHIPMENT{time_str}"
+def generate_container_id() -> str:
+    """
+    Generate a unique ID in the format SHIPMENTYYYYMMDDHHMMSS, using the current date and time.
+    """
+    current_time = datetime.now()
+    # Format the time as YYYYMMDDHHMMSS (year, month, day, hour, minute, second)
+    time_str = current_time.strftime("%Y%m%d%H%M%S")
+    return f"CONTAINER{time_str}"

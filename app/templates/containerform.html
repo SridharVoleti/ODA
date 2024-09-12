@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% block content %}
+<div class="w-screen p-5">
+  <h1 class="text-center text-2xl font-bold">Container Form</h1>
+  <!-- The form starts here, will be submitted to the Flask container route -->
+  <form
+    method="POST"
+    action="{{ url_for('container') }}"
+    class="relative flex flex-col justify-center p-5"
+  >
+    <!-- Hidden tag to include CSRF token for form security -->
+    {{ form.hidden_tag() }}
+
+    <!-- This div will hold the dynamic container forms -->
+    <div id="container-forms">
+      <!-- Loop over the subforms in form.containers to render the initial container forms -->
+      {% for subform in form.containers %}
+      <div id="container-form-{{ loop.index }}">
+        <fieldset class="grid grid-cols-6 gap-3">
+          <!-- Label for each container form -->
+          <!-- Render each field in the form with labels -->
+          <div class="container-form-group">
+            {{ subform.container_type.label }} {{
+            subform.container_type(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.container_size.label }} {{
+            subform.container_size(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.container_weight.label }} {{
+            subform.container_weight(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.max_gross_weight.label }} {{
+            subform.max_gross_weight(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.container_seal_number.label }} {{
+            subform.container_seal_number(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.owner_or_operator_code.label }} {{
+            subform.owner_or_operator_code(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.container_status.label }} {{
+            subform.container_status(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.iso_code.label }} {{
+            subform.iso_code(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.container_condtition.label }} {{
+            subform.container_condtition(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.date_of_manufacture.label }} {{
+            subform.date_of_manufacture(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.last_date_inspection.label }} {{
+            subform.last_date_inspection(class="form-control") }}
+          </div>
+          <div class="container-form-group">
+            {{ subform.cargo_type.label }} {{
+            subform.cargo_type(class="form-control") }}
+          </div>
+
+          <!-- Button to remove this particular container form -->
+          <button
+            type="button"
+            class="button"
+            onclick="removeContainerForm({{ loop.index }})"
+          >
+            Remove
+          </button>
+        </fieldset>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Button to add a new container form dynamically -->
+    <button type="button" id="add-container-btn" class="button bg-ocean-blue">
+      Add Container
+    </button>
+
+    <!-- Submit button for submitting all forms together -->
+    <div>
+      {{ form.submit(class="absolute left-[45%] button booking-submit") }}
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+  const containerTypes = {{ container_types | tojson }};
+  const containerStatus = {{ container_status | tojson }};
+  const containerCondition = {{ container_condition | tojson }};
+  const cargoTypes = {{ cargo_types | tojson }};
+</script>
+{% endblock %}

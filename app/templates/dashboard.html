@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %} {% include 'includes/menu.html' %}
+<div class="flex flex-col justify-center">
+  <h1 class="mt-10 text-center text-2xl font-bold">Dashboard</h1>
+  <table class="mt-5">
+    <thead>
+      <tr>
+        <th>Shipment ID</th>
+        <th>shipping company</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      {% for shipment in shipments %}
+      <tr>
+        <td>{{shipment._id}}</td>
+        <td>{{shipment.shipping_company}}</td>
+        <td>
+            <button>View</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

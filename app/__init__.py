@@ -29,7 +29,7 @@ def run_tests():
     pytest_args = ["--disable-warnings", "tests/"]
     return pytest.main(pytest_args)
 
-# Only run tests when running in development mode
+# Only run tests when running in development modeW
 if app.config['ENV'] == 'development':
     result = run_tests()
     if result != 0:
