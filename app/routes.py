@@ -12,9 +12,11 @@ from datetime import datetime,timezone
 from flask import session
 from app.forms.choices_config import *
 from app.forms.loginform import LoginForm
-from flask_login import LoginManager,UserMixin,login_user,login_required,logout_user,current_user
+from flask_login import login_user,login_required,logout_user,current_user
+from app import User
 import json
 @app.route('/')
+@login_required
 def dashboard():
     shipments = get_shipments()
     return render_template('dashboard.html',shipments = shipments)
@@ -70,17 +72,12 @@ def container():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    print("Hey",flush=True)
     if form.validate_on_submit():
         username = form.username.data
-        password = form.password.data
-        
+        password = form.password.data      
         # we have to Replace this with our actual authentication logic
-        print("Hello World",flush=True)
-        print(username,flush=True)
-        print(password,flush=True)
         if username == "admin" and password == "password":
-            user = user(id=1)  # Create a user with ID 1
+            user = User(id=1)  # Create a user with ID 1
             login_user(user)
             return redirect(url_for('dashboard'))
         else:
