@@ -11,6 +11,8 @@ from app.utils.auto_gen_id import *
 from datetime import datetime,timezone
 from flask import session
 from app.forms.choices_config import *
+from app.forms.loginform import LoginForm
+from flask_login import LoginManager,UserMixin,login_user,login_required,logout_user,current_user
 import json
 @app.route('/')
 def dashboard():
@@ -63,5 +65,35 @@ def container():
                                              container_status=CONTAINER_STATUS,
                                              container_condition=CONTAINER_CONDITION,
                                              cargo_types=CARGO_TYPES)
+
+#creating a route that handles user login. For testing, this will use hard-coded credentials:
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    print("Hey",flush=True)
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        
+        # we have to Replace this with our actual authentication logic
+        print("Hello World",flush=True)
+        print(username,flush=True)
+        print(password,flush=True)
+        if username == "admin" and password == "password":
+            user = user(id=1)  # Create a user with ID 1
+            login_user(user)
+            return redirect(url_for('dashboard'))
+        else:
+            return "Invalid credentials"
+    
+    return render_template('login.html',form = form)
+
+
+#creating to implement the logout route to allow users to log out:
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 
