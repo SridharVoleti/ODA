@@ -1,27 +1,28 @@
 # # app/routes.py
-from flask import render_template, request, redirect, flash,url_for
-from app import app
+from flask import render_template, redirect, flash,url_for,Blueprint
 from app.forms.booking_form import BookingForm
-from app.forms.container_form import ContainerForm,ContainerFormList
+from app.forms.container_form import ContainerFormList
 from app.services.shipment import get_shipments,create_shipment,update_shipment
-from app.services.container import create_container,create_containers
+from app.services.container import create_containers
 from app.models.shipment import Shipment
 from app.models.container import Container
 from app.utils.auto_gen_id import *
 from datetime import datetime,timezone
 from flask import session
 from app.forms.choices_config import *
-from app.forms.loginform import LoginForm
-from flask_login import login_user,login_required,logout_user,current_user
-from app import User
-import json
-@app.route('/')
+from flask_login import login_required,current_user
+from app.utils.decorators import role_required
+
+main_bp = Blueprint('main', __name__)
+
+@main_bp.route('/')
 @login_required
 def dashboard():
     shipments = get_shipments()
     return render_template('dashboard.html',shipments = shipments)
 
-@app.route('/shipment', methods=['GET', 'POST'])
+@main_bp.route('/shipment',methods =['GET','POST'])
+@role_required('Admin')
 def shipment():
     form = BookingForm()
     if form.validate_on_submit():
@@ -39,12 +40,13 @@ def shipment():
        if response:
           session["shipment_id"]=shipment._id
           flash("Shipment created succesfully",'success')
-          return redirect(url_for('container'))
+          return redirect(url_for('main.container'))
        else:
           return shipment.to_json()
     return render_template('booking.html',form = form)
 
-@app.route('/container',methods=['GET', 'POST'])
+@main_bp.route('/container',methods =['GET','POST'])
+@login_required
 def container():
  form = ContainerFormList()
  if form.validate_on_submit(): 
@@ -61,36 +63,10 @@ def container():
       shipment_id = session.get("shipment_id",None)
       update_shipment(shipment_id,{"container":container_ids})
       flash("Container Added Successfully")
-      return redirect(url_for('dashboard'))
+      return redirect(url_for('main.dashboard'))
  return render_template('containerform.html',form=form,
                                              container_types=CONTAINER_TYPES, 
                                              container_status=CONTAINER_STATUS,
                                              container_condition=CONTAINER_CONDITION,
                                              cargo_types=CARGO_TYPES)
-
-#creating a route that handles user login. For testing, this will use hard-coded credentials:
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data      
-        # we have to Replace this with our actual authentication logic
-        if username == "admin" and password == "password":
-            user = User(id=1)  # Create a user with ID 1
-            login_user(user)
-            return redirect(url_for('dashboard'))
-        else:
-            return "Invalid credentials"
-    
-    return render_template('login.html',form = form)
-
-
-#creating to implement the logout route to allow users to log out:
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
-
 

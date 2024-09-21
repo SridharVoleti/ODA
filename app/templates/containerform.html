@@ -1,7 +1,19 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% block title %} Container Booking {% endblock %} {%
+block content %}
 <div class="w-screen p-5">
   <h1 class="text-center text-2xl font-bold">Container Form</h1>
   <!-- The form starts here, will be submitted to the Flask container route -->
+  <!-- Display Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %}
+  <div class="flash-message m-5">
+    {% for category, message in messages %} {% if category == "success" %}
+    <div class="alert alert-success" role="alert">{{ message }}</div>
+    {% endif %} {% if category == "danger" %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endif %} {% endfor %}
+  </div>
+  {% endif %} {% endwith %}
   <form
     method="POST"
     action="{{ url_for('container') }}"

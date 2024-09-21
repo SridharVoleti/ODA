@@ -1,5 +1,5 @@
-{% extends 'base.html'%} {% block title %} login {% endblock %} {% block content
-%}
+{% extends 'base.html'%} {% block title %} Register {% endblock %} {% block
+content %}
 <div>
   <!-- Display Flash Messages -->
   {% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -15,8 +15,10 @@
   <form method="post" class="flex h-screen items-center justify-center">
     <!-- CSRF protection token-->
     {{ form.hidden_tag() }}
-    <div class="flex flex-col items-center justify-center gap-5">
-      <h1 class="text-2xl">Login</h1>
+    <div
+      class="flex flex-col items-center justify-center gap-5 p-5 shadow-lg shadow-slate-300"
+    >
+      <h1 class="text-2xl">Register</h1>
       <div class="form-group">
         {{ form.username(class="form-control",placeholder="username") }} {% for
         error in form.username.errors %}
@@ -24,13 +26,19 @@
         {% endfor %}
       </div>
       <div class="form-group">
-        {{ form.password(class="form-control",placeholder="password") }} {% for
-        error in form.password.errors %}
-        <span style="color: red">[{{ error }}]</span>
-        {% endfor %}
+        <div class="relative">
+          {{ form.password(class="form-control",placeholder="Password") }}
+        </div>
+        {% for error in form.password.errors %}
+        <span style="color: red">[{{ error }}]</span> {% endfor %}
+      </div>
+      <div class="form-group">
+        <div class="relative">{{ form.role(class="form-control") }}</div>
+        {% for error in form.password.errors %}
+        <span style="color: red">[{{ error }}]</span> {% endfor %}
       </div>
       <div>
-        <a href="{{url_for('auth.signup')}}">Did not Have Account?</a>
+        <a href="{{url_for('auth.login')}}">Already Have an Account?</a>
       </div>
       <div class="form-group">
         {{ form.submit(class="button booking-submit") }}
