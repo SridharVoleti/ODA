@@ -19,9 +19,11 @@ def create_app():
     # Import blueprints after initializing extensions
     from .routes.auth import auth_bp
     from .routes.main import main_bp
+    from .routes.errors import errors_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
+    app.register_blueprint(errors_bp)
 
     # Define the user_loader function to load a user from the user_id
     @login_manager.user_loader

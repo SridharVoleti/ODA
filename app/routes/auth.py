@@ -18,7 +18,7 @@ def login():
         if user and check_password_hash(user.password_hash, password):
             login_user(user)
             flash('Login successful', 'success')
-            return redirect(url_for('main.dashboard'))
+            return redirect(url_for('main.index'))
         else:
             flash('Invalid credentials', 'danger')
     return render_template('login.html', form=form)

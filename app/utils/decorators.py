@@ -8,7 +8,7 @@ def role_required(required_role):
         def wrapper(*args, **kwargs):
             if current_user.role != required_role:
                 flash('Access denied: insufficient permissions.', 'danger')
-                return redirect(url_for('auth.login'))
+                return redirect(url_for('error.unauthorised'))
             return func(*args, **kwargs)
         return wrapper
     return decorator

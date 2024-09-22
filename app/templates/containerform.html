@@ -16,7 +16,7 @@ block content %}
   {% endif %} {% endwith %}
   <form
     method="POST"
-    action="{{ url_for('container') }}"
+    action="{{ url_for('main.container') }}"
     class="relative flex flex-col justify-center p-5"
   >
     <!-- Hidden tag to include CSRF token for form security -->

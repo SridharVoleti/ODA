@@ -15,11 +15,16 @@ from app.utils.decorators import role_required
 
 main_bp = Blueprint('main', __name__)
 
-@main_bp.route('/')
+@main_bp.route('/dashboard')
 @login_required
 def dashboard():
     shipments = get_shipments()
     return render_template('dashboard.html',shipments = shipments)
+
+@main_bp.route('/')
+@login_required
+def index():
+    return render_template('index.html')
 
 @main_bp.route('/shipment',methods =['GET','POST'])
 @role_required('Admin')
@@ -70,3 +75,6 @@ def container():
                                              container_condition=CONTAINER_CONDITION,
                                              cargo_types=CARGO_TYPES)
 
+@main_bp.route('/shipment-management')
+def shipmentManagement():
+   return render_template('shipment_management.html')

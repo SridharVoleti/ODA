@@ -1,0 +1,122 @@
+{% extends 'base.html' %} {% block title %}Index{% endblock %} {% include
+'includes/nav.html' %} {% block content %}
+<!-- Display Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %} {% if messages
+%}
+<div class="flash-message m-5">
+  {% for category, message in messages %} {% if category == "success" %}
+  <div class="alert alert-success" role="alert">{{ message }}</div>
+  {% endif %} {% if category == "danger" %}
+  <div class="alert alert-danger" role="alert">{{ message }}</div>
+  {% endif %} {% endfor %}
+</div>
+{% endif %} {% endwith %}
+<div class="flex h-screen items-center justify-center">
+  <div class="grid w-[50%] grid-cols-4 gap-20 border-2 p-10">
+    <a
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+      href="#"
+    >
+      <img
+        src="{{url_for('static', filename='icons/user-management.png')}}"
+        alt=""
+      />
+      <span>User Management</span>
+    </a>
+    <a
+      href="#"
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+    >
+      <img
+        src="{{url_for('static', filename='icons/order-management.png')}}"
+        alt=""
+      />
+      <span>Order Management</span>
+    </a>
+    <a
+      href="{{url_for('main.shipmentManagement')}}"
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+    >
+      <img
+        src="{{url_for('static', filename='icons/shipment-management.png')}}"
+        alt=""
+      />
+      <span>Shipment Management</span>
+    </a>
+    <a
+      href="#"
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+    >
+      <img
+        src="{{url_for('static', filename='icons/inventory-management.png')}}"
+        alt=""
+      />
+      <span>Inventory Management</span>
+    </a>
+    <a href="#" class="h-20 w-20 text-center">
+      <img src="{{url_for('static', filename='icons/support.png')}}" alt="" />
+      <span>Support</span>
+    </a>
+    <a
+      href="#"
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+    >
+      <img
+        src="{{url_for('static', filename='icons/human-resources.png')}}"
+        alt=""
+      />
+      <span>HR</span>
+    </a>
+    <a
+      href="#"
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+    >
+      <img
+        src="{{url_for('static', filename='icons/finance-management.png')}}"
+        alt=""
+      />
+      <span>Finance Management</span>
+    </a>
+    <a
+      href="#"
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+    >
+      <img
+        src="{{url_for('static', filename='icons/communication-management.png')}}"
+        alt=""
+      />
+      <span>Communication Management</span>
+    </a>
+    <a
+      href="#"
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+    >
+      <img
+        src="{{url_for('static', filename='icons/reporting-management.png')}}"
+        alt=""
+      />
+      <span>Reporting Management</span>
+    </a>
+    <a
+      href="#"
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+    >
+      <img
+        src="{{url_for('static', filename='icons/compliance-management.png')}}"
+        alt=""
+      />
+      <span>Compliance Management</span>
+    </a>
+    <a
+      href="#"
+      class="flex h-20 w-20 flex-col items-center justify-center text-center"
+    >
+      <img
+        src="{{url_for('static', filename='icons/integration.png')}}"
+        alt=""
+      />
+      <span>Integration</span>
+    </a>
+  </div>
+</div>
+{% endblock %}

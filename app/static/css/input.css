@@ -28,7 +28,7 @@
     @apply mt-5 w-40 cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-white;
   }
   .booking-submit {
-    @apply bg-ocean-green;
+    @apply bg-green-700;
   }
   .booking-remove {
     @apply bg-red-500;
