@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block title %} Container Booking {% endblock %} {%
-block content %}
+block content %} {% include 'includes/nav.html' %}
 <div class="w-screen p-5">
   <h1 class="text-center text-2xl font-bold">Container Form</h1>
   <!-- The form starts here, will be submitted to the Flask container route -->
@@ -103,10 +103,10 @@ block content %}
     </div>
   </form>
 </div>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   const containerTypes = {{ container_types | tojson }};
   const containerStatus = {{ container_status | tojson }};
   const containerCondition = {{ container_condition | tojson }};
   const cargoTypes = {{ cargo_types | tojson }};
-</script>
+</script> -->
 {% endblock %}
