@@ -1,16 +1,62 @@
 {% extends 'base.html'%} {% block title %} login {% endblock %} {% block content
 %}
-<div class="flex h-screen w-screen items-center justify-center">
-  <div>
-    <div class="h-40 w-40">
-      <img src="{{url_for('static',filename='icons/profile.png')}}" alt="" />
-    </div>
-    <div class="flex h-10 items-center justify-center gap-5 bg-gray-100">
-      <div class="w-10">
-        <img src="{{url_for('static',filename='icons/user.png')}}" alt="" />
-      </div>
-      {{form.username(class="form-control rounded-none border-0")}}
-    </div>
+<div class="flex h-screen w-screen items-center justify-center bg-[#FFC7ED]">
+  <!-- Display Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %}
+  <div class="flash-message m-5">
+    {% for category, message in messages %} {% if category == "success" %}
+    <div class="alert alert-success" role="alert">{{ message }}</div>
+    {% endif %} {% if category == "danger" %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endif %} {% endfor %}
   </div>
+  {% endif %} {% endwith %}
+  <form method="post" class="flex flex-col items-center justify-center gap-5">
+    {{ form.hidden_tag() }}
+    <div>
+      <img
+        width="100"
+        src="{{url_for('static',filename='icons/profile.png')}}"
+        alt=""
+      />
+    </div>
+    <div class="flex h-10 items-center justify-center gap-5 bg-gray-100 px-2">
+      <div class="w-10">
+        <img
+          width="25"
+          src="{{url_for('static',filename='icons/user.png')}}"
+          alt=""
+        />
+      </div>
+      {{form.username(class="form-control rounded-none border-0",
+      placeholder="Username")}} {% for error in form.username.errors %}
+      <span style="color: red">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+    <div class="flex h-10 items-center justify-center gap-5 bg-gray-100 px-2">
+      <div class="w-10">
+        <img
+          width="25"
+          src="{{url_for('static',filename='icons/padlock.png')}}"
+          alt=""
+        />
+      </div>
+      {{form.password(class="form-control rounded-none border-0",
+      placeholder="Password")}} {% for error in form.password.errors %}
+      <span style="color: red">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+    <div class="flex w-[100%] justify-between">
+      <div class="flex items-center gap-1">
+        <input type="checkbox" />
+        <label for="">Remenber Me</label>
+      </div>
+      <div>
+        <a class="opacity-50" href="{{url_for('auth.signup')}}">Register</a>
+      </div>
+    </div>
+    {{form.submit(class='button bg-[#7D8ABC]')}}
+  </form>
 </div>
 {%endblock%}

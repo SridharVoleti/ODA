@@ -11,11 +11,16 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    print("login" ,flush=True)
     if form.validate_on_submit():
+        print("post" ,flush=True)
         username = form.username.data
         password = form.password.data
+        print(username,flush=True)
+        print(password, flush=True)
         user = User.find_by_username(username)
         if user and check_password_hash(user.password_hash, password):
+            print(user,flush=True)
             login_user(user)
             flash('Login successful', 'success')
             return redirect(url_for('main.index'))

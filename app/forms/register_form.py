@@ -20,5 +20,5 @@ class RegisterForm(FlaskForm):
                      ]
     )
 
-    submit = SubmitField('login')
+    submit = SubmitField('Register')
     
