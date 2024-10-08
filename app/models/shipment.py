@@ -1,5 +1,5 @@
 from typing import Optional
-from app.forms.booking_form import BookingForm
+from app.forms.shipment_form import ShipmentForm
 class Shipment:
     _id: Optional[str] = None
     shipping_company: Optional[str] = None
@@ -68,7 +68,7 @@ class Shipment:
         return shipment_dict
 
     @classmethod
-    def form_to_shipment(cls, form: "BookingForm") -> "Shipment":
+    def form_to_shipment(cls, form: "ShipmentForm") -> "Shipment":
         """
         Map BookingForm fields to Shipment fields.
         """

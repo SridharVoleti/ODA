@@ -1,6 +1,6 @@
 # # app/routes.py
 from flask import render_template, redirect, flash,url_for,Blueprint
-from app.forms.booking_form import BookingForm
+from app.forms.shipment_form import ShipmentForm
 from app.forms.container_form import ContainerFormList
 from app.services.shipment import get_shipments,create_shipment,update_shipment
 from app.services.container import create_containers
@@ -29,7 +29,7 @@ def index():
 @main_bp.route('/shipment',methods =['GET','POST'])
 @role_required('Admin')
 def shipment():
-    form = BookingForm()
+    form = ShipmentForm()
     if form.validate_on_submit():
        current_datetime = datetime.now(timezone.utc)
        formatted_datetime = current_datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -48,7 +48,7 @@ def shipment():
           return redirect(url_for('main.container'))
        else:
           return shipment.to_json()
-    return render_template('booking.html',form = form)
+    return render_template('shipment.html',form = form)
 
 @main_bp.route('/container',methods =['GET','POST'])
 @login_required

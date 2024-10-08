@@ -6,7 +6,7 @@ from wtforms import StringField
 from datetime import datetime 
 from app.forms.choices_config import *
 from app.forms.custom_validations import *
-class BookingForm(FlaskForm):
+class ShipmentForm(FlaskForm):
 
     #Form for creating a new booking with validation.
 
