@@ -69,11 +69,7 @@ def container():
       update_shipment(shipment_id,{"container":container_ids})
       flash("Container Added Successfully")
       return redirect(url_for('main.dashboard'))
- return render_template('containerform.html',form=form,
-                                             container_types=CONTAINER_TYPES, 
-                                             container_status=CONTAINER_STATUS,
-                                             container_condition=CONTAINER_CONDITION,
-                                             cargo_types=CARGO_TYPES)
+ return render_template('containerform.html',form=form)
 
 @main_bp.route('/shipment-management')
 def shipmentManagement():

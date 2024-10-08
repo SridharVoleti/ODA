@@ -33,8 +33,9 @@
   .booking-remove {
     @apply bg-red-500;
   }
+
   .menu-bar {
-    @apply relative flex justify-around bg-ocean-blue font-bold text-black;
+    @apply sticky top-0 flex justify-around bg-ocean-blue font-bold text-black;
   }
   .menu-item {
     @apply cursor-pointer p-5 text-center;
@@ -56,5 +57,11 @@
   }
   .alert-success {
     @apply bg-green-500;
+  }
+  .sub-nav {
+    @apply sticky top-0 w-screen overflow-hidden bg-ocean-green p-8 text-sm;
+  }
+  .sub-nav-item {
+    @apply flex h-10 w-5 flex-col items-center justify-center text-center;
   }
 }
