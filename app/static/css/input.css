@@ -10,7 +10,7 @@
     @apply absolute left-2.5 top-4 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600;
   }
   .booking-form {
-    @apply mt-5 grid w-full grid-cols-1 gap-5 md:grid-cols-3;
+    @apply grid h-[60vh] w-full grid-cols-1 gap-5 overflow-y-scroll p-3 md:grid-cols-3;
   }
   .container-form {
     @apply mt-5 grid w-full grid-cols-1 gap-5 md:grid-cols-6 lg:grid-cols-11;
@@ -59,9 +59,9 @@
     @apply bg-green-500;
   }
   .sub-nav {
-    @apply sticky top-0 w-screen overflow-hidden bg-ocean-green p-8 text-sm;
+    @apply sticky top-0 w-screen overflow-hidden bg-ocean-green p-5 text-sm;
   }
   .sub-nav-item {
-    @apply flex h-10 w-5 flex-col items-center justify-center text-center;
+    @apply flex items-center gap-3 text-nowrap;
   }
 }

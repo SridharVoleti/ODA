@@ -1,42 +1,3 @@
-// Selecting all the menu items and assigning them to menuItems variable
-const menuItems = document.querySelectorAll(".menu-item");
-
-menuItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    // Remove the active class from all menu items
-    menuItems.forEach((menuItem) => {
-      menuItem.classList.remove("menu-item-active");
-    });
-
-    // Add the active class to the clicked menu item
-    item.classList.add("menu-item-active");
-
-    // Handle submenu display
-    const submenu = item.querySelector(".submenu");
-    const isVisible = submenu.style.display === "flex";
-
-    // Hide all other submenus
-    document.querySelectorAll(".submenu").forEach((sub) => {
-      sub.style.display = "none";
-    });
-
-    // Toggle the clicked submenu
-    submenu.style.display = isVisible ? "none" : "flex";
-  });
-});
-
-// Close submenu and remove custom class when clicking outside of the menu bar
-document.addEventListener("click", (event) => {
-  if (!event.target.closest(".menu-item")) {
-    menuItems.forEach((menuItem) => {
-      menuItem.classList.remove("menu-item-active");
-    });
-    document.querySelectorAll(".submenu").forEach((sub) => {
-      sub.style.display = "none";
-    });
-  }
-});
-
 // Remove flash messages after 3 seconds
 setTimeout(() => {
   document.querySelectorAll(".flash-message").forEach((message) => {
@@ -45,114 +6,112 @@ setTimeout(() => {
 }, 3000); // 3000ms = 3 seconds
 
 //---------------------------------------------------------------------------
-
-// Initialize containerCount with the number of forms initially rendered
-let containerCount = document.querySelectorAll(".container-form").length;
-
-// Function to add a new container form dynamically
 function addContainerForm() {
-  containerCount++; // Increment the form count for unique form IDs
-  const containerFormsDiv = document.getElementById("container-forms"); // Get the div holding all forms
+  const containerFormsDiv = document.getElementById("container-forms");
+  const formIndex = containerFormsDiv.children.length;
 
-  // Create a new container form dynamically
-  const newForm = `
-        <div class="container-form" id="container-form-${containerCount}">
-            <fieldset class="relative grid grid-cols-6 gap-3 w-screen">
-                
-                <!-- Dynamic container fields -->
-                <div class="form-group">
-                    <label for="containers-${containerCount}-container_type">Container Type</label>
-                    <select class="form-control" id="containers-${containerCount}-container_type" name="containers-${containerCount}-container_type">
-                        {% for choice in form.containers[0].container_type.choices %}
-                            <option value="{{ choice[0] }}">{{ choice[1] }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-container_size">Container Size</label>
-                    <input class="form-control" id="containers-${containerCount}-container_size" name="containers-${containerCount}-container_size" type="text" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-container_weight">Container Weight</label>
-                    <input class="form-control" id="containers-${containerCount}-container_weight" name="containers-${containerCount}-container_weight" type="number" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-max_gross_weight">Max Gross Weight</label>
-                    <input class="form-control" id="containers-${containerCount}-max_gross_weight" name="containers-${containerCount}-max_gross_weight" type="number" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-container_seal_number">Container Seal Number</label>
-                    <input class="form-control" id="containers-${containerCount}-container_seal_number" name="containers-${containerCount}-container_seal_number" type="text" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-owner_or_operator_code">Owner/Operator Code</label>
-                    <input class="form-control" id="containers-${containerCount}-owner_or_operator_code" name="containers-${containerCount}-owner_or_operator_code" type="text" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-container_status">Container Status</label>
-                    <select class="form-control" id="containers-${containerCount}-container_status" name="containers-${containerCount}-container_status">
-                        {% for choice in form.containers[0].container_status.choices %}
-                            <option value="{{ choice }}">{{ choice }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-iso_code">ISO CODE</label>
-                    <input class="form-control" id="containers-${containerCount}-iso_code" name="containers-${containerCount}-iso_code" type="text" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-container_condtition">Container Condition</label>
-                    <select class="form-control" id="containers-${containerCount}-container_condtition" name="containers-${containerCount}-container_condtition">
-                        {% for choice in form.containers[0].container_condtition.choices %}
-                            <option value="{{ choice }}">{{ choice }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-date_of_manufacture">Date of Manufacture</label>
-                    <input class="form-control" id="containers-${containerCount}-date_of_manufacture" name="containers-${containerCount}-date_of_manufacture" type="date" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-last_date_inspection">Last Inspection Date</label>
-                    <input class="form-control" id="containers-${containerCount}-last_date_inspection" name="containers-${containerCount}-last_date_inspection" type="date" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="containers-${containerCount}-cargo_type">Cargo Type</label>
-                    <select class="form-control" id="containers-${containerCount}-cargo_type" name="containers-${containerCount}-cargo_type">
-                        {% for choice in form.containers[0].cargo_type.choices %}
-                            <option value="{{ choice }}">{{ choice }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-                <!-- Remove button for dynamically added forms -->
-                <button type="button" class="button" onclick="removeContainerForm(${containerCount})">Remove</button>
-            </fieldset>
-        </div>
-    `;
+  const containerFormHTML = `
+  <h4>Container ${formIndex}</h4>
+      <div class="container-form grid grid-cols-6 gap-3">
 
-  // Insert the new form into the page
-  containerFormsDiv.insertAdjacentHTML("beforeend", newForm);
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-container_type">Container Type:</label class="form-label">
+          <select class="form-control" id="containers-${formIndex}-container_type" name="containers-${formIndex}-container_type">
+          <option value="20FT">20FT</option>
+          <option value="40FT">40FT</option>
+          </select>
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-container_size">Container Size:</label class="form-label">
+          <input class="form-control" type="text" id="containers-${formIndex}-container_size" name="containers-${formIndex}-container_size" required>
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-container_weight">Container Weight:</label class="form-label">
+          <input class="form-control" type="text" id="containers-${formIndex}-container_weight" name="containers-${formIndex}-container_weight">
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-max_gross_weight">Max Gross Weight:</label class="form-label">
+          <input class="form-control" type="text" id="containers-${formIndex}-max_gross_weight" name="containers-${formIndex}-max_gross_weight">
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-container_seal_number">Container Seal Number:</label class="form-label">
+          <input class="form-control" type="text" id="containers-${formIndex}-container_seal_number" name="containers-${formIndex}-container_seal_number">
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-owner_operator_code">Owner Operator Code:</label class="form-label">
+          <input class="form-control" type="text" id="containers-${formIndex}-owner_operator_code" name="containers-${formIndex}-owner_operator_code">
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-container_status">Container Status:</label class="form-label">
+          <select class="form-control" id="containers-${formIndex}-container_status" name="containers-${formIndex}-container_status">
+          <option value="Loaded">Loaded</option>
+          <option value="In transit">In transit</option>
+          <option value="Empty">Empty</option>
+          </select>
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-iso_code">ISO Code:</label class="form-label">
+          <input class="form-control" type="text" id="containers-${formIndex}-iso_code" name="containers-${formIndex}-iso_code">
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-container_condition">Container Condition:</label class="form-label">
+          <select class="form-control" id="containers-${formIndex}-container_condition" name="containers-${formIndex}-container_condition">
+          <option value="Clean">Clean</option>
+          <option value="Damaged">Damaged</option>
+          </select>
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-date_of_manufacture">Date of Manufacture:</label class="form-label">
+          <input class="form-control" type="date" id="containers-${formIndex}-date_of_manufacture" name="containers-${formIndex}-date_of_manufacture">
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-last_inspection_date">Last Inspection Date:</label class="form-label">
+          <input class="form-control" type="date" id="containers-${formIndex}-last_inspection_date" name="containers-${formIndex}-last_inspection_date">
+          </div>
+
+          <div class="container-form-group">
+          <label class="form-label" for="containers-${formIndex}-cargo_type">Cargo Type:</label class="form-label">
+          <select class="form-control" id="containers-${formIndex}-cargo_type" name="containers-${formIndex}-cargo_type">
+          <option value="General">General</option>
+          <option value="Hazardous">Hazardous</option>
+          </select>
+          </div>
+      </div>
+  `;
+  containerFormsDiv.insertAdjacentHTML("beforeend", containerFormHTML);
+}
+//---------------------------------------------------------------------------
+function toggleAccordion(event) {
+  const content = event.currentTarget.nextElementSibling;
+  const isHidden = content.classList.contains("hidden");
+  if (isHidden) {
+    content.classList.remove("hidden");
+  } else {
+    content.classList.add("hidden");
+  }
 }
 
-// Function to remove a container form by its index
-function removeContainerForm(index) {
-  const formDiv = document.getElementById(`container-form-${index}`); // Find the form by its ID
-  formDiv.remove(); // Remove it from the DOM
-}
+const btn_open = document.querySelector(".side-menu-btn");
+const btn_close = document.querySelector(".close-side-menu");
+const sidebar = document.querySelector(".sidebar");
+let isSidebarOpen = false;
 
-// Event listener for adding a new form
-document
-  .getElementById("add-container-btn")
-  .addEventListener("click", addContainerForm);
+// add our event listener for the click
+btn_open.addEventListener("click", () => {
+  sidebar.classList.toggle("-translate-x-full");
+});
+
+// add our event listener for the click
+btn_close.addEventListener("click", () => {
+  sidebar.classList.toggle("-translate-x-full");
+});

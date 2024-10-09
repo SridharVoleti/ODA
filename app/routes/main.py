@@ -1,18 +1,11 @@
 # # app/routes.py
-from flask import render_template, redirect, flash,url_for,Blueprint
+from flask import render_template, redirect, flash,url_for,Blueprint,request,jsonify
 from app.forms.shipment_form import ShipmentForm
-from app.forms.container_form import ContainerFormList
-from app.services.shipment import get_shipments,create_shipment,update_shipment
-from app.services.container import create_containers
-from app.models.shipment import Shipment
-from app.models.container import Container
-from app.utils.auto_gen_id import *
-from datetime import datetime,timezone
-from flask import session
+from app.services.shipment import get_shipments,create_shipment
 from app.forms.choices_config import *
 from flask_login import login_required,current_user
 from app.utils.decorators import role_required
-
+from app.forms.form_process import FormProcessor
 main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/dashboard')
@@ -26,50 +19,29 @@ def dashboard():
 def index():
     return render_template('index.html')
 
-@main_bp.route('/shipment',methods =['GET','POST'])
+@main_bp.route('/shipment-management/shipment', methods=['GET', 'POST'])
 @role_required('Admin')
 def shipment():
-    form = ShipmentForm()
-    if form.validate_on_submit():
-       current_datetime = datetime.now(timezone.utc)
-       formatted_datetime = current_datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
-       shipment = Shipment.form_to_shipment(form)
-       shipment._id = generate_shipment_id()
-       shipment.invoice_date = formatted_datetime
-       shipment.invoice_number = generate_invoice_number()
-       shipment.job_number = generate_job_id()
-       shipment.job_date = formatted_datetime
-       shipment.sb_number = generate_sb_id()
-       shipment.sb_number_date = formatted_datetime
-       response = create_shipment(shipment.to_json())
-       if response:
-          session["shipment_id"]=shipment._id
-          flash("Shipment created succesfully",'success')
-          return redirect(url_for('main.container'))
-       else:
-          return shipment.to_json()
-    return render_template('shipment.html',form = form)
-
-@main_bp.route('/container',methods =['GET','POST'])
-@login_required
-def container():
- form = ContainerFormList()
- if form.validate_on_submit(): 
-   containers =[]
-   container_ids =[]
-   for container_form in form.containers:
-      if container_form.validate():        
-         container = Container.form_to_container(container_form)
-         container._id = generate_container_id()
-         container_ids.append(container._id)
-         containers.append(container.to_json())
-   response = create_containers(containers)
-   if response:
-      shipment_id = session.get("shipment_id",None)
-      update_shipment(shipment_id,{"container":container_ids})
-      flash("Container Added Successfully")
-      return redirect(url_for('main.dashboard'))
- return render_template('containerform.html',form=form)
+    form = ShipmentForm(request.form)
+    # Pass the form to the processor
+    form_processor = FormProcessor(form)
+    
+    if request.method == "POST":
+        if form.shipment_details.validate_on_submit() & form.container_details.validate_on_submit():
+            # Process the form and generate the JSON response
+            form_data = form_processor.process_form()
+            response = create_shipment(form_data['booking'])
+            if response:
+                flash("Booking Successful","success")
+                return redirect(url_for("main.index"))
+            else:
+                flash("Booking Unsuccessful","danger")
+                return redirect(url_for("main.shipment"))
+        # If form doesn't validate, you can log errors
+        print("Form validation failed", form.errors, flush=True)
+    
+    # For GET requests, or when the form fails validation, render the HTML form
+    return render_template('new_shipment.html', form=form,current_user = current_user)
 
 @main_bp.route('/shipment-management')
 def shipmentManagement():

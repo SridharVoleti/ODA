@@ -51,7 +51,7 @@ UNIT_TYPES=['STANDARD', 'PALLET','BOXES']
 
 CONTAINER_TYPES = [('20','20FT'),('40','40FT')]
 
-CONTAINER_STATUS = ['Empty','Loaded','In-Transit']
+CONTAINER_STATUS = [('1','Empty'),('2','Loaded'),('3','In-Transit')]
 
 CONTAINER_CONDITION = ['Clean','Damaged']
 
