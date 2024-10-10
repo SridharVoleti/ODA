@@ -19,7 +19,7 @@ def dashboard():
 def index():
     return render_template('index.html')
 
-@main_bp.route('/shipment-management/shipment', methods=['GET', 'POST'])
+@main_bp.route('/shipment-management/shipment-booking', methods=['GET', 'POST'])
 @role_required('Admin')
 def shipment():
     form = ShipmentForm(request.form)

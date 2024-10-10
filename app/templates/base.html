@@ -9,9 +9,13 @@
       href="{{ url_for('static', filename='css/output.css') }}"
     />
   </head>
-  <body class="overflow-hidden">
-    {% include 'includes/nav.html' %} {%include 'includes/side_menu.html'%} {%
-    block content %} {% endblock %}
+  <body class="flex max-h-screen flex-col">
+    <header>
+      {% include 'includes/nav.html' %} {% include 'includes/side_menu.html' %}
+    </header>
+    <main class="h-full flex-1 overflow-auto pb-5">
+      {% block content %} {% endblock %}
+    </main>
   </body>
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </html>
