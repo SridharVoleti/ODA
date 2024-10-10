@@ -20,7 +20,7 @@ def index():
     return render_template('index.html')
 
 @main_bp.route('/shipment-management/shipment-booking', methods=['GET', 'POST'])
-@role_required('Admin')
+@role_required(['Admin','Shipper'])
 def shipment():
     form = ShipmentForm(request.form)
     # Pass the form to the processor
@@ -44,5 +44,6 @@ def shipment():
     return render_template('new_shipment.html', form=form,current_user = current_user)
 
 @main_bp.route('/shipment-management')
+@login_required
 def shipmentManagement():
    return render_template('shipment_management.html')

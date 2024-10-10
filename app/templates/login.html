@@ -1,18 +1,10 @@
 {% extends 'base.html'%} {% block title %} login {% endblock %} {% block content
 %}
-<div class="flex h-screen w-screen items-center justify-center bg-[#FFC7ED]">
-  <!-- Display Flash Messages -->
-  {% with messages = get_flashed_messages(with_categories=true) %} {% if
-  messages %}
-  <div class="flash-message m-5">
-    {% for category, message in messages %} {% if category == "success" %}
-    <div class="alert alert-success" role="alert">{{ message }}</div>
-    {% endif %} {% if category == "danger" %}
-    <div class="alert alert-danger" role="alert">{{ message }}</div>
-    {% endif %} {% endfor %}
-  </div>
-  {% endif %} {% endwith %}
-  <form method="post" class="flex flex-col items-center justify-center gap-5">
+<div class="flex h-screen w-screen items-center justify-center bg-gradient-to-r from-ocean-blue from-10% via-sky-500 via-30% to-ocean-green to-90%"">
+  <form
+    method="post"
+    class="flex flex-col items-center justify-center gap-5 border-2 border-black bg-white bg-opacity-25 p-20 shadow-lg"
+  >
     {{ form.hidden_tag() }}
     <div>
       <img
@@ -21,7 +13,7 @@
         alt=""
       />
     </div>
-    <div class="flex h-10 items-center justify-center gap-5 bg-gray-100 px-2">
+    <div class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 ps-2">
       <div class="w-10">
         <img
           width="25"
@@ -29,12 +21,12 @@
           alt=""
         />
       </div>
-      {{form.username(class="form-control rounded-none border-0",
+      {{form.username(class="form-control rounded-none border-none bg-transparent",
       placeholder="Username")}} {% for error in form.username.errors %}
       <span style="color: red">[{{ error }}]</span>
       {% endfor %}
     </div>
-    <div class="flex h-10 items-center justify-center gap-5 bg-gray-100 px-2">
+    <div class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 ps-2">
       <div class="w-10">
         <img
           width="25"
@@ -42,21 +34,25 @@
           alt=""
         />
       </div>
-      {{form.password(class="form-control rounded-none border-0",
+      {{form.password(class="form-control rounded-none border-none bg-transparent",
       placeholder="Password")}} {% for error in form.password.errors %}
       <span style="color: red">[{{ error }}]</span>
       {% endfor %}
     </div>
-    <div class="flex w-[100%] justify-between">
-      <div class="flex items-center gap-1">
-        <input type="checkbox" />
-        <label for="">Remenber Me</label>
-      </div>
+    <div class="flex w-[100%] justify-end">
       <div>
-        <a class="opacity-50" href="{{url_for('auth.signup')}}">Register</a>
+        <a class="" href="{{url_for('auth.signup')}}">Register</a>
       </div>
     </div>
-    {{form.submit(class='button bg-[#7D8ABC]')}}
+    <!-- Display Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div class="flash-message m-5">
+      {% for category, message in messages %} {% if category == "danger" %}
+      <span class="text-red-600">{{message}}</span>
+      {% endif %} {% endfor %}
+    </div>
+    {% endif %} {% endwith %} {{form.submit(class='button bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500')}}
   </form>
 </div>
 {%endblock%}

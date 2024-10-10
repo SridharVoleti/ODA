@@ -66,4 +66,7 @@
   .side-menu-item {
     @apply cursor-pointer py-2 pe-10 ps-2 transition duration-200 ease-in-out hover:bg-ocean-green;
   }
+  .user-card {
+    @apply absolute right-4 top-12 z-10 h-44 w-72 bg-white bg-opacity-70 p-4 text-black shadow-md shadow-gray-700;
+  }
 }

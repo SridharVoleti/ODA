@@ -115,3 +115,11 @@ btn_open.addEventListener("click", () => {
 btn_close.addEventListener("click", () => {
   sidebar.classList.toggle("-translate-x-full");
 });
+
+profile_btn = document.querySelector(".user-profile");
+user_card = document.querySelector(".user-card");
+profile_btn.addEventListener("click", () => {
+  console.log("hello");
+  console.log(user_card.classList);
+  user_card.classList.toggle("hidden");
+});

@@ -17,7 +17,6 @@ def login():
         user = User.find_by_username(username)
         if user and check_password_hash(user.password_hash, password):
             login_user(user)
-            flash('Login successful', 'success')
             return redirect(url_for('main.index'))
         else:
             flash('Invalid credentials', 'danger')
@@ -32,8 +31,8 @@ def signup():
         role = form.role.data
         user = create_user(username, password, role)
         if user:
-            flash('Registration successful', 'success')
-            return redirect(url_for('auth.login'))
+            login_user(user)
+            return redirect(url_for('main.index'))
         else:
             flash('User already exists', 'danger')
     return render_template('register.html', form=form)

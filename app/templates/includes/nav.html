@@ -1,3 +1,4 @@
+{% if current_user.username %}
 <div
   class="flex h-10 w-screen items-center justify-between bg-ocean-blue p-1 px-4 text-white"
 >
@@ -13,8 +14,8 @@
       <a href="{{url_for('main.index')}}">ODA</a>
     </h1>
   </div>
-  <ul
-    class="flex cursor-pointer items-center gap-3 px-3 py-2 hover:bg-white hover:bg-opacity-50"
+  <div
+    class="user-profile relative flex cursor-pointer items-center gap-3 px-3 py-2 hover:bg-white hover:bg-opacity-50"
   >
     <h1 class="text-sm">{{current_user.username}}</h1>
     <img
@@ -22,5 +23,23 @@
       width="20"
       alt=""
     />
-  </ul>
+  </div>
+  <div class="user-card hidden space-y-3">
+    <div class="flex justify-end">
+      <a href="{{url_for('auth.logout')}}" class="hover:opacity-80">Logout</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <img
+        class="h-14 w-14"
+        width="14"
+        src="{{url_for('static',filename='icons/profile-user.png')}}"
+        alt=""
+      />
+      <div>
+        <h1>{{current_user.username}}</h1>
+        <h1>{{current_user.role}}</h1>
+      </div>
+    </div>
+  </div>
 </div>
+{% endif %}
