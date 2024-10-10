@@ -1,12 +1,14 @@
 {% extends 'base.html' %} {% block title %}Shipment Management{% endblock %} {%
 block content %}
-<div class="flex h-full flex-col overflow-hidden pb-5">
-  <div class="flex-1 px-3 pt-5">
-    <div class="">
-      <h1 class="px-5 text-2xl font-bold">Shipment Management</h1>
-      <div>{% include 'includes/shipment_management_nav.html' %}</div>
-    </div>
-    <div class="">{% block inner_content %} {% endblock %}</div>
+<div class="flex h-screen flex-col bg-white p-5">
+  <h1 class="px-5 text-2xl font-bold">Shipment Management</h1>
+
+  <!-- Navigation for shipment management -->
+  <div class="mb-4">{% include 'includes/shipment_management_nav.html' %}</div>
+
+  <!-- Container for scrollable content -->
+  <div class="flex-1 overflow-y-auto">
+    {% block inner_content %} {% endblock %}
   </div>
 </div>
 {% endblock %}

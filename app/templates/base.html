@@ -9,11 +9,11 @@
       href="{{ url_for('static', filename='css/output.css') }}"
     />
   </head>
-  <body class="flex max-h-screen flex-col">
+  <body class="flex max-h-screen min-h-screen flex-col">
     <header>
       {% include 'includes/nav.html' %} {% include 'includes/side_menu.html' %}
     </header>
-    <main class="h-full flex-1 overflow-auto pb-5">
+    <main class="h-full flex-1 overflow-hidden pb-5">
       {% block content %} {% endblock %}
     </main>
   </body>
