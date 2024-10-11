@@ -32,7 +32,6 @@ def shipment():
             form_data = form_processor.process_form()
             response = create_shipment(form_data['booking'])
             if response:
-                flash("Booking Successful","success")
                 return redirect(url_for("main.index"))
             else:
                 flash("Booking Unsuccessful","danger")

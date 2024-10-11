@@ -28,6 +28,7 @@ def signup():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
+        print(username,flush=True)
         role = form.role.data
         user = create_user(username, password, role)
         if user:

@@ -2,6 +2,15 @@
 <div class="flex flex-col">
   <!-- Header Section (non-scrollable) -->
   <h1 class="mb-1 mt-3 px-5 text-2xl font-extrabold">Shipment Booking Form</h1>
+  <!-- Display Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %} {% if messages
+  %}
+  <div class="flash-message m-5">
+    {% for category, message in messages %}{% if category == "danger" %}
+    <span class="text-red-600">{{message}}</span>
+    {% endif %} {% endfor %}
+  </div>
+  {% endif %} {% endwith %}
 
   <!-- Form Wrapper: Takes remaining screen height, scrollable content -->
   <div class="flex-grow overflow-y-auto px-5 pb-10">

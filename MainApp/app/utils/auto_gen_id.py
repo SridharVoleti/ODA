@@ -25,6 +25,14 @@ def generate_job_id():
     job_id = f"JOB{random_digits}"
     
     return job_id
+def generate_booking_id():
+    # Generate a random 5-digit number
+    random_digits = f"{random.randint(0, 99999):05}"
+    
+    # Combine with the "JOB" prefix
+    booking_id = f"BOOKING{random_digits}"
+    
+    return booking_id
 
 def generate_sb_id():
     # Generate a random 8-digit number

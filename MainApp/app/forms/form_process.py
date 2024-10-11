@@ -25,6 +25,7 @@ class FormProcessor:
         current_datetime = datetime.now(timezone.utc)
         formatted_datetime = current_datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
         form_data = {
+            "_id":generate_booking_id(),
             "shipment_details": {
                 "shipping_company": self.form.shipment_details.shipping_company.data,
                 "sender_name": self.form.shipment_details.sender_name.data,
