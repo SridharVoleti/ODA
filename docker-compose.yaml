@@ -16,6 +16,8 @@ services:
     build: ./MainApp
     ports:
       - '5001:5001'
+    volumes:
+      - /home/yogesh-kumar/Projects/ODA/MainApp:/app
     env_file:
       - ./env
     depends_on:
