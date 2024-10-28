@@ -8,6 +8,8 @@ services:
     build: ./Microservices/BookingService
     ports:
       - '5000:5000'
+    volumes:
+      - ./Microservices/BookingService:/app
     env_file:
       - ./env
     depends_on:
