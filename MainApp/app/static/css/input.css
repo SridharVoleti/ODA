@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+  .floating-label-input {
+    @apply block w-full appearance-none rounded-lg border border-gray-300 bg-white px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 peer-placeholder-shown:pt-2.5;
+  }
+  .floating-label-label {
+    @apply absolute left-2.5 top-4 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600;
+  }
+  .booking-form {
+    @apply grid w-full grid-cols-1 gap-5 p-3 md:grid-cols-3;
+  }
+  .container-form {
+    @apply mt-5 grid w-full grid-cols-1 gap-5 md:grid-cols-6 lg:grid-cols-11;
+  }
+  .form-group {
+    @apply flex flex-col;
+  }
+  .container-form-group {
+    @apply flex flex-col text-sm;
+  }
+  .form-control {
+    @apply h-10 rounded-lg border-[1px] bg-gray-100 px-4 py-2 disabled:bg-gray-300;
+  }
+  .button {
+    @apply mt-5 w-40 cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-white;
+  }
+  .booking-submit {
+    @apply bg-green-700;
+  }
+  .booking-remove {
+    @apply bg-red-500;
+  }
+
+  .menu-bar {
+    @apply sticky top-0 flex justify-around bg-ocean-blue font-bold text-black;
+  }
+  .menu-item {
+    @apply cursor-pointer p-5 text-center;
+  }
+  .submenu {
+    @apply absolute left-0 top-[100%] hidden h-16 w-full items-center gap-5 bg-ocean-green py-5 text-black;
+  }
+  .submenu-item {
+    @apply border-r-2 p-5;
+  }
+  .menu-item-active {
+    @apply bg-ocean-green;
+  }
+  .alert {
+    @apply absolute left-7 top-1 w-[95%] rounded-lg p-5 text-white;
+  }
+  .alert-danger {
+    @apply bg-red-500;
+  }
+  .alert-success {
+    @apply bg-green-500;
+  }
+  .sub-nav {
+    @apply sticky top-0 w-screen overflow-hidden bg-ocean-green p-5 text-sm;
+  }
+  .sub-nav-item {
+    @apply flex items-center gap-3 text-nowrap;
+  }
+  .side-menu-item {
+    @apply cursor-pointer py-2 pe-10 ps-2 transition duration-200 ease-in-out hover:bg-ocean-green;
+  }
+  .user-card {
+    @apply absolute right-4 top-12 z-10 h-44 w-72 bg-white bg-opacity-70 p-4 text-black shadow-md shadow-gray-700;
+  }
+}
