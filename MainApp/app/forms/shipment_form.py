@@ -1,14 +1,93 @@
 # app/forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField,IntegerField,SelectField,DateField,BooleanField,SubmitField,FormField,FieldList
+from wtforms import StringField,IntegerField,SelectField,DateField,BooleanField,SubmitField,FormField,FieldList,Form
 from wtforms.validators import DataRequired,Length,Regexp,NumberRange,Optional,AnyOf
-from wtforms import StringField
 from app.forms.choices_config import *
 from app.forms.custom_validations import *
-class ShipmentDetailsFormSection(FlaskForm):
 
-    #Form for creating a new booking with validation.
+# Container Form
+class ContainerDetailsFormSection(Form):
+    container_type = SelectField(
+    'Container Type',
+    choices=CONTAINER_TYPES,
+    validators=[DataRequired("Container Type is required"),
+                AnyOf([choice[0] for choice in CONTAINER_TYPES],message="select valid contaier type")
+                ]
+    )
 
+    container_size = StringField(
+        'Container Size',
+        validators=[DataRequired('Container Size is required'),
+            Regexp(r'^\d+(\.\d+)?\*\d+(\.\d+)?\*\d+(\.\d+)?$' , message="Invalid format")
+            # Must be in format: number*number*number
+        ],
+        render_kw={"placeholder": "e.g., 12*15*20"}  # Placeholder for user guidance
+    )
+
+    container_weight = IntegerField(
+        'Container Weight',
+        validators=[DataRequired("Container Weight is required")]
+    )
+
+    max_gross_weight = IntegerField(
+        'Max Gross Weight',
+        validators=[DataRequired('Max Gross Weight is required')]
+    )
+
+    container_seal_number = StringField(
+        'Container Seal Number',
+        validators=[DataRequired("Container Seal Number is required")]
+    )
+
+    # Owner/Operator Code
+    owner_or_operator_code = StringField(
+        'Owner/Operator Code',
+        validators=[DataRequired("Owner/Operator Code is required")]
+    )
+
+    container_status = SelectField(
+        'Container Status',
+        choices=CONTAINER_STATUS,
+        validators=[DataRequired('Container Status is required'),
+            AnyOf([choice[0] for choice in CONTAINER_STATUS],message='Select valid Container status')
+        ]
+    )
+
+    iso_code = StringField(
+        'ISO CODE',
+        validators=[DataRequired('ISO CODE is required')]
+    )
+
+    container_condition = SelectField(
+        'Container Condition',
+        choices=CONTAINER_CONDITION,
+        validators=[
+            AnyOf([choice for choice in CONTAINER_CONDITION],message='Select valid Container condition')
+        ]
+
+    )
+
+    date_of_manufacture = DateField(
+        'Date of Manufacture',
+        validators=[DataRequired('Date of Manufacture is required')]
+    )
+
+    last_date_inspection = DateField(
+        'Last Inspection Date',
+        validators=[DataRequired('Last Inspection Date is required')]
+    )
+    
+    cargo_type = SelectField(
+        'Cargo type',
+        choices=CARGO_TYPES,
+        validators=[
+            DataRequired('Cargo type is required'),
+            AnyOf([choice for choice in CARGO_TYPES],message='Select valid Cargo type')
+        ]
+    )
+
+    submit = SubmitField('Next')
+class ShipmentForm(FlaskForm):
     # Shipping Company Field
     shipping_company = StringField(
         'Shipping Company',
@@ -469,93 +548,6 @@ class ShipmentDetailsFormSection(FlaskForm):
         ]
     )
 
-    # Container Form
-class ContainerDetailsFormSection(FlaskForm):
-    container_type = SelectField(
-    'Container Type',
-    choices=CONTAINER_TYPES,
-    validators=[DataRequired("Container Type is required"),
-                AnyOf([choice[0] for choice in CONTAINER_TYPES],message="select valid contaier type")
-                ]
-    )
-
-    container_size = StringField(
-        'Container Size',
-        validators=[DataRequired('Container Size is required'),
-            Regexp(r'^\d+(\.\d+)?\*\d+(\.\d+)?\*\d+(\.\d+)?$' , message="Invalid format")
-            # Must be in format: number*number*number
-        ],
-        render_kw={"placeholder": "e.g., 12*15*20"}  # Placeholder for user guidance
-    )
-
-    container_weight = IntegerField(
-        'Container Weight',
-        validators=[DataRequired("Container Weight is required")]
-    )
-
-    max_gross_weight = IntegerField(
-        'Max Gross Weight',
-        validators=[DataRequired('Max Gross Weight is required')]
-    )
-
-    container_seal_number = StringField(
-        'Container Seal Number',
-        validators=[DataRequired("Container Seal Number is required")]
-    )
-
-    # Owner/Operator Code
-    owner_or_operator_code = StringField(
-        'Owner/Operator Code',
-        validators=[DataRequired("Owner/Operator Code is required")]
-    )
-
-    container_status = SelectField(
-        'Container Status',
-        choices=CONTAINER_STATUS,
-        validators=[DataRequired('Container Status is required'),
-            AnyOf([choice[0] for choice in CONTAINER_STATUS],message='Select valid Container status')
-        ]
-    )
-
-    iso_code = StringField(
-        'ISO CODE',
-        validators=[DataRequired('ISO CODE is required')]
-    )
-
-    container_condtition = SelectField(
-        'Container Condition',
-        choices=CONTAINER_CONDITION,
-        validators=[
-            AnyOf([choice for choice in CONTAINER_CONDITION],message='Select valid Container condition')
-        ]
-
-    )
-
-    date_of_manufacture = DateField(
-        'Date of Manufacture',
-        validators=[DataRequired('Date of Manufacture is required')]
-    )
-
-    last_date_inspection = DateField(
-        'Last Inspection Date',
-        validators=[DataRequired('Last Inspection Date is required')]
-    )
-    
-    cargo_type = SelectField(
-        'Cargo type',
-        choices=CARGO_TYPES,
-        validators=[
-            DataRequired('Cargo type is required'),
-            AnyOf([choice for choice in CARGO_TYPES],message='Select valid Cargo type')
-        ]
-    )
-
-    submit = SubmitField('Next')
-class ShipmentForm(FlaskForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.shipment_details = ShipmentDetailsFormSection()
-        self.container_details = ContainerDetailsFormSection()
-
-    submit = SubmitField('Submit')  # Only define this once
+    containers = FieldList(FormField(ContainerDetailsFormSection), min_entries=1)
+    submit = SubmitField('Submit')
 

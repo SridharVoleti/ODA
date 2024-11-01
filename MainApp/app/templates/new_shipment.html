@@ -14,7 +14,7 @@
 
   <!-- Form Wrapper: Takes remaining screen height, scrollable content -->
   <div class="flex-grow overflow-y-auto px-5 pb-10">
-    <form method="post" action="" class="px-5">
+    <form method="post" class="px-5" novalidate>
       <!-- CSRF protection token -->
       {{ form.hidden_tag() }}
       <!-- Shipment Details Section -->
@@ -34,359 +34,359 @@
         </div>
         <div class="booking-form rounded-lg border-2">
           <div class="form-group">
-            {{ form.shipment_details.shipping_company.label(class="form-label")
-            }} {{ form.shipment_details.shipping_company(class="form-control")
-            }} {% for error in form.shipment_details.shipping_company.errors %}
+            {{ form.shipping_company.label(class="form-label")
+            }} {{ form.shipping_company(class="form-control")
+            }} {% for error in form.shipping_company.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.sender_name.label(class="form-label") }} {{
-            form.shipment_details.sender_name(class="form-control") }} {% for
-            error in form.shipment_details.sender_name.errors %}
+            {{ form.sender_name.label(class="form-label") }} {{
+            form.sender_name(class="form-control") }} {% for
+            error in form.sender_name.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.sender_address.label(class="form-label") }}
-            {{ form.shipment_details.sender_address(class="form-control") }} {%
-            for error in form.shipment_details.sender_address.errors %}
+            {{ form.sender_address.label(class="form-label") }}
+            {{ form.sender_address(class="form-control") }} {%
+            for error in form.sender_address.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.consignee.label(class="form-label") }} {{
-            form.shipment_details.consignee(class="form-control") }} {% for
-            error in form.shipment_details.consignee.errors %}
+            {{ form.consignee.label(class="form-label") }} {{
+            form.consignee(class="form-control") }} {% for
+            error in form.consignee.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.consignee_address.label(class="form-label")
-            }} {{ form.shipment_details.consignee_address(class="form-control")
-            }} {% for error in form.shipment_details.consignee_address.errors %}
+            {{ form.consignee_address.label(class="form-label")
+            }} {{ form.consignee_address(class="form-control")
+            }} {% for error in form.consignee_address.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.package_type.label(class="form-label") }}
-            {{ form.shipment_details.package_type(class="form-control") }} {%
-            for error in form.shipment_details.package_type.errors %}
+            {{ form.package_type.label(class="form-label") }}
+            {{ form.package_type(class="form-control") }} {%
+            for error in form.package_type.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.weight.label(class="form-label") }} {{
-            form.shipment_details.weight(class="form-control") }} {% for error
-            in form.shipment_details.weight.errors %}
+            {{ form.weight.label(class="form-label") }} {{
+            form.weight(class="form-control") }} {% for error
+            in form.weight.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.dimensions.label(class="form-label") }} {{
-            form.shipment_details.dimensions(class="form-control") }} {% for
-            error in form.shipment_details.dimensions.errors %}
+            {{ form.dimensions.label(class="form-label") }} {{
+            form.dimensions(class="form-control") }} {% for
+            error in form.dimensions.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.shipping_date.label(class="form-label") }}
-            {{ form.shipment_details.shipping_date(class="form-control") }} {%
-            for error in form.shipment_details.shipping_date.errors %}
+            {{ form.shipping_date.label(class="form-label") }}
+            {{ form.shipping_date(class="form-control") }} {%
+            for error in form.shipping_date.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.delivery_date.label(class="form-label") }}
-            {{ form.shipment_details.delivery_date(class="form-control") }} {%
-            for error in form.shipment_details.delivery_date.errors %}
+            {{ form.delivery_date.label(class="form-label") }}
+            {{ form.delivery_date(class="form-control") }} {%
+            for error in form.delivery_date.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.shipping_method.label(class="form-label")
-            }} {{ form.shipment_details.shipping_method(class="form-control") }}
-            {% for error in form.shipment_details.shipping_method.errors %}
+            {{ form.shipping_method.label(class="form-label")
+            }} {{ form.shipping_method(class="form-control") }}
+            {% for error in form.shipping_method.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.insurance.label(class="form-label") }}
+            {{ form.insurance.label(class="form-label") }}
             <div class="form-control flex items-center gap-5">
-              {{ form.shipment_details.insurance(class="form-control") }} {% for
-              error in form.shipment_details.insurance.errors %}
+              {{ form.insurance(class="form-control") }} {% for
+              error in form.insurance.errors %}
               <span style="color: red"> {{ error }} </span>
               {% endfor %}
               <p>Is Insured?</p>
             </div>
           </div>
           <div class="form-group">
-            {{ form.shipment_details.declared_value.label(class="form-label") }}
-            {{ form.shipment_details.declared_value(class="form-control") }} {%
-            for error in form.shipment_details.declared_value.errors %}
+            {{ form.declared_value.label(class="form-label") }}
+            {{ form.declared_value(class="form-control") }} {%
+            for error in form.declared_value.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
             {{
-            form.shipment_details.special_instructions.label(class="form-label")
+            form.special_instructions.label(class="form-label")
             }} {{
-            form.shipment_details.special_instructions(class="form-control") }}
-            {% for error in form.shipment_details.special_instructions.errors %}
+            form.special_instructions(class="form-control") }}
+            {% for error in form.special_instructions.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.bill_of_lading.label(class="form-label") }}
-            {{ form.shipment_details.bill_of_lading(class="form-control") }} {%
-            for error in form.shipment_details.bill_of_lading.errors %}
+            {{ form.bill_of_lading.label(class="form-label") }}
+            {{ form.bill_of_lading(class="form-control") }} {%
+            for error in form.bill_of_lading.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.carting_point.label(class="form-label") }}
-            {{ form.shipment_details.carting_point(class="form-control") }} {%
-            for error in form.shipment_details.carting_point.errors %}
+            {{ form.carting_point.label(class="form-label") }}
+            {{ form.carting_point(class="form-control") }} {%
+            for error in form.carting_point.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.cbm.label(class="form-label") }} {{
-            form.shipment_details.cbm(class="form-control") }} {% for error in
-            form.shipment_details.cbm.errors %}
+            {{ form.cbm.label(class="form-label") }} {{
+            form.cbm(class="form-control") }} {% for error in
+            form.cbm.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.cha.label(class="form-label") }} {{
-            form.shipment_details.cha(class="form-control") }} {% for error in
-            form.shipment_details.cha.errors %}
+            {{ form.cha.label(class="form-label") }} {{
+            form.cha(class="form-control") }} {% for error in
+            form.cha.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.clearance_place.label(class="form-label")
-            }} {{ form.shipment_details.clearance_place(class="form-control") }}
-            {% for error in form.shipment_details.clearance_place.errors %}
+            {{ form.clearance_place.label(class="form-label")
+            }} {{ form.clearance_place(class="form-control") }}
+            {% for error in form.clearance_place.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.co_loader.label(class="form-label") }} {{
-            form.shipment_details.co_loader(class="form-control") }} {% for
-            error in form.shipment_details.co_loader.errors %}
+            {{ form.co_loader.label(class="form-label") }} {{
+            form.co_loader(class="form-control") }} {% for
+            error in form.co_loader.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
             {{
-            form.shipment_details.container_stuffing.label(class="form-label")
-            }} {{ form.shipment_details.container_stuffing(class="form-control")
-            }} {% for error in form.shipment_details.container_stuffing.errors
+            form.container_stuffing.label(class="form-label")
+            }} {{ form.container_stuffing(class="form-control")
+            }} {% for error in form.container_stuffing.errors
             %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
             {{
-            form.shipment_details.file_reference_number.label(class="form-label")
+            form.file_reference_number.label(class="form-label")
             }} {{
-            form.shipment_details.file_reference_number(class="form-control") }}
-            {% for error in form.shipment_details.file_reference_number.errors
+            form.file_reference_number(class="form-control") }}
+            {% for error in form.file_reference_number.errors
             %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.forwarder.label(class="form-label") }} {{
-            form.shipment_details.forwarder(class="form-control") }} {% for
-            error in form.shipment_details.forwarder.errors %}
+            {{ form.forwarder.label(class="form-label") }} {{
+            form.forwarder(class="form-control") }} {% for
+            error in form.forwarder.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.fpod.label(class="form-label") }} {{
-            form.shipment_details.fpod(class="form-control") }} {% for error in
-            form.shipment_details.fpod.errors %}
+            {{ form.fpod.label(class="form-label") }} {{
+            form.fpod(class="form-control") }} {% for error in
+            form.fpod.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.gross_weight.label(class="form-label") }}
-            {{ form.shipment_details.gross_weight(class="form-control") }} {%
-            for error in form.shipment_details.gross_weight.errors %}
+            {{ form.gross_weight.label(class="form-label") }}
+            {{ form.gross_weight(class="form-control") }} {%
+            for error in form.gross_weight.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.invoice_currency.label(class="form-label")
-            }} {{ form.shipment_details.invoice_currency(class="form-control")
-            }} {% for error in form.shipment_details.invoice_currency.errors %}
+            {{ form.invoice_currency.label(class="form-label")
+            }} {{ form.invoice_currency(class="form-control")
+            }} {% for error in form.invoice_currency.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
             {{
-            form.shipment_details.invoice_currency_value.label(class="form-label")
+            form.invoice_currency_value.label(class="form-label")
             }} {{
-            form.shipment_details.invoice_currency_value(class="form-control")
+            form.invoice_currency_value(class="form-control")
             }} {% for error in
-            form.shipment_details.invoice_currency_value.errors %}
+            form.invoice_currency_value.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.invoice_type.label(class="form-label") }}
-            {{ form.shipment_details.invoice_type(class="form-control") }} {%
-            for error in form.shipment_details.invoice_type.errors %}
+            {{ form.invoice_type.label(class="form-label") }}
+            {{ form.invoice_type(class="form-control") }} {%
+            for error in form.invoice_type.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.item_description.label(class="form-label")
-            }} {{ form.shipment_details.item_description(class="form-control")
-            }} {% for error in form.shipment_details.item_description.errors %}
+            {{ form.item_description.label(class="form-label")
+            }} {{ form.item_description(class="form-control")
+            }} {% for error in form.item_description.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.job_type.label(class="form-label") }} {{
-            form.shipment_details.job_type(class="form-control") }} {% for error
-            in form.shipment_details.job_type.errors %}
+            {{ form.job_type.label(class="form-label") }} {{
+            form.job_type(class="form-control") }} {% for error
+            in form.job_type.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
             {{
-            form.shipment_details.nature_of_contract.label(class="form-label")
-            }} {{ form.shipment_details.nature_of_contract(class="form-control")
-            }} {% for error in form.shipment_details.nature_of_contract.errors
+            form.nature_of_contract.label(class="form-label")
+            }} {{ form.nature_of_contract(class="form-control")
+            }} {% for error in form.nature_of_contract.errors
             %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.nature_of_payment.label(class="form-label")
-            }} {{ form.shipment_details.nature_of_payment(class="form-control")
-            }} {% for error in form.shipment_details.nature_of_payment.errors %}
+            {{ form.nature_of_payment.label(class="form-label")
+            }} {{ form.nature_of_payment(class="form-control")
+            }} {% for error in form.nature_of_payment.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.net_weight.label(class="form-label") }} {{
-            form.shipment_details.net_weight(class="form-control") }} {% for
-            error in form.shipment_details.net_weight.errors %}
+            {{ form.net_weight.label(class="form-label") }} {{
+            form.net_weight(class="form-control") }} {% for
+            error in form.net_weight.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
             {{
-            form.shipment_details.number_of_packages.label(class="form-label")
-            }} {{ form.shipment_details.number_of_packages(class="form-control")
-            }} {% for error in form.shipment_details.number_of_packages.errors
+            form.number_of_packages.label(class="form-label")
+            }} {{ form.number_of_packages(class="form-control")
+            }} {% for error in form.number_of_packages.errors
             %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
             {{
-            form.shipment_details.operation_handle_by.label(class="form-label")
+            form.operation_handle_by.label(class="form-label")
             }} {{
-            form.shipment_details.operation_handle_by(class="form-control") }}
-            {% for error in form.shipment_details.operation_handle_by.errors %}
+            form.operation_handle_by(class="form-control") }}
+            {% for error in form.operation_handle_by.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.plan_date.label(class="form-label") }} {{
-            form.shipment_details.plan_date(class="form-control") }} {% for
-            error in form.shipment_details.plan_date.errors %}
+            {{ form.plan_date.label(class="form-label") }} {{
+            form.plan_date(class="form-control") }} {% for
+            error in form.plan_date.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.pod.label(class="form-label") }} {{
-            form.shipment_details.pod(class="form-control") }} {% for error in
-            form.shipment_details.pod.errors %}
+            {{ form.pod.label(class="form-label") }} {{
+            form.pod(class="form-control") }} {% for error in
+            form.pod.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.pol.label(class="form-label") }} {{
-            form.shipment_details.pol(class="form-control") }} {% for error in
-            form.shipment_details.pol.errors %}
+            {{ form.pol.label(class="form-label") }} {{
+            form.pol(class="form-control") }} {% for error in
+            form.pol.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.por.label(class="form-label") }} {{
-            form.shipment_details.por(class="form-control") }} {% for error in
-            form.shipment_details.por.errors %}
+            {{ form.por.label(class="form-label") }} {{
+            form.por(class="form-control") }} {% for error in
+            form.por.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.remarks.label(class="form-label") }} {{
-            form.shipment_details.remarks(class="form-control") }} {% for error
-            in form.shipment_details.remarks.errors %}
+            {{ form.remarks.label(class="form-label") }} {{
+            form.remarks(class="form-control") }} {% for error
+            in form.remarks.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.sales_person_name.label(class="form-label")
-            }} {{ form.shipment_details.sales_person_name(class="form-control")
-            }} {% for error in form.shipment_details.sales_person_name.errors %}
+            {{ form.sales_person_name.label(class="form-label")
+            }} {{ form.sales_person_name(class="form-control")
+            }} {% for error in form.sales_person_name.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.select_job.label(class="form-label") }} {{
-            form.shipment_details.select_job(class="form-control") }} {% for
-            error in form.shipment_details.select_job.errors %}
+            {{ form.select_job.label(class="form-label") }} {{
+            form.select_job(class="form-control") }} {% for
+            error in form.select_job.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.series.label(class="form-label") }} {{
-            form.shipment_details.series(class="form-control") }} {% for error
-            in form.shipment_details.series.errors %}
+            {{ form.series.label(class="form-label") }} {{
+            form.series(class="form-control") }} {% for error
+            in form.series.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
             {{
-            form.shipment_details.shipper_or_exporter.label(class="form-label")
+            form.shipper_or_exporter.label(class="form-label")
             }} {{
-            form.shipment_details.shipper_or_exporter(class="form-control") }}
-            {% for error in form.shipment_details.shipper_or_exporter.errors %}
+            form.shipper_or_exporter(class="form-control") }}
+            {% for error in form.shipper_or_exporter.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.shipping_line.label(class="form-label") }}
-            {{ form.shipment_details.shipping_line(class="form-control") }} {%
-            for error in form.shipment_details.shipping_line.errors %}
+            {{ form.shipping_line.label(class="form-label") }}
+            {{ form.shipping_line(class="form-control") }} {%
+            for error in form.shipping_line.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.type_of_shipment.label(class="form-label")
-            }} {{ form.shipment_details.type_of_shipment(class="form-control")
-            }} {% for error in form.shipment_details.type_of_shipment.errors %}
+            {{ form.type_of_shipment.label(class="form-label")
+            }} {{ form.type_of_shipment(class="form-control")
+            }} {% for error in form.type_of_shipment.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.unit_type.label(class="form-label") }} {{
-            form.shipment_details.unit_type(class="form-control") }} {% for
-            error in form.shipment_details.unit_type.errors %}
+            {{ form.unit_type.label(class="form-label") }} {{
+            form.unit_type(class="form-control") }} {% for
+            error in form.unit_type.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
           <div class="form-group">
-            {{ form.shipment_details.unit.label(class="form-label") }} {{
-            form.shipment_details.unit(class="form-control") }} {% for error in
-            form.shipment_details.unit.errors %}
+            {{ form.unit.label(class="form-label") }} {{
+            form.unit(class="form-control") }} {% for error in
+            form.unit.errors %}
             <span style="color: red"> {{ error }} </span>
             {% endfor %}
           </div>
@@ -402,102 +402,106 @@
           <div>
             <img
               width="20"
-              src="{{url_for('static', filename='icons/caret-down.png')}}"
+              src="{{ url_for('static', filename='icons/caret-down.png') }}"
               alt=""
             />
           </div>
         </div>
-        <div class="hidden rounded-lg border-2 p-3">
-          <div class="container-form grid grid-cols-1 gap-3 md:grid-cols-3">
-            <div class="container-form-group">
-              {{ form.container_details.container_type.label }} {{
-              form.container_details.container_type(class="form-control") }} {%
-              for error in form.container_details.container_type.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
+        <div class="hidden rounded-lg border-2 p-3" id="container-details">
+          <div class="container-forms">
+            {% for container_details in form.containers %}
+            <div class="container-form grid grid-cols-1 gap-3 md:grid-cols-3">
+              <div class="container-form-group">
+                {{ container_details.container_type.label }} {{
+                container_details.container_type(class="form-control") }} {%
+                for error in container_details.container_type.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.container_size.label }} {{
+                container_details.container_size(class="form-control") }} {%
+                for error in container_details.container_size.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.container_weight.label }} {{
+                container_details.container_weight(class="form-control") }}{%
+                for error in container_details.container_weight.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.max_gross_weight.label }} {{
+                container_details.max_gross_weight(class="form-control") }}{%
+                for error in container_details.max_gross_weight.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.container_seal_number.label }} {{
+                container_details.container_seal_number(class="form-control")
+                }}{% for error in
+                container_details.container_seal_number.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.owner_or_operator_code.label }} {{
+                container_details.owner_or_operator_code(class="form-control")
+                }}{% for error in
+                container_details.owner_or_operator_code.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.container_status.label }} {{
+                container_details.container_status(class="form-control") }}{%
+                for error in container_details.container_status.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.iso_code.label }} {{
+                container_details.iso_code(class="form-control") }}{% for
+                error in container_details.iso_code.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.container_condition.label }} {{
+                container_details.container_condition(class="form-control")
+                }}{% for error in
+                container_details.container_condition.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.date_of_manufacture.label }} {{
+                container_details.date_of_manufacture(class="form-control")
+                }}{% for error in
+                container_details.date_of_manufacture.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.last_date_inspection.label }} {{
+                container_details.last_date_inspection(class="form-control")
+                }}{% for error in
+                container_details.last_date_inspection.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
+              <div class="container-form-group">
+                {{ container_details.cargo_type.label }} {{
+                container_details.cargo_type(class="form-control") }}{% for
+                error in container_details.cargo_type.errors %}
+                <span style="color: red"> {{ error }} </span>
+                {% endfor %}
+              </div>
             </div>
-            <div class="container-form-group">
-              {{ form.container_details.container_size.label }} {{
-              form.container_details.container_size(class="form-control") }} {%
-              for error in form.container_details.container_size.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.container_weight.label }} {{
-              form.container_details.container_weight(class="form-control") }}{%
-              for error in form.container_details.container_weight.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.max_gross_weight.label }} {{
-              form.container_details.max_gross_weight(class="form-control") }}{%
-              for error in form.container_details.max_gross_weight.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.container_seal_number.label }} {{
-              form.container_details.container_seal_number(class="form-control")
-              }}{% for error in
-              form.container_details.container_seal_number.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.owner_or_operator_code.label }} {{
-              form.container_details.owner_or_operator_code(class="form-control")
-              }}{% for error in
-              form.container_details.owner_or_operator_code.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.container_status.label }} {{
-              form.container_details.container_status(class="form-control") }}{%
-              for error in form.container_details.container_status.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.iso_code.label }} {{
-              form.container_details.iso_code(class="form-control") }}{% for
-              error in form.container_details.iso_code.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.container_condtition.label }} {{
-              form.container_details.container_condtition(class="form-control")
-              }}{% for error in
-              form.container_details.container_condtition.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.date_of_manufacture.label }} {{
-              form.container_details.date_of_manufacture(class="form-control")
-              }}{% for error in
-              form.container_details.date_of_manufacture.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.last_date_inspection.label }} {{
-              form.container_details.last_date_inspection(class="form-control")
-              }}{% for error in
-              form.container_details.last_date_inspection.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
-            <div class="container-form-group">
-              {{ form.container_details.cargo_type.label }} {{
-              form.container_details.cargo_type(class="form-control") }}{% for
-              error in form.container_details.cargo_type.errors %}
-              <span style="color: red"> {{ error }} </span>
-              {% endfor %}
-            </div>
+            {% endfor %}
           </div>
         </div>
       </fieldset>

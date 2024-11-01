@@ -22,13 +22,11 @@ def index():
 @main_bp.route('/shipment-management/shipment-booking', methods=['GET', 'POST'])
 @role_required(['Admin','Shipper'])
 def shipment():
-    form = ShipmentForm(request.form)
-    # Pass the form to the processor
-    form_processor = FormProcessor(form)
-    
+    form = ShipmentForm()
     if request.method == "POST":
-        if form.shipment_details.validate_on_submit() & form.container_details.validate_on_submit():
+        if form.validate_on_submit():
             # Process the form and generate the JSON response
+            form_processor = FormProcessor(form)
             form_data = form_processor.process_form()
             response = create_shipment(form_data['booking'])
             if response:

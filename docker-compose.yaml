@@ -1,9 +1,5 @@
 version: '3.8'
 services:
-  mongodb:
-    image: mongo
-    volumes:
-      - data:/data/db
   booking:
     build: ./MicroServices/BookingService
     ports:
@@ -12,8 +8,6 @@ services:
       - ./MicroServices/BookingService:/app
     env_file:
       - ./env
-    depends_on:
-      - mongodb
   app:
     build: ./MainApp
     ports:
@@ -24,6 +18,4 @@ services:
       - ./env
     depends_on:
       - booking
-volumes:
-  data:
         
