@@ -72,7 +72,7 @@ pipeline {
 
     environment {
         TEMP_DIR = "${env.WORKSPACE}/temp"  // Use workspace directory for temp files
-        COMPOSE_FILE = "${TEMP_DIR}/docker-compose.yml"
+        COMPOSE_FILE = "${TEMP_DIR}/docker-compose.yaml"
     }
 
     stages {
@@ -82,7 +82,7 @@ pipeline {
                 
                 // Create a temporary directory in the Jenkins workspace and copy files
                 sh "mkdir -p ${TEMP_DIR}"
-                sh "cp -r * ${TEMP_DIR}/"
+                sh "cp -r Jenkinsfile MainApp MicroServices docker-compose.yaml ${TEMP_DIR}/"
             }
         }
 
