@@ -21,7 +21,7 @@ def index():
 
 @main_bp.route('/shipment-management/shipment-booking', methods=['GET', 'POST'])
 @role_required(['Admin','Shipper'])
-def shipment():
+def Booking():
     form = ShipmentForm()
     if request.method == "POST":
         if form.add_container.data:
@@ -38,12 +38,12 @@ def shipment():
                 return redirect(url_for("main.index"))
             else:
                 flash("Booking Unsuccessful","danger")
-                return redirect(url_for("main.shipment"))
+                return redirect(url_for("main.Booking"))
         # If form doesn't validate, you can log errors
         print("Form validation failed", form.errors, flush=True)
     
     # For GET requests, or when the form fails validation, render the HTML form
-    return render_template('new_shipment.html', form=form,current_user = current_user)
+    return render_template('booking_form.html', form=form,current_user = current_user)
 
 @main_bp.route('/shipment-management')
 @login_required
