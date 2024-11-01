@@ -24,7 +24,12 @@ def index():
 def shipment():
     form = ShipmentForm()
     if request.method == "POST":
-        if form.validate_on_submit():
+        if form.add_container.data:
+            form.containers.append_entry(None)
+        elif form.remove_container.data:
+            if len(form.containers.entries) > 1:
+                form.containers.pop_entry()
+        elif form.validate_on_submit():
             # Process the form and generate the JSON response
             form_processor = FormProcessor(form)
             form_data = form_processor.process_form()

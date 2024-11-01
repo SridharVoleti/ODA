@@ -548,6 +548,10 @@ class ShipmentForm(FlaskForm):
         ]
     )
 
-    containers = FieldList(FormField(ContainerDetailsFormSection), min_entries=1)
+    # Add Container
+    add_container = SubmitField('Add Container')
+    # Remove Container
+    remove_container = SubmitField('Remove Container')
+    containers = FieldList(FormField(ContainerDetailsFormSection), min_entries=0)
     submit = SubmitField('Submit')
 

@@ -32,7 +32,7 @@
             />
           </div>
         </div>
-        <div class="booking-form rounded-lg border-2">
+        <div class="hidden booking-form rounded-lg border-2">
           <div class="form-group">
             {{ form.shipping_company.label(class="form-label")
             }} {{ form.shipping_company(class="form-control")
@@ -408,6 +408,8 @@
           </div>
         </div>
         <div class="hidden rounded-lg border-2 p-3" id="container-details">
+          {{form.add_container(class="button bg-blue-500")}}
+          {{form.remove_container(class="button bg-red-500")}}
           <div class="container-forms">
             {% for container_details in form.containers %}
             <div class="container-form grid grid-cols-1 gap-3 md:grid-cols-3">
