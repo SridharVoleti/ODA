@@ -71,7 +71,7 @@ pipeline {
     agent any
 
     environment {
-        TEMP_DIR = "/home/jenkins_temp"
+        TEMP_DIR = "${env.WORKSPACE}/temp"  // Use workspace directory for temp files
         COMPOSE_FILE = "${TEMP_DIR}/docker-compose.yml"
     }
 
@@ -80,7 +80,7 @@ pipeline {
             steps {
                 git url: 'https://github.com/SridharVoleti/ODA.git', branch: 'jenkins'
                 
-                // Create a temporary directory in /home and copy files
+                // Create a temporary directory in the Jenkins workspace and copy files
                 sh "mkdir -p ${TEMP_DIR}"
                 sh "cp -r * ${TEMP_DIR}/"
             }
@@ -89,7 +89,7 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    // Use the copied docker-compose file in the /home directory
+                    // Use the copied docker-compose file in the workspace directory
                     sh "docker-compose -f ${COMPOSE_FILE} build"
                 }
             }
@@ -116,7 +116,6 @@ pipeline {
         always {
             // Clean up workspace and remove temporary directory
             cleanWs()
-            sh "rm -rf ${TEMP_DIR}"
         }
     }
 }
