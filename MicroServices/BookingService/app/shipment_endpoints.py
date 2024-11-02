@@ -3,7 +3,6 @@ from flask import request,jsonify,Blueprint
 from .Models.shipment import ShipmentCreate,ShipmentUpdate, ShipmentUpdateDetails,ContainerUpdateDetails, ShipmentBase
 from app import mongo
 from pymongo.errors import DuplicateKeyError
-import logging
 
 shipment_bp = Blueprint('shipment', __name__)
 @shipment_bp.route('/api/shipments', methods=["GET"])
@@ -22,7 +21,6 @@ def add_shipment():
     try:
         raw_data = request.get_json()
         data = ShipmentCreate(**raw_data).to_bson()
-        logging.info(data)
         result = mongo.db.shipments.insert_one(data)
         if result.acknowledged:
             inserted_doc = mongo.db.shipments.find_one({"_id": result.inserted_id})

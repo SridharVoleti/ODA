@@ -4,18 +4,14 @@ services:
     build: ./MicroServices/BookingService
     ports:
       - '5000:5000'
-    # volumes:
-    #   - ./MicroServices/BookingService:/app
-    env_file:
-      - ./env
+    volumes:
+      - ./MicroServices/BookingService:/app
   app:
     build: ./MainApp
     ports:
       - '5001:5001'
-    # volumes:
-    #   - ./MainApp:/app
-    env_file:
-      - ./env
+    volumes:
+      - ./MainApp:/app
     depends_on:
       - booking
         
