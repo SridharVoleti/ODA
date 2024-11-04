@@ -1,7 +1,9 @@
 {% extends 'shipment_management_template.html' %} {% block inner_content %}
 <div class="flex flex-col">
   <!-- Header Section (non-scrollable) -->
-  <h1 class="mb-1 mt-3 px-5 text-2xl font-extrabold">Shipment Booking Form</h1>
+  <h1 class="mb-1 px-5 text-2xl font-extrabold md:mt-3">
+    Shipment Booking Form
+  </h1>
   <!-- Display Flash Messages -->
   {% with messages = get_flashed_messages(with_categories=true) %} {% if
   messages %}
@@ -13,7 +15,7 @@
   {% endif %} {% endwith %}
 
   <!-- Form Wrapper: Takes remaining screen height, scrollable content -->
-  <div class="flex-grow overflow-y-auto px-5 pb-10">
+  <div class="flex-grow overflow-y-auto pb-10 md:px-5">
     <form method="post" class="px-5" novalidate>
       <!-- CSRF protection token -->
       {{ form.hidden_tag() }}
@@ -385,8 +387,10 @@
           </div>
         </div>
         <div class="hidden rounded-lg border-2 p-3" id="container-details">
-          {{form.add_container(class="button bg-blue-500")}}
-          {{form.remove_container(class="button bg-red-500")}}
+          <div class="space-y-3">
+            {{form.add_container(class="button bg-blue-500")}}
+            {{form.remove_container(class="button bg-red-500")}}
+          </div>
           <div class="container-forms">
             {% for container_details in form.containers %}
             <div
