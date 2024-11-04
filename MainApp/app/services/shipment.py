@@ -5,7 +5,19 @@ def get_shipments():
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
-  
+
+def get_shipment(id):
+    url = os.getenv("BOOKING_SERVICE_URL")+"/shipment/"+id
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    
+def get_shipper_shipments(shipper_id):
+    url = os.getenv("BOOKING_SERVICE_URL")+"/shipments/"+shipper_id
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    
 def create_shipment(shipment):
     url = os.getenv("BOOKING_SERVICE_URL")+"/shipment"
     response = requests.post(url,json=shipment)
@@ -15,5 +27,11 @@ def create_shipment(shipment):
 def update_shipment(id,shipment):
     url = os.getenv("BOOKING_SERVICE_URL")+"/shipment/"+ id
     response = requests.put(url,json=shipment)
-    if response.status_code == 201:
+    if response.status_code == 200:
+        return response.json()
+    
+def delete_shipment(id):
+    url = os.getenv("BOOKING_SERVICE_URL")+"/shipment/"+id
+    response = requests.delete(url)
+    if response.status_code == 200:
         return response.json()

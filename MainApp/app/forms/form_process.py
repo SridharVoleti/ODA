@@ -24,7 +24,7 @@ class FormProcessor:
             }
 
         current_datetime = datetime.now(timezone.utc)
-        formatted_datetime = current_datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
+        formatted_datetime = current_datetime.strftime('%Y-%m-%dT%H:%M:%S')
         
         # Shipment details
         form_data = {
@@ -39,8 +39,8 @@ class FormProcessor:
                 "package_type": self.form.package_type.data,
                 "weight": self.form.weight.data,
                 "dimensions": self.form.dimensions.data,
-                "shipping_date": self.form.shipping_date.data.strftime("%Y-%m-%dT%H:%M:%SZ") if self.form.shipping_date.data else None,
-                "delivery_date": self.form.delivery_date.data.strftime("%Y-%m-%dT%H:%M:%SZ") if self.form.delivery_date.data else None,
+                "shipping_date": self.form.shipping_date.data.strftime("%Y-%m-%dT%H:%M:%S") if self.form.shipping_date.data else None,
+                "delivery_date": self.form.delivery_date.data.strftime("%Y-%m-%dT%H:%M:%S") if self.form.delivery_date.data else None,
                 "shipping_method": self.form.shipping_method.data,
                 "insurance": self.form.insurance.data,
                 "declared_value": self.form.declared_value.data,
@@ -66,7 +66,7 @@ class FormProcessor:
                 "net_weight": self.form.net_weight.data,
                 "number_of_packages": self.form.number_of_packages.data,
                 "operation_handle_by": self.form.operation_handle_by.data,
-                "plan_date": self.form.plan_date.data.strftime("%Y-%m-%dT%H:%M:%SZ") if self.form.plan_date.data else None,
+                "plan_date": self.form.plan_date.data.strftime("%Y-%m-%dT%H:%M:%S") if self.form.plan_date.data else None,
                 "pod": self.form.pod.data,
                 "pol": self.form.pol.data,
                 "por": self.form.por.data,
@@ -99,8 +99,8 @@ class FormProcessor:
                     "container_status": container['container_status'],
                     "iso_code": container['iso_code'],
                     "container_condition": container['container_condition'],
-                    "date_of_manufacture": container['date_of_manufacture'].strftime("%Y-%m-%dT%H:%M:%SZ") if container.get('date_of_manufacture') else None,
-                    "last_date_inspection": container['last_date_inspection'].strftime("%Y-%m-%dT%H:%M:%SZ") if container.get('last_date_inspection') else None,
+                    "date_of_manufacture": container['date_of_manufacture'].strftime("%Y-%m-%dT%H:%M:%S") if container.get('date_of_manufacture') else None,
+                    "last_date_inspection": container['last_date_inspection'].strftime("%Y-%m-%dT%H:%M:%S") if container.get('last_date_inspection') else None,
                     "cargo_type": container['cargo_type'],
                 } for container in self.form.containers.data  # Iterating over multiple containers
             ]

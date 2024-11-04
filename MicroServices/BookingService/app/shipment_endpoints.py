@@ -10,9 +10,7 @@ def get_shipments():
     try:
         cursor = mongo.db.shipments.find()
         shipments = [ShipmentBase(**doc).to_json() for doc in cursor]
-        if len(shipments) > 0:
-            return shipments,200
-        return jsonify(error="No records found"),404
+        return shipments,200
     except Exception as e:
         return jsonify(error=str(e)), 500
 
@@ -21,9 +19,7 @@ def get_shipments_by_shipper(shipper_id):
     try:
         cursor = mongo.db.shipments.find({"shipper_id":shipper_id})
         shipments = [ShipmentBase(**doc).to_json() for doc in cursor]
-        if len(shipments) > 0:
-            return shipments,200
-        return jsonify(error="No records found"),404
+        return shipments,200
     except Exception as e:
         return jsonify(error=str(e)), 500
 
@@ -49,7 +45,6 @@ def get_shipment(id):
     doc = mongo.db.shipments.find_one_or_404({"_id":id})
     return ShipmentBase(**doc).to_json()
 
-@shipment_bp.route('/api/shipment/<string:id>',methods=["PUT"])
 @shipment_bp.route('/api/shipment/<string:id>', methods=["PUT"])
 def update_shipment(id):
     try:
@@ -57,37 +52,10 @@ def update_shipment(id):
         existing_shipment = mongo.db.shipments.find_one({"_id": id})
         if not existing_shipment:
             return jsonify(error="Shipment not found."), 404
-
         # Get the raw JSON payload
         raw_data = request.get_json()
-
-        # Extract shipment and container details from the raw payload
-        shipment_data = raw_data.get("shipment_details", {})
-        container_data = raw_data.get("container_details", {})
-
-        # Initialize an update dictionary
-        update_data = {}
-
-        # Merge existing shipment details with incoming data for shipment
-        if shipment_data:
-            existing_details = existing_shipment.get("shipment_details", {})
-            # Use the existing details and update with any new data
-            updated_shipment_details = {**existing_details, **shipment_data}
-            update_data['shipment_details'] = updated_shipment_details
-
-        # Merge existing container details with incoming data for container
-        if container_data:
-            existing_container_details = existing_shipment.get("container_details", {})
-            # Use the existing container details and update with any new data
-            updated_container_details = {**existing_container_details, **container_data}
-            update_data['container_details'] = updated_container_details
-
-        # Check if there is any valid data to update
-        if not update_data:
-            return jsonify(error="No valid fields to update."), 400
-
         # Perform the update operation in MongoDB for the shipment document
-        result = mongo.db.shipments.update_one({"_id": id}, {"$set": update_data})
+        result = mongo.db.shipments.update_one({"_id": id}, {"$set": raw_data})
 
         # Check if the update was successful
         if result.acknowledged:

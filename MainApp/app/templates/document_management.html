@@ -1,0 +1,40 @@
+{% extends 'shipment_management_template.html' %} {% block inner_content %}
+<h1 class="mb-4 text-2xl font-bold">Your Documents</h1>
+<div class="overflow-x-auto">
+  <table class="min-w-full border border-gray-200 bg-white">
+    <thead>
+      <tr class="bg-gray-200 text-sm uppercase leading-normal text-gray-600">
+        <th class="px-6 py-3 text-left">Booking Id</th>
+        <th class="px-6 py-3 text-left">Shipping Company</th>
+        <th class="px-6 py-3 text-left">Sender Name</th>
+        <th class="px-6 py-3 text-left">Consignee Name</th>
+        <th class="px-6 py-3 text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="text-sm font-light text-gray-600">
+      {% for shipment in shipments %}
+      <tr class="border-b border-gray-200 hover:bg-gray-100">
+        <td class="px-6 py-3"><a href="">{{ shipment._id }}</a></td>
+        <td class="px-6 py-3">
+          {{ shipment.shipment_details.shipping_company }}
+        </td>
+        <td class="px-6 py-3">{{ shipment.shipment_details.sender_name }}</td>
+        <td class="px-6 py-3">{{ shipment.shipment_details.consignee }}</td>
+        <td class="space-x-3 px-6 py-3 text-center">
+          <a
+            href="{{url_for('main.updateBooking',Id=shipment._id)}}"
+            class="button bg-blue-400"
+            >Edit</a
+          >
+          <a
+            href="{{url_for('main.deleteBooking',Id=shipment._id)}}"
+            class="button bg-red-400"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

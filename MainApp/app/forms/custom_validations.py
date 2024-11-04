@@ -6,7 +6,7 @@ def validate_positive_number(form, field):
         # Attempt to convert the field's data to a float
         value = field.data
         # Raise a validation error if the value is not positive
-        if value <= 0:
+        if value and value <= 0:
             raise ValidationError("Dimensions must be a positive number.")
     except ValueError:
         # Raise a validation error if the conversion to float fails (input is not a number)
