@@ -45,7 +45,6 @@ def get_shipment(id):
     doc = mongo.db.shipments.find_one_or_404({"_id":id})
     return ShipmentBase(**doc).to_json()
 
-@shipment_bp.route('/api/shipment/<string:id>',methods=["PUT"])
 @shipment_bp.route('/api/shipment/<string:id>', methods=["PUT"])
 def update_shipment(id):
     try:

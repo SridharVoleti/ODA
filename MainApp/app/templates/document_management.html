@@ -26,7 +26,11 @@
             class="button bg-blue-400"
             >Edit</a
           >
-          <a class="button bg-red-400">Delete</a>
+          <a
+            href="{{url_for('main.deleteBooking',Id=shipment._id)}}"
+            class="button bg-red-400"
+            >Delete</a
+          >
         </td>
       </tr>
       {% endfor %}

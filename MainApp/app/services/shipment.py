@@ -29,3 +29,9 @@ def update_shipment(id,shipment):
     response = requests.put(url,json=shipment)
     if response.status_code == 200:
         return response.json()
+    
+def delete_shipment(id):
+    url = os.getenv("BOOKING_SERVICE_URL")+"/shipment/"+id
+    response = requests.delete(url)
+    if response.status_code == 200:
+        return response.json()

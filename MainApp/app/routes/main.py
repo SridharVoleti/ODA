@@ -1,7 +1,7 @@
 # # app/routes.py
 from flask import render_template, redirect, flash,url_for,Blueprint,request,jsonify
 from app.forms.shipment_form import ShipmentForm
-from app.services.shipment import get_shipments,create_shipment,get_shipper_shipments,update_shipment,get_shipment
+from app.services.shipment import get_shipments,create_shipment,get_shipper_shipments,update_shipment,get_shipment,delete_shipment
 from app.forms.choices_config import *
 from flask_login import login_required,current_user
 from app.utils.decorators import role_required
@@ -102,6 +102,13 @@ def updateBooking(Id):
     # Render the form for GET requests or if form validation fails
     return render_template('booking_form.html', form=form, current_user=current_user)
 
+@main_bp.route('/shipment-management/delete-shipment/<string:Id>', methods=["GET", "POST"])
+@role_required(['Shipper'])
+def deleteBooking(Id):
+    response = delete_shipment(Id)
+    if response:
+        flash("Deleted","success")
+    return redirect(url_for("main.documentManagement"))
       
 @main_bp.route('/shipment-management')
 @login_required
