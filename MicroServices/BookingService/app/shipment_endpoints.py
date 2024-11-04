@@ -16,6 +16,18 @@ def get_shipments():
     except Exception as e:
         return jsonify(error=str(e)), 500
 
+@shipment_bp.route('/api/shipments/<string:shipper_id>', methods=["GET"])
+def get_shipments_by_shipper(shipper_id):
+    try:
+        cursor = mongo.db.shipments.find({"shipper_id":shipper_id})
+        shipments = [ShipmentBase(**doc).to_json() for doc in cursor]
+        if len(shipments) > 0:
+            return shipments,200
+        return jsonify(error="No records found"),404
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
 @shipment_bp.route('/api/shipment', methods=["POST"])
 def add_shipment():
     try:
