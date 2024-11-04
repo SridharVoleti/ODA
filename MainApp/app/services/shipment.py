@@ -27,5 +27,5 @@ def create_shipment(shipment):
 def update_shipment(id,shipment):
     url = os.getenv("BOOKING_SERVICE_URL")+"/shipment/"+ id
     response = requests.put(url,json=shipment)
-    if response.status_code == 201:
+    if response.status_code == 200:
         return response.json()

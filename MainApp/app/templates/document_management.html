@@ -21,8 +21,12 @@
         <td class="px-6 py-3">{{ shipment.shipment_details.sender_name }}</td>
         <td class="px-6 py-3">{{ shipment.shipment_details.consignee }}</td>
         <td class="space-x-3 px-6 py-3 text-center">
-          <button class="button bg-blue-400">Edit</button>
-          <button class="button bg-red-400">Delete</button>
+          <a
+            href="{{url_for('main.updateBooking',Id=shipment._id)}}"
+            class="button bg-blue-400"
+            >Edit</a
+          >
+          <a class="button bg-red-400">Delete</a>
         </td>
       </tr>
       {% endfor %}

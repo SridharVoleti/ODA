@@ -1,6 +1,6 @@
 # app/forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField,IntegerField,SelectField,DateField,BooleanField,SubmitField,FormField,FieldList,Form
+from wtforms import StringField,IntegerField,FloatField,SelectField,DateField,BooleanField,SubmitField,FormField,FieldList,Form
 from wtforms.validators import DataRequired,Length,Regexp,NumberRange,Optional,AnyOf
 from app.forms.choices_config import *
 from app.forms.custom_validations import *
@@ -24,12 +24,12 @@ class ContainerDetailsFormSection(Form):
         render_kw={"placeholder": "e.g., 12*15*20"}  # Placeholder for user guidance
     )
 
-    container_weight = IntegerField(
+    container_weight = FloatField(
         'Container Weight',
         validators=[DataRequired("Container Weight is required")]
     )
 
-    max_gross_weight = IntegerField(
+    max_gross_weight = FloatField(
         'Max Gross Weight',
         validators=[DataRequired('Max Gross Weight is required')]
     )
@@ -152,7 +152,7 @@ class ShipmentForm(FlaskForm):
     ) 
     
     #Weight Field
-    weight = IntegerField(
+    weight = FloatField(
         'Weight',
         validators=[
             DataRequired("Weight is required"),  # Not Null validation
@@ -218,7 +218,7 @@ class ShipmentForm(FlaskForm):
     )
 
     # declared value field 
-    declared_value = IntegerField(
+    declared_value = FloatField(
         'Declared Value',  # Label for the field
         validators=[
             Optional(),  # Allow the field to be empty if insurance is not selected
@@ -260,7 +260,7 @@ class ShipmentForm(FlaskForm):
     )
     
     # 'cbm' field
-    cbm = IntegerField(
+    cbm = FloatField(
         'CBM',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="CBM is required"),  # Ensures the field is not left empty
@@ -347,7 +347,7 @@ class ShipmentForm(FlaskForm):
     )
 
     # Gross Weight Field
-    gross_weight= IntegerField(
+    gross_weight= FloatField(
         'Gross Weight',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
@@ -366,7 +366,7 @@ class ShipmentForm(FlaskForm):
     )
 
     # Invoice Currency Value Field
-    invoice_currency_value = IntegerField(
+    invoice_currency_value = FloatField(
         'Invoice Currency Value',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty
@@ -418,7 +418,7 @@ class ShipmentForm(FlaskForm):
     )
 
     # Net Weight Field
-    net_weight = IntegerField(
+    net_weight = FloatField(
         'Net Weight',  # The label for the field
         validators=[  # A list of validators to apply to this field
             DataRequired(message="Gross Weight is required"),  # Ensures the field is not left empty

@@ -36,7 +36,7 @@ def createBooking():
             form_data = form_processor.process_form()
             response = create_shipment(form_data['booking'])
             if response:
-                return redirect(url_for("main.index"))
+                return redirect(url_for("main.documentManagement"))
             else:
                 flash("Booking Unsuccessful","danger")
                 return redirect(url_for("main.createBooking"))
@@ -48,7 +48,6 @@ def createBooking():
 @role_required(['Shipper'])
 def updateBooking(Id):
     shipment = get_shipment(Id)
-    print(shipment.get("shipment_details"),flush=True)
     form = ShipmentForm()
 
     # Prepopulate the form with shipment data if this is a GET request
@@ -91,11 +90,13 @@ def updateBooking(Id):
             # Process the form and generate the JSON response
             form_processor = FormProcessor(form)
             form_data = form_processor.process_form()
-            response = update_shipment(form_data['booking'], Id)  # Update the function to update shipment
+            data = form_data['booking']
+            data['_id']=Id
+            response = update_shipment(Id,data)  # Update the function to update shipment
             if response:
-                return redirect(url_for("main.index"))
+                return redirect(url_for("main.documentManagement"))
             else:
-                flash("Booking Unsuccessful", "danger")
+                flash("Update Unsuccessful", "danger")
                 return redirect(url_for("main.updateBooking", Id=Id))
 
     # Render the form for GET requests or if form validation fails
