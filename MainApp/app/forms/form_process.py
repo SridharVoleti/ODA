@@ -1,6 +1,7 @@
 import json
 from datetime import datetime,timezone
 from app.utils.auto_gen_id import *
+from flask_login import current_user
 class FormProcessor:
     def __init__(self, form):
         self.form = form
@@ -28,6 +29,7 @@ class FormProcessor:
         # Shipment details
         form_data = {
             "_id": generate_booking_id(),
+            "shipper_id": current_user.user_id,
             "shipment_details": {
                 "shipping_company": self.form.shipping_company.data,
                 "sender_name": self.form.sender_name.data,

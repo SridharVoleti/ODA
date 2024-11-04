@@ -80,6 +80,7 @@ class ShipmentDetails(BaseModel):
 # Define a model to encapsulate both container and shipment details
 class ShipmentBase(BaseModel):
     booking_id: str = Field(None, alias="_id")
+    shipper_id: str
     container_details: list[ContainerDetails]
     shipment_details: ShipmentDetails
 
@@ -172,5 +173,6 @@ class ShipmentUpdateDetails(BaseModel):
 # Define a model for PUT requests where both container and shipment details are optional
 class ShipmentUpdate(ShipmentBase):
     booking_id: Optional[str] = Field(None, alias="_id")
+    shipper_id: Optional[str]=None
     container_details: Optional[list[ContainerUpdateDetails]]=None
     shipment_details:Optional[ShipmentUpdateDetails]=None
