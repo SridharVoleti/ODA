@@ -6,6 +6,12 @@ def get_shipments():
     if response.status_code == 200:
         return response.json()
 
+def get_shipment(id):
+    url = os.getenv("BOOKING_SERVICE_URL")+"/shipment/"+id
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    
 def get_shipper_shipments(shipper_id):
     url = os.getenv("BOOKING_SERVICE_URL")+"/shipments/"+shipper_id
     response = requests.get(url)

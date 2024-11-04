@@ -24,7 +24,7 @@
     @apply h-10 rounded-lg border-[1px] bg-gray-100 px-4 py-2 disabled:bg-gray-300;
   }
   .button {
-    @apply mt-5 w-40 cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-white;
+    @apply w-40 cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-white;
   }
   .booking-submit {
     @apply bg-green-700;
@@ -34,13 +34,13 @@
   }
 
   .menu-bar {
-    @apply sticky top-0 flex justify-around bg-ocean-blue font-bold text-black;
+    @apply bg-ocean-blue sticky top-0 flex justify-around font-bold text-black;
   }
   .menu-item {
     @apply cursor-pointer p-5 text-center;
   }
   .submenu {
-    @apply absolute left-0 top-[100%] hidden h-16 w-full items-center gap-5 bg-ocean-green py-5 text-black;
+    @apply bg-ocean-green absolute left-0 top-[100%] hidden h-16 w-full items-center gap-5 py-5 text-black;
   }
   .submenu-item {
     @apply border-r-2 p-5;
@@ -58,13 +58,13 @@
     @apply bg-green-500;
   }
   .sub-nav {
-    @apply sticky top-0 w-screen overflow-hidden bg-ocean-green p-5 text-sm;
+    @apply bg-ocean-green sticky top-0 w-screen overflow-hidden p-5 text-sm;
   }
   .sub-nav-item {
     @apply flex items-center gap-3 text-nowrap;
   }
   .side-menu-item {
-    @apply cursor-pointer py-2 pe-10 ps-2 transition duration-200 ease-in-out hover:bg-ocean-green;
+    @apply hover:bg-ocean-green cursor-pointer py-2 pe-10 ps-2 transition duration-200 ease-in-out;
   }
   .user-card {
     @apply absolute right-4 top-12 z-10 h-44 w-72 bg-white bg-opacity-70 p-4 text-black shadow-md shadow-gray-700;
