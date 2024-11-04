@@ -10,9 +10,7 @@ def get_shipments():
     try:
         cursor = mongo.db.shipments.find()
         shipments = [ShipmentBase(**doc).to_json() for doc in cursor]
-        if len(shipments) > 0:
-            return shipments,200
-        return jsonify(error="No records found"),404
+        return shipments,200
     except Exception as e:
         return jsonify(error=str(e)), 500
 
@@ -21,9 +19,7 @@ def get_shipments_by_shipper(shipper_id):
     try:
         cursor = mongo.db.shipments.find({"shipper_id":shipper_id})
         shipments = [ShipmentBase(**doc).to_json() for doc in cursor]
-        if len(shipments) > 0:
-            return shipments,200
-        return jsonify(error="No records found"),404
+        return shipments,200
     except Exception as e:
         return jsonify(error=str(e)), 500
 

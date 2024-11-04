@@ -1,7 +1,7 @@
 # # app/routes.py
 from flask import render_template, redirect, flash,url_for,Blueprint,request,jsonify
 from app.forms.shipment_form import ShipmentForm
-from app.services.shipment import get_shipments,create_shipment
+from app.services.shipment import get_shipments,create_shipment,get_shipper_shipments
 from app.forms.choices_config import *
 from flask_login import login_required,current_user
 from app.utils.decorators import role_required
@@ -20,7 +20,7 @@ def index():
     return render_template('index.html')
 
 @main_bp.route('/shipment-management/shipment-booking', methods=['GET', 'POST'])
-@role_required(['Admin','Shipper'])
+@role_required(['Shipper'])
 def Booking():
     form = ShipmentForm()
     if request.method == "POST":
@@ -49,3 +49,10 @@ def Booking():
 @login_required
 def shipmentManagement():
    return render_template('shipment_management.html')
+
+@main_bp.route('/document-management')
+@role_required(['Shipper'])
+def documentManagement():
+    shipments = get_shipper_shipments(current_user.user_id)
+    print(shipments,flush=True)
+    return render_template('document_management.html',shipments=shipments)
