@@ -1,7 +1,8 @@
-import json
+from flask_login import current_user
+
 from datetime import datetime,timezone
 from app.utils.auto_gen_id import *
-from flask_login import current_user
+
 class FormProcessor:
     def __init__(self, form):
         self.form = form
@@ -12,6 +13,7 @@ class FormProcessor:
         :return: Boolean
         """
         return self.form.validate_on_submit()
+    
     def process_form(self):
         """
         Process the form and return data in JSON format.

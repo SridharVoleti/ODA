@@ -2,8 +2,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,IntegerField,FloatField,SelectField,DateField,BooleanField,SubmitField,FormField,FieldList,Form
 from wtforms.validators import DataRequired,Length,Regexp,NumberRange,Optional,AnyOf
-from app.forms.choices_config import *
-from app.forms.custom_validations import *
+
+from MainApp.app.utils.choices_config import *
+from app.utils.custom_validations import *
 
 # Container Form
 class ContainerDetailsFormSection(Form):

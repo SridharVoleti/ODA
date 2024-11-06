@@ -1,5 +1,6 @@
-from app.models.user import User
 from werkzeug.security import generate_password_hash
+
+from app.models.user import User
 
 def create_user(username, password, role):
     user = User.find_by_username(username)

@@ -1,5 +1,6 @@
 import requests
 import os
+
 def get_shipments():
     url = os.getenv("BOOKING_SERVICE_URL")+"/shipments"
     response = requests.get(url)

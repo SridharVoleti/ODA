@@ -1,12 +1,14 @@
 # # app/routes.py
 from flask import render_template, redirect, flash,url_for,Blueprint,request,jsonify
+from flask_login import login_required,current_user
+
+from datetime import datetime
+from app.utils.decorators import role_required
+from app.utils.form_process import FormProcessor
 from app.forms.shipment_form import ShipmentForm
 from app.services.shipment import get_shipments,create_shipment,get_shipper_shipments,update_shipment,get_shipment,delete_shipment
-from app.forms.choices_config import *
-from flask_login import login_required,current_user
-from app.utils.decorators import role_required
-from app.forms.form_process import FormProcessor
-from datetime import datetime
+from MainApp.app.utils.choices_config import *
+
 main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/dashboard')
