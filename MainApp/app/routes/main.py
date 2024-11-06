@@ -7,7 +7,7 @@ from app.utils.decorators import role_required
 from app.utils.form_process import FormProcessor
 from app.forms.shipment_form import ShipmentForm
 from app.services.shipment import get_shipments,create_shipment,get_shipper_shipments,update_shipment,get_shipment,delete_shipment
-from MainApp.app.utils.choices_config import *
+from app.utils.choices_config import *
 
 main_bp = Blueprint('main', __name__)
 

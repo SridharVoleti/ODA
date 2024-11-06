@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,IntegerField,FloatField,SelectField,DateField,BooleanField,SubmitField,FormField,FieldList,Form
 from wtforms.validators import DataRequired,Length,Regexp,NumberRange,Optional,AnyOf
 
-from MainApp.app.utils.choices_config import *
+from app.utils.choices_config import *
 from app.utils.custom_validations import *
 
 # Container Form
