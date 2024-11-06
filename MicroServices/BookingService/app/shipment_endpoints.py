@@ -1,8 +1,9 @@
 import flask
 from flask import request,jsonify,Blueprint
-from .Models.shipment import ShipmentCreate,ShipmentUpdate, ShipmentUpdateDetails,ContainerUpdateDetails, ShipmentBase
-from app import mongo
 from pymongo.errors import DuplicateKeyError
+
+from .Models.shipment import ShipmentCreate, ShipmentBase
+from app import mongo
 
 shipment_bp = Blueprint('shipment', __name__)
 @shipment_bp.route('/api/shipments', methods=["GET"])

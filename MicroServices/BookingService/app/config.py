@@ -1,6 +1,8 @@
 import os
 import dotenv
+
 dotenv.load_dotenv()
+
 class Config:
     """Base configuration."""
     SECRET_KEY = 'your_secret_key'
