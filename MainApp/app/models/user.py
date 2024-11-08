@@ -54,10 +54,11 @@ class User(UserMixin):
             print(f"Get user error: {e}", flush=True)
             return None
         
-    def register(self):
+    @staticmethod
+    def register(user):
         """Registers a new user and returns the result or error."""
         try:
-            return register_user(self.firstname, self.lastname, self.address, self.phone, self.username, self.role)
+            return register_user(user)
         except Exception as e:
             print(f"Register error: {e}", flush=True)
             return e

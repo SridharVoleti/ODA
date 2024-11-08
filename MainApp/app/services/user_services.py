@@ -5,7 +5,8 @@ import json
 url = os.getenv("AUTH_URL")
 def register_user(user):
     try:
-        response = requests.post(url+"/register",json=json.dumps(user.__dict__))
+        response = requests.post(url+"/register",json=user)
+        print(response.json(),flush=True)
         if response.status_code == 200:
             return response.json()
         else:

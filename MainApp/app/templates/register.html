@@ -4,19 +4,61 @@
   class="from-ocean-blue to-ocean-green flex h-screen w-screen items-center justify-center bg-gradient-to-r from-10% via-sky-500 via-30% to-90%"
 >
   <form
+    novalidate
     method="post"
-    class="flex flex-col items-center justify-center gap-5 border-2 border-black bg-white bg-opacity-25 p-5 shadow-lg md:p-20"
+    class="grid grid-cols-1 gap-5 border-2 border-black bg-white bg-opacity-25 p-5 shadow-lg md:grid-cols-2 md:p-10"
   >
     {{ form.hidden_tag() }}
-    <div>
-      <img
-        width="100"
-        src="{{url_for('static',filename='icons/profile.png')}}"
-        alt=""
-      />
+    <h1 class="text-center text-3xl font-extrabold md:col-span-2">
+      CREATE USER
+    </h1>
+    <div
+      class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 px-2"
+    >
+      {{form.firstname.label}} {{form.firstname(class="form-control rounded-none
+      border-none bg-transparent flex-1", placeholder="First Name")}} {% for
+      error in form.firstname.errors %}
+      <span style="color: red">[{{ error }}]</span>
+      {% endfor %}
     </div>
     <div
-      class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 ps-2"
+      class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 px-2"
+    >
+      {{form.middlename.label}} {{form.middlename(class="form-control
+      rounded-none border-none bg-transparent flex-1", placeholder="Middle
+      Name")}} {% for error in form.middlename.errors %}
+      <span style="color: red">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+    <div
+      class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 px-2"
+    >
+      {{form.lastname.label}} {{form.lastname(class="form-control rounded-none
+      border-none bg-transparent flex-1", placeholder="Last Name")}} {% for
+      error in form.lastname.errors %}
+      <span style="color: red">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+    <div
+      class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 px-2"
+    >
+      {{form.address.label}} {{form.address(class="form-control rounded-none
+      border-none bg-transparent flex-1", placeholder="Address")}} {% for error
+      in form.address.errors %}
+      <span style="color: red">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+    <div
+      class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 px-2"
+    >
+      {{form.phone.label}} {{form.phone(class="form-control rounded-none
+      border-none bg-transparent flex-1", placeholder="Phone")}} {% for error in
+      form.phone.errors %}
+      <span style="color: red">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+    <div
+      class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 px-2"
     >
       <div class="w-10">
         <img
@@ -26,13 +68,13 @@
         />
       </div>
       {{form.username(class="form-control rounded-none border-none
-      bg-transparent", placeholder="Username")}} {% for error in
+      bg-transparent flex-1", placeholder="Username")}} {% for error in
       form.username.errors %}
       <span style="color: red">[{{ error }}]</span>
       {% endfor %}
     </div>
     <div
-      class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 ps-2"
+      class="flex h-10 items-center justify-center gap-5 bg-gray-100 bg-opacity-25 px-2"
     >
       <div class="w-10">
         <img
@@ -42,7 +84,7 @@
         />
       </div>
       {{form.password(class="form-control rounded-none border-none
-      bg-transparent", placeholder="Password")}} {% for error in
+      bg-transparent flex-1", placeholder="Password")}} {% for error in
       form.password.errors %}
       <span style="color: red">[{{ error }}]</span>
       {% endfor %}
@@ -52,9 +94,9 @@
     >
       <label for="">Role</label>
       {{form.role(class="form-control w-full rounded-none border-none
-      bg-transparent")}}
+      bg-transparent flex-1")}}
     </div>
-    <div class="flex w-[100%] justify-end">
+    <div class="flex justify-end md:col-span-2">
       <div>
         <a class="" href="{{url_for('auth.login')}}">Login</a>
       </div>
@@ -66,8 +108,11 @@
       <span class="text-red-600">{{message}}</span>
       {% endif %} {% endfor %}
     </div>
-    {% endif %} {% endwith %} {{form.submit(class='button bg-gradient-to-r
-    from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500')}}
+    {% endif %} {% endwith %}
+    <div class="text-center md:col-span-2">
+      {{form.submit(class='button bg-gradient-to-r from-teal-400 to-blue-500
+      hover:from-pink-500 hover:to-orange-500')}}
+    </div>
   </form>
 </div>
 {%endblock%}

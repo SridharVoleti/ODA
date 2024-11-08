@@ -1,6 +1,7 @@
 from flask import Blueprint,jsonify,request,abort
 from flask_jwt_extended import create_access_token,decode_token
 from passlib.hash import pbkdf2_sha256
+import uuid
 
 from app.Models.User import  User
 from app import mongo
@@ -13,7 +14,7 @@ def register():
         data = request.get_json()
         data["password"] = pbkdf2_sha256.hash(data["password"])
         user = User(**data).to_bson()
-        user['_id']="user001"
+        user['_id']=str(uuid.uuid4())
         response = mongo.db.Users.insert_one(user)
         if response.acknowledged:
             return jsonify(status="success",message="User registration  successful"),200

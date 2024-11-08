@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, flash,session
 from flask_login import login_user, logout_user
 import json
+from datetime import datetime
 
 from app.models.user import User
 from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
-from app.services.user_services import register_user
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -31,13 +31,22 @@ def login():
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        role = form.role.data
-        user = register_user(username, password, role)
+        current_datetime = datetime.now()
+        user_data = {
+            "firstname": form.firstname.data,
+            "middlename": form.middlename.data,
+            "lastname": form.lastname.data,
+            "address": form.address.data,
+            "phone": form.phone.data,
+            "username": form.username.data,
+            "password": form.password.data,
+            "role": form.role.data,
+            "CreatedAt":current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+        } 
+        user = User.register(user_data)
         if user:
-            login_user(user)
-            return redirect(url_for('main.index'))
+            flash("Registration successful","success")
+            return redirect(url_for('auth.login'))
         else:
             flash('User already exists', 'danger')
     return render_template('register.html', form=form)
