@@ -23,7 +23,7 @@ def index():
     return render_template('index.html')
 
 @main_bp.route('/shipment-management/shipment-booking', methods=['GET', 'POST'])
-@role_required(['Shipper'])
+@role_required(['shipper'])
 def createBooking():
     form = ShipmentForm()
     if request.method == "POST":
@@ -47,7 +47,7 @@ def createBooking():
     return render_template('booking_form.html', form=form,current_user = current_user)
 
 @main_bp.route('/shipment-management/update-shipment/<string:Id>', methods=["GET", "POST"])
-@role_required(['Shipper'])
+@role_required(['shipper'])
 def updateBooking(Id):
     shipment = get_shipment(Id)
     form = ShipmentForm()
@@ -105,7 +105,7 @@ def updateBooking(Id):
     return render_template('booking_form.html', form=form, current_user=current_user)
 
 @main_bp.route('/shipment-management/delete-shipment/<string:Id>', methods=["GET", "POST"])
-@role_required(['Shipper'])
+@role_required(['shipper'])
 def deleteBooking(Id):
     response = delete_shipment(Id)
     if response:
@@ -118,7 +118,7 @@ def shipmentManagement():
    return render_template('shipment_management.html')
 
 @main_bp.route('/document-management')
-@role_required(['Shipper'])
+@role_required(['shipper'])
 def documentManagement():
-    shipments = get_shipper_shipments(current_user.user_id)
+    shipments = get_shipper_shipments(current_user._id)
     return render_template('document_management.html',shipments=shipments)
