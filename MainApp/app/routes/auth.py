@@ -1,11 +1,11 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash,session
 from flask_login import login_user, logout_user
-from werkzeug.security import check_password_hash
+import json
 
 from app.models.user import User
 from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
-from app.services.user_services import create_user
+from app.services.user_services import register_user
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -15,12 +15,16 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-        user = User.find_by_username(username)
-        if user and check_password_hash(user.password_hash, password):
-            login_user(user)
-            return redirect(url_for('main.index'))
-        else:
-            flash('Invalid credentials', 'danger')
+        try:
+            user = User.login(username,password)
+            if user:
+                session['user']=user.__dict__
+                login_user(user)
+                return redirect(url_for('main.index'))
+            else:
+                flash('Invalid credentials', 'danger')
+        except Exception as e:
+            flash(e, 'danger')
     return render_template('login.html', form=form)
 
 @auth_bp.route('/signup', methods=['GET', 'POST'])
@@ -29,9 +33,8 @@ def signup():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-        print(username,flush=True)
         role = form.role.data
-        user = create_user(username, password, role)
+        user = register_user(username, password, role)
         if user:
             login_user(user)
             return redirect(url_for('main.index'))

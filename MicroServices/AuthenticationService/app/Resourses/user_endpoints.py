@@ -28,18 +28,29 @@ def login():
         user = request.get_json()
         response = mongo.db.Users.find_one_or_404({"username":user["username"]})
         if response and pbkdf2_sha256.verify(user["password"],response["password"]):
-            access_token = create_access_token(identity=response["_id"])
+            response.pop('password',None)
+            access_token = create_access_token(identity=response)
             return jsonify(access_token=access_token,user=response),200
         else:
             abort(401,message="Invalid Credentials")
     except Exception as e:
         return jsonify({"error":str(e)}),400
 
+@user_bp.route('/get-user/<string:id>')
+def get_user_by_id(id):
+    try:
+        response = mongo.db.Users.find_one_or_404({"_id":id})
+        if response:
+            response.pop('password',None)
+            return response
+    except Exception as e:
+        return jsonify({"error":str(e)}),400
+    
 @user_bp.route('/validate-token',methods=['POST'])
 def validate_token():
     try:
         token = request.json.get('token')
         decoded_token = decode_token(token)
-        return jsonify({"user":decoded_token['sub'],"role":decoded_token['role']}),200
+        return jsonify({"valid":True,"user":decoded_token['sub']}),200
     except Exception as e:
         return jsonify({"valid":False,"error":str(e)}),401

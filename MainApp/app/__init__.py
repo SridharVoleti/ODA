@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask,session
 from flask_pymongo import PyMongo
 from flask_login import LoginManager
+
 from config import Config
 
 # Initialize extensions
@@ -25,10 +26,9 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(errors_bp)
 
-    # Define the user_loader function to load a user from the user_id
     @login_manager.user_loader
     def load_user(user_id):
-        from app.models.user import User  # Import here to avoid circular import issues
-        return User.find_by_username(user_id)  # Assuming user_id corresponds to username
-
+        from app.models.user import User
+        user = session.get('user',None)
+        return User(**user) if user else None
     return app

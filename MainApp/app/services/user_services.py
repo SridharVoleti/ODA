@@ -1,12 +1,44 @@
-from werkzeug.security import generate_password_hash
+import os
+import requests
+import json
 
-from app.models.user import User
+url = os.getenv("AUTH_URL")
+def register_user(user):
+    try:
+        response = requests.post(url+"/register",json=json.dumps(user.__dict__))
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception("Registration failed...Please Try Again")
+    except Exception as e:
+        return e
+    
+def login_user(username:str,password:str):
+    try:
+        response = requests.post(url+"/login",json={"username":username,"password":password})
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception("Login failed...Please Try Again")
+    except Exception as e:
+        return e
 
-def create_user(username, password, role):
-    user = User.find_by_username(username)
-    if user:
-        return None  # User already exists
-    password_hash = generate_password_hash(password)
-    user = User(user_id=username, username=username, password_hash=password_hash, role=role)
-    user.save_to_db()
-    return user
+def get_user(user_id:str):
+    try:
+        response =  requests.get(f"{url}/get-user/{user_id}")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception("User not found")
+    except Exception as e:
+        return e
+
+def validate_token(token:str):
+    try:
+        response = requests.post(url+"/validate-token",json={"token":token})
+        if response.status_code == 200:
+            return True
+        else:
+            return False
+    except Exception as e:
+        return e

@@ -1,34 +1,67 @@
 from flask_login import UserMixin
+from app.services.user_services import register_user, login_user, validate_token, get_user
 
 class User(UserMixin):
-    def __init__(self, user_id, username, password_hash, role):
-        self.user_id = user_id  # Assuming user_id is a unique identifier
+    def __init__(self, access_token, _id, firstname, lastname, address, phone, username, role, CreatedAt, middlename=None, UpdatedAt=None):
+        self.access_token = access_token
+        self._id = _id 
+        self.firstname = firstname
+        self.middlename = middlename
+        self.lastname = lastname
+        self.address = address
+        self.phone = phone
         self.username = username
-        self.password_hash = password_hash
         self.role = role
+        self.CreatedAt = CreatedAt
+        self.UpdatedAt = UpdatedAt
+
+    @property
+    def is_authenticated(self):
+        """Determines if the user is authenticated based on a valid access token."""
+        return self.access_token and validate_token(self.access_token)
+
+    @property
+    def is_active(self):
+        """Determines if the user account is active."""
+        return True
+
+    @property
+    def is_anonymous(self):
+        """Determines if the user is anonymous (not authenticated)."""
+        return not self.is_authenticated
 
     @staticmethod
-    def find_by_username(username):
-        from app import mongo  # Import inside the function to avoid circular import issues
-        user_data = mongo.db.users.find_one({"username": username})
-        if user_data:
-            return User(
-                user_id=user_data.get("_id"),  # Use the correct field that identifies the user uniquely
-                username=user_data.get("username"),
-                password_hash=user_data.get("password_hash"),
-                role=user_data.get("role")
-            )
-        return None
+    def login(username: str, password: str):
+        """Attempts to log in a user and return a User instance or None if login fails."""
+        try:
+            response = login_user(username, password)
+            if response and 'user' in response and 'access_token' in response:
+                user_data = response['user']
+                user_data['access_token'] = response['access_token']
+                return User(**user_data)
+            return None
+        except Exception as e:
+            print(f"Login error: {e}", flush=True)
+            return None
 
-    def save_to_db(self):
-        from app import mongo
-        mongo.db.users.insert_one({
-            "_id": self.user_id,
-            "username": self.username,
-            "password_hash": self.password_hash,
-            "role": self.role
-        })
+    @staticmethod
+    def get_user(_id):
+        """Retrieves a user by ID and returns a User instance or None if retrieval fails."""
+        try:
+            data = get_user(_id)
+            return User(**data) if data else None
+        except Exception as e:
+            print(f"Get user error: {e}", flush=True)
+            return None
+        
+    def register(self):
+        """Registers a new user and returns the result or error."""
+        try:
+            return register_user(self.firstname, self.lastname, self.address, self.phone, self.username, self.role)
+        except Exception as e:
+            print(f"Register error: {e}", flush=True)
+            return e
 
     def get_id(self):
-        # Ensure this returns a unique identifier for the user; can be self.user_id, self.username, or another unique field
-        return str(self.user_id)  # Make sure it returns a string representation of the ID
+        """Returns the user’s unique ID as a string for Flask-Login."""
+        return str(self._id)

@@ -4,6 +4,8 @@ services:
     build: ./MicroServices/AuthenticationService
     ports:
       - "5001:5000"
+    volumes:
+      - ./MicroServices/AuthenticationService:/app
   booking:
     build: ./MicroServices/BookingService
     ports:
