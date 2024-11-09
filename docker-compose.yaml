@@ -1,15 +1,21 @@
 version: '3.8'
 services:
+  auth:
+    build: ./MicroServices/AuthenticationService
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./MicroServices/AuthenticationService:/app
   booking:
     build: ./MicroServices/BookingService
     ports:
-      - '5000:5000'
+      - '5002:5000'
     volumes:
       - ./MicroServices/BookingService:/app
   app:
     build: ./MainApp
     ports:
-      - '5001:5001'
+      - '5000:5000'
     volumes:
       - ./MainApp:/app
     depends_on:

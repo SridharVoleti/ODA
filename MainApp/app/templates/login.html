@@ -3,7 +3,7 @@
 <div class="flex h-screen w-screen items-center justify-center bg-gradient-to-r from-ocean-blue from-10% via-sky-500 via-30% to-ocean-green to-90%"">
   <form
     method="post"
-    class="flex flex-col items-center justify-center gap-5 border-2 border-black bg-white bg-opacity-25 p-20 shadow-lg"
+    class="flex flex-col items-center justify-center gap-5 border-2 border-black bg-white bg-opacity-25 md:p-20 p-5 shadow-lg"
   >
     {{ form.hidden_tag() }}
     <div>
@@ -46,13 +46,16 @@
     </div>
     <!-- Display Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %}
-    <div class="flash-message m-5">
-      {% for category, message in messages %} {% if category == "danger" %}
-      <span class="text-red-600">{{message}}</span>
-      {% endif %} {% endfor %}
-    </div>
-    {% endif %} {% endwith %} {{form.submit(class='button bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500')}}
+      messages %}
+      <div class="flash-message m-5">
+        {% for category, message in messages %} {% if category == "danger" %}
+        <span class="text-red-600">{{message}}</span>
+        {% endif %} {% if category == "success" %}
+        <span class="text-green-600">{{message}}</span>
+        {% endif %} {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    {{form.submit(class='button bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500')}}
   </form>
 </div>
 {%endblock%}

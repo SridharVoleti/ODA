@@ -5,6 +5,21 @@ from wtforms.validators import DataRequired,AnyOf
 ROLE_CHOICES = ['Admin','Shipper','Forwarder']
 
 class RegisterForm(FlaskForm):
+    firstname = StringField(
+        'First Name',validators=[DataRequired("firstname is required")]
+    )
+    middlename = StringField(
+        'Middle Name'
+    )
+    lastname = StringField(
+        'Last Name',validators=[DataRequired("lastname is required")]
+    )
+    address = StringField(
+        'Address',validators=[DataRequired("address is required")]
+    )
+    phone = StringField(
+        'Phone Number',validators=[DataRequired("phone is required")]
+    )
     username = StringField(
         'username',validators=[DataRequired("username is required")]
     )

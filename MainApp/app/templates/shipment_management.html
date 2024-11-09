@@ -1,2 +1,56 @@
-{% extends 'shipment_management_template.html' %} {% block inner_content %} {%
-endblock %}
+{% extends 'shipment_management_template.html' %} {% block inner_content %}
+<nav class="pb-3 pt-5 md:hidden">
+  <ul class="flex flex-col gap-5 px-5">
+    <li>
+      <a href="{{url_for('main.createBooking')}}" class="sub-nav-item"
+        ><img
+          width="20"
+          src="{{url_for('static', filename='icons/new-booking.png')}}"
+          alt=""
+        />
+        <h1>New Booking</h1>
+      </a>
+    </li>
+    <li>
+      <a href="" class="sub-nav-item"
+        ><img
+          width="20"
+          src="{{url_for('static', filename='icons/tracking-and-tracing.png')}}"
+          alt=""
+        />
+        <h1>Tracking and Tracing</h1>
+      </a>
+    </li>
+    <li>
+      <a href="" class="sub-nav-item"
+        ><img
+          width="20"
+          src="{{url_for('static', filename='icons/route-optimization.png')}}"
+          alt=""
+        />
+        <h1>Route Optimization</h1>
+      </a>
+    </li>
+    <li>
+      <a href="" class="sub-nav-item"
+        ><img
+          width="20"
+          src="{{url_for('static', filename='icons/status-updates.png')}}"
+          alt=""
+        />
+        <h1>Status Updates</h1>
+      </a>
+    </li>
+    <li>
+      <a href="{{url_for('main.documentManagement')}}" class="sub-nav-item"
+        ><img
+          width="20"
+          src="{{url_for('static', filename='icons/document-management.png')}}"
+          alt=""
+        />
+        <h1>Document Management</h1>
+      </a>
+    </li>
+  </ul>
+</nav>
+{% endblock %}

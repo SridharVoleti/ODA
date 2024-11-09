@@ -1,6 +1,7 @@
 {% extends 'shipment_management_template.html' %} {% block inner_content %}
 <h1 class="mb-4 text-2xl font-bold">Your Documents</h1>
 <div class="overflow-x-auto">
+  {% if shipments %}
   <table class="min-w-full border border-gray-200 bg-white">
     <thead>
       <tr class="bg-gray-200 text-sm uppercase leading-normal text-gray-600">
@@ -36,5 +37,8 @@
       {% endfor %}
     </tbody>
   </table>
+  {% else %}
+  <h1>No Shipments created</h1>
+  {% endif %}
 </div>
 {% endblock %}
