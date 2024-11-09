@@ -791,10 +791,6 @@ video {
   left: 0px;
 }
 
-.col-span-3 {
-  grid-column: span 3 / span 3;
-}
-
 .m-5 {
   margin: 1.25rem;
 }
@@ -1225,6 +1221,11 @@ video {
   line-height: 2rem;
 }
 
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -1233,11 +1234,6 @@ video {
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
 }
 
 .font-bold {
@@ -1263,6 +1259,11 @@ video {
 .text-gray-600 {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+
+.text-green-600 {
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity));
 }
 
 .text-red-600 {
@@ -1334,10 +1335,6 @@ video {
 }
 
 @media (min-width: 768px) {
-  .md\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
   }
@@ -1354,20 +1351,20 @@ video {
     display: none;
   }
 
-  .md\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .md\:p-20 {
-    padding: 5rem;
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .md\:p-10 {
     padding: 2.5rem;
+  }
+
+  .md\:p-20 {
+    padding: 5rem;
   }
 
   .md\:px-5 {

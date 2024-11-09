@@ -46,13 +46,16 @@
     </div>
     <!-- Display Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %}
-    <div class="flash-message m-5">
-      {% for category, message in messages %} {% if category == "danger" %}
-      <span class="text-red-600">{{message}}</span>
-      {% endif %} {% endfor %}
-    </div>
-    {% endif %} {% endwith %} {{form.submit(class='button bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500')}}
+      messages %}
+      <div class="flash-message m-5">
+        {% for category, message in messages %} {% if category == "danger" %}
+        <span class="text-red-600">{{message}}</span>
+        {% endif %} {% if category == "success" %}
+        <span class="text-green-600">{{message}}</span>
+        {% endif %} {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    {{form.submit(class='button bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500')}}
   </form>
 </div>
 {%endblock%}

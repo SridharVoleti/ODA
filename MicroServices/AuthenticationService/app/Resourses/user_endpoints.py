@@ -21,7 +21,7 @@ def register():
         else:
             abort(404,message="Failed to register user")
     except Exception as e:
-        return jsonify({"error":str(e)}),400
+        return jsonify({"message":str(e)}),400
 
 @user_bp.route('/login',methods=['POST'])
 def login():
@@ -33,9 +33,9 @@ def login():
             access_token = create_access_token(identity=response)
             return jsonify(access_token=access_token,user=response),200
         else:
-            abort(401,message="Invalid Credentials")
+            abort(401,description="Invalid Credentials")
     except Exception as e:
-        return jsonify({"error":str(e)}),400
+        return jsonify({"description":str(e)}),400
 
 @user_bp.route('/get-user/<string:id>')
 def get_user_by_id(id):
@@ -45,7 +45,7 @@ def get_user_by_id(id):
             response.pop('password',None)
             return response
     except Exception as e:
-        return jsonify({"error":str(e)}),400
+        return jsonify({"message":str(e)}),400
     
 @user_bp.route('/validate-token',methods=['POST'])
 def validate_token():
