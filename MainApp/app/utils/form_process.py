@@ -31,7 +31,7 @@ class FormProcessor:
         # Shipment details
         form_data = {
             "_id": generate_booking_id(),
-            "shipper_id": current_user.user_id,
+            "shipper_id": current_user._id,
             "shipment_details": {
                 "shipping_company": self.form.shipping_company.data,
                 "sender_name": self.form.sender_name.data,

@@ -85,7 +85,7 @@ def update_shipment(id):
             updated_doc = mongo.db.shipments.find_one({"_id": id})
             return ShipmentBase(**updated_doc).to_json(), 200
         else:
-            return jsonify(error="Failed to update shipment."), 400
+            return jsonify(description="Failed to update shipment."), 400
 
     except Exception as e:
         return jsonify(error=str(e)), 500
@@ -96,8 +96,8 @@ def delete_shipment(id):
         verify_token(required_roles=['Shipper'])
         result = mongo.db.shipments.delete_one({"_id": id})
         if result.deleted_count:
-            return jsonify(message="Shipment deleted successfully."), 200
+            return jsonify(description="Shipment deleted successfully."), 200
         else:
-            flask.abort(404, "Shipment not found")
+            abort(404, description="Shipment not found")
     except Exception as e:
-        return jsonify(error=str(e)), 400
+        return jsonify(description=str(e)), 400
