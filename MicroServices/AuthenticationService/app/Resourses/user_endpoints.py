@@ -36,16 +36,6 @@ def login():
             abort(401,description="Invalid Credentials")
     except Exception as e:
         return jsonify({"description":str(e)}),400
-
-@user_bp.route('/get-user/<string:id>')
-def get_user_by_id(id):
-    try:
-        response = mongo.db.Users.find_one_or_404({"_id":id})
-        if response:
-            response.pop('password',None)
-            return response
-    except Exception as e:
-        return jsonify({"message":str(e)}),400
     
 @user_bp.route('/validate-token',methods=['POST'])
 def validate_token():
