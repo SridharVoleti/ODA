@@ -12,6 +12,7 @@ ENV MONGO_DEV_URI=mongodb+srv://yogesh-kumar:yogesh2829@oda.9uyfb.mongodb.net/DE
 ENV MONGO_TEST_URI=mongodb+srv://yogesh-kumar:yogesh2829@oda.9uyfb.mongodb.net/TESTDB
 ENV MAIL_USERNAME=yogeshkumarnandi@gmail.com
 ENV MAIL_PASSWORD="ebpc ljcn edcq rzgp"
+ENV ODA_URL=http://oda:5000
 
 EXPOSE 5000
 
