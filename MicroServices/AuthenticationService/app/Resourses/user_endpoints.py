@@ -8,15 +8,22 @@ from app import mongo
 
 user_bp = Blueprint("User",__name__)
 
-@user_bp.route('/register',methods=['POST'])
+@user_bp.route('/register/',methods=['POST'])
 def register():
     try:
         data = request.get_json()
         data["password"] = pbkdf2_sha256.hash(data["password"])
+        invite_id = request.headers.get("Token","")
+        if not invite_id:
+            abort(400,message="You are not allowed to register...Contact Admin")
+        invite = mongo.db.Inviitations.find_one({"_id":invite_id})
+        if not invite or invite["is_used"]:
+            abort(400,message="You are not allowed to register...Contact Admin")
         user = User(**data).to_bson()
         user['_id']=str(uuid.uuid4())
         response = mongo.db.Users.insert_one(user)
         if response.acknowledged:
+            mongo.db.Inviitations.update_one({"_id":invite_id},{"$set":{"is_used":True}})
             return jsonify(status="success",message="User registration  successful"),200
         else:
             abort(404,message="Failed to register user")

@@ -1,11 +1,11 @@
 from flask import Flask,jsonify
 from flask_pymongo  import PyMongo
 from flask_jwt_extended import JWTManager
-
+from flask_mail import Mail
 from app.config import DevelopmentConfig,TestingConfig
 
 mongo = PyMongo()
-
+mail = Mail()
 def create_app(config_name):
     app = Flask(__name__)
 
@@ -14,7 +14,7 @@ def create_app(config_name):
     elif config_name == "testing":
         app.config.from_object(TestingConfig)
     
-    app.config["JWT_SECRET_KEY"] = "7cd250f4c920ad972f9392e9d6ef07971198a8decedf607eb76455e56117c556"
+    mail.init_app(app)
     jwt = JWTManager(app)
    
     # @jwt.token_in_blocklist_loader
@@ -78,6 +78,8 @@ def create_app(config_name):
     
     mongo.init_app(app)
     from app.Resourses.user_endpoints import user_bp
+    from app.Resourses.invitation_endpoints import invitation_bp
     app.register_blueprint(user_bp)
+    app.register_blueprint(invitation_bp)
 
     return app

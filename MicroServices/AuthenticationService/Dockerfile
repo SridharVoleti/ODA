@@ -10,6 +10,8 @@ COPY . .
 
 ENV MONGO_DEV_URI=mongodb+srv://yogesh-kumar:yogesh2829@oda.9uyfb.mongodb.net/DEVDB
 ENV MONGO_TEST_URI=mongodb+srv://yogesh-kumar:yogesh2829@oda.9uyfb.mongodb.net/TESTDB
+ENV MAIL_USERNAME=yogeshkumarnandi@gmail.com
+ENV MAIL_PASSWORD="ebpc ljcn edcq rzgp"
 
 EXPOSE 5000
 

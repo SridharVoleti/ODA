@@ -11,14 +11,15 @@ class User(BaseModel):
     lastname:str
     address:str
     phone:str
-    username:str
+    email:str
     password:str
     role:str
+    is_active:bool=True
     CreatedAt:datetime
     UpdatedAt:Optional[datetime]=None
 
     def to_json(self):
-        return jsonable_encoder(self,exclude_none=True)
+        return jsonable_encoder(self,exclude_none=True,by_alias=True)
     
     def to_bson(self):
-        return self.model_dump(exclude_none=True)
+        return self.model_dump(exclude_none=True,by_alias=True)
