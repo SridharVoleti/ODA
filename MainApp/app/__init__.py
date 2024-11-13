@@ -20,11 +20,13 @@ def create_app():
     # Import blueprints after initializing extensions
     from .routes.auth import auth_bp
     from .routes.main import main_bp
+    from .routes.user_management import um_bp
     from .routes.errors import errors_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(errors_bp)
+    app.register_blueprint(um_bp)
 
     @login_manager.user_loader
     def load_user(user_id):

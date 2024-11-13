@@ -8,28 +8,10 @@ from app.Models.User import  User
 from app.Models.Invitation import Invitation
 from app import mail
 from app import mongo
+from app.utils.validate_token import verify_token
+from app.utils.send_invitation import send_invitation_email
 
 invitation_bp = Blueprint("Invitation",__name__)
-
-def verify_token():
-    token = request.headers.get("Authorization", "").replace("Bearer ", "")
-    if not token:
-        abort(401, description="Missing token")
-    
-    decoded_token = decode_token(token)
-    user = decoded_token['sub']
-    if user['role'] != "Admin":
-        abort(401,description="You do not have required privilages to access")
-    return user
-
-def send_invitation_email(email, token):
-    try :
-        invite_link = f"localhost:5000/register/{token}"
-        message = Message("You're Invited to Join", recipients=[email])
-        message.body = f"Click the link to create your account: {invite_link}"
-        mail.send(message)  # Send the email with Flask-Mail
-    except Exception as e:
-        print(f"Exception in sending invitation email: {e}")
 
 @invitation_bp.route('/invite',methods=['POST'])
 def invite():
@@ -51,10 +33,33 @@ def invite():
         print(f"Exception in invite endpoint: {str(e)}",flush=True)
         return jsonify({"message":str(e)}),400
 
+@invitation_bp.route('/get-invitations')
+def get_invitations():
+    try:
+        verify_token(required_roles=['Admin'])
+        cursor = mongo.db.Invitations.find({})
+        invitations = [doc for doc in cursor]
+        return invitations
+    except Exception as e:
+        print(f"Exception in get_invites endpoint: {str(e)}",flush=True)
+        return jsonify({"description":str(e)}),400
+
 @invitation_bp.route('/get-invite/<string:id>')
 def get_invitation_by_id(id):
     try:
         invitation = mongo.db.Invitations.find_one_or_404({"_id":id})
         return invitation
     except Exception as e:
-        return jsonify({"message":str(e)}),400
+        return jsonify({"description":str(e)}),400
+    
+@invitation_bp.route('/revoke/<string:id>',methods=['DELETE'])
+def revoke(id):
+    try:
+        verify_token(required_roles=['Admin'])
+        result = mongo.db.Invitations.delete_one({"_id": id})
+        if result.deleted_count:
+            return jsonify(description="Invitation revoked successfully."), 200
+        else:
+            abort(404, description="Invitation not found")
+    except Exception as e:
+        return jsonify(description=str(e)), 400

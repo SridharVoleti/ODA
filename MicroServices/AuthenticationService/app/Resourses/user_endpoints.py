@@ -5,8 +5,21 @@ import uuid
 
 from app.Models.User import  User
 from app import mongo
+from app.utils.validate_token import verify_token
 
 user_bp = Blueprint("User",__name__)
+
+@user_bp.route('/get-users')
+def get_users():
+    try:
+        user = verify_token(required_roles=["Admin"])
+        print(user.get('user'),flush=True)
+        cursor = mongo.db.Users.find({})
+        users = [doc for doc in cursor]
+        return users,200
+    except Exception as e:
+        print(f"Exception in get users endpoint: {str(e)}",flush=True)
+        return jsonify({"description":str(e)}),401
 
 @user_bp.route('/register/<token>',methods=['POST'])
 def register(token):
