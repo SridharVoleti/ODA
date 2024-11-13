@@ -1,5 +1,6 @@
 from flask import Blueprint,jsonify,request,abort,url_for
 from flask_mail import Message
+from flask_jwt_extended import decode_token
 import uuid
 import os
 
@@ -10,12 +11,20 @@ from app import mongo
 
 invitation_bp = Blueprint("Invitation",__name__)
 
-# Function to send invitation email
+def verify_token():
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    if not token:
+        abort(401, description="Missing token")
+    
+    decoded_token = decode_token(token)
+    user = decoded_token['sub']
+    if user['role'] != "Admin":
+        abort(401,description="You do not have required privilages to access")
+    return user
+
 def send_invitation_email(email, token):
     try :
-        # Generate the URL for user registration with the unique token
         invite_link = f"localhost:5000/register/{token}"
-        # Create an email message with the invitation link
         message = Message("You're Invited to Join", recipients=[email])
         message.body = f"Click the link to create your account: {invite_link}"
         mail.send(message)  # Send the email with Flask-Mail
@@ -25,6 +34,7 @@ def send_invitation_email(email, token):
 @invitation_bp.route('/invite',methods=['POST'])
 def invite():
     try:
+        verify_token()
         data = request.get_json()
         invite = mongo.db.Invitations.find_one({"email":data.get('email')})
         if invite:
