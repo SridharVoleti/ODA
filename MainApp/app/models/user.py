@@ -3,7 +3,7 @@ import requests
 import os
 
 class User(UserMixin):
-    def __init__(self, access_token, _id, firstname, lastname, address, phone, username, role, CreatedAt, middlename=None, UpdatedAt=None):
+    def __init__(self, access_token, _id, firstname, lastname, address, phone, email, role,is_active, CreatedAt, middlename=None, UpdatedAt=None):
         self.access_token = access_token
         self._id = _id 
         self.firstname = firstname
@@ -11,8 +11,9 @@ class User(UserMixin):
         self.lastname = lastname
         self.address = address
         self.phone = phone
-        self.username = username
+        self.email = email
         self.role = role
+        self.is_active_user = is_active
         self.CreatedAt = CreatedAt
         self.UpdatedAt = UpdatedAt
 
@@ -26,8 +27,7 @@ class User(UserMixin):
         
     @property
     def is_active(self):
-        """Determines if the user account is active."""
-        return True
+        return self.is_active_user
 
     @property
     def is_anonymous(self):

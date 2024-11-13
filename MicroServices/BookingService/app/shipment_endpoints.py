@@ -64,8 +64,12 @@ def add_shipment():
 
 @shipment_bp.route('/api/shipment/<string:id>',methods=["GET"])
 def get_shipment(id):
-    doc = mongo.db.shipments.find_one_or_404({"_id":id})
-    return ShipmentBase(**doc).to_json()
+    try:
+        verify_token(required_roles=['Shipper'])
+        doc = mongo.db.shipments.find_one_or_404({"_id":id})
+        return ShipmentBase(**doc).to_json()
+    except Exception as e:
+        return jsonify(error=str(e)), 500
 
 @shipment_bp.route('/api/shipment/<string:id>', methods=["PUT"])
 def update_shipment(id):

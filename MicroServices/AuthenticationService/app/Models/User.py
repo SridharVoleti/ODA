@@ -22,4 +22,5 @@ class User(BaseModel):
         return jsonable_encoder(self,exclude_none=True,by_alias=True)
     
     def to_bson(self):
-        return self.model_dump(exclude_none=True,by_alias=True)
+        data = self.model_dump(by_alias=True, exclude_none=True)
+        return data

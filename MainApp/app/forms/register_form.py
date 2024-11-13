@@ -2,8 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,SubmitField,SelectField
 from wtforms.validators import DataRequired,AnyOf
 
-ROLE_CHOICES = ['Admin','Shipper','Forwarder']
-
 class RegisterForm(FlaskForm):
     firstname = StringField(
         'First Name',validators=[DataRequired("firstname is required")]
@@ -20,19 +18,16 @@ class RegisterForm(FlaskForm):
     phone = StringField(
         'Phone Number',validators=[DataRequired("phone is required")]
     )
-    username = StringField(
-        'username',validators=[DataRequired("username is required")]
+    email = StringField(
+        'email',validators=[DataRequired("email is required")]
     )
 
     password = PasswordField(
         'password',validators=[DataRequired("password is required")]
     )
-    role = SelectField(
+    role = StringField(
         'Role',
-        choices=['Admin','Shipper','Forwarder'],
-        validators=[ DataRequired('Role is required'),
-                   AnyOf([choice for choice in ROLE_CHOICES])
-                     ]
+        validators=[ DataRequired('Role is required')]
     )
 
     submit = SubmitField('Register')

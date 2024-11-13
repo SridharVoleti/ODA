@@ -1,5 +1,5 @@
 # # app/routes.py
-from flask import render_template, redirect, flash,url_for,Blueprint,request,jsonify
+from flask import render_template, redirect, flash,url_for,Blueprint,request
 from flask_login import login_required,current_user
 import requests
 import os
@@ -12,11 +12,6 @@ from app.utils.choices_config import *
 
 main_bp = Blueprint('main', __name__)
 
-@main_bp.route('/dashboard')
-@login_required
-def dashboard():
-    shipments = get_shipments()
-    return render_template('dashboard.html',shipments = shipments)
 
 @main_bp.route('/')
 @login_required
@@ -54,9 +49,20 @@ def createBooking():
 @main_bp.route('/shipment-management/update-shipment/<string:Id>', methods=["GET", "POST"])
 @role_required(['Shipper'])
 def updateBooking(Id):
-    shipment = get_shipment(Id)
+    try:
+        headers={
+            "Authorization": f"Bearer {current_user.access_token}"
+        }
+        response = requests.get(f"{os.getenv("BOOKING_SERVICE_URL")}/shipment/{Id}",headers=headers)
+        if response.status_code != 200:
+            flash("Shipment not found", "danger")
+            return redirect(url_for("main.documentManagement"))
+        shipment = response.json()
+    except Exception as e:
+        flash("Something went wrong...Try Again","danger")
+        print(f"Get Booking Error in update: {str(e)}",flush=True)
+        return redirect(url_for("main.documentManagement"))
     form = ShipmentForm()
-
     # Prepopulate the form with shipment data if this is a GET request
     if request.method == "GET" and shipment:
         # Loop through shipment details and set each form field
