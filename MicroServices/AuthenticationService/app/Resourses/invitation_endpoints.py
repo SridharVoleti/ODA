@@ -29,7 +29,7 @@ def send_invitation_email(email, token):
         message.body = f"Click the link to create your account: {invite_link}"
         mail.send(message)  # Send the email with Flask-Mail
     except Exception as e:
-        print(f"Error sending invitation email: {e}")
+        print(f"Exception in sending invitation email: {e}")
 
 @invitation_bp.route('/invite',methods=['POST'])
 def invite():
@@ -44,11 +44,11 @@ def invite():
             return jsonify({"message":"User already exists"}),400
         invitation = Invitation(**data).to_bson()
         invitation['_id']=str(uuid.uuid4())
-        print(invitation,flush=True)
         mongo.db.Invitations.insert_one(invitation)
         send_invitation_email(data.get('email'),invitation['_id'])
         return jsonify({"message":"Invitation sent successfully"}),200
     except Exception as e:
+        print(f"Exception in invite endpoint: {str(e)}",flush=True)
         return jsonify({"message":str(e)}),400
 
 @invitation_bp.route('/get-invite/<string:id>')
