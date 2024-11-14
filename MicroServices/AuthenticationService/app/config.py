@@ -17,7 +17,7 @@ class DevelopmentConfig(Config):
     MAIL_PORT = 587  # Port number for the SMTP server
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")  # SMTP login username
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")  # SMTP login password
-    MAIL_DEFAULT_SENDER = "yogeshkumarnandi@gmail.com"
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
     MAIL_USE_TLS = True  # Enable TLS for security
     MAIL_USE_SSL = False  # Disable SSL since we're using TLS
 

@@ -123,7 +123,8 @@
   <div
     class="col-span-3 max-h-full overflow-y-auto rounded-lg border bg-blue-100 p-5 text-sm md:col-span-2 md:text-base"
   >
-    {% if invitations %} {% for invitation in invitations %}
+    {% if invitations %} {% for invitation in invitations %} {% if not
+    invitation.is_used %}
     <div class="flex items-center justify-between gap-5">
       <div class="flex items-center">
         <svg
@@ -155,7 +156,7 @@
         </a>
       </div>
     </div>
-    {% endfor %} {% else %}
+    {% endif %} {% endfor %} {% else %}
     <h1>No Invitations pending</h1>
     {% endif %}
   </div>

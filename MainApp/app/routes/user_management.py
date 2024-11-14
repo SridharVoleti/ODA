@@ -63,7 +63,7 @@ def delete_user(id):
         headers={
             "Authorization":f"Bearer {current_user.access_token}"
         }
-        requests.delete(f"{os.getenv('AUTH_URL')}/delete-ser/{id}",headers=headers)
+        requests.delete(f"{os.getenv('AUTH_URL')}/delete-user/{id}",headers=headers)
     except Exception as e:
         print(f"Exception in delete user: {str(e)}",flush=True)
     return redirect(url_for('user-management.index'))

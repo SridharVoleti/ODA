@@ -15,7 +15,7 @@ We are pleased to extend an exclusive invitation for you to join ODA. We are exc
 Please click the link below to accept your invitation and complete the registration process:
 {invite_link}
 
-If you have any questions or need assistance, feel free to reach out to our support team at yogeshkumarnandi@gmail.com.
+If you have any questions or need assistance, feel free to reach out to our support team at oda.development3@gmail.com.
 
 We look forward to welcoming you aboard.
 
