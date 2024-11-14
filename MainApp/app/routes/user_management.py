@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash,session,request
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import current_user
 import requests
 import os
@@ -55,4 +55,16 @@ def revoke_invitation(id):
     except Exception as e:
         print(f"Exception in revoke invitation: {str(e)}",flush=True)
     return redirect(url_for('user-management.index'))
-  
+
+@um_bp.route('/user-management/delete-user/<id>')
+@role_required('Admin')
+def delete_user(id):
+    try:
+        headers={
+            "Authorization":f"Bearer {current_user.access_token}"
+        }
+        requests.delete(f"{os.getenv('AUTH_URL')}/delete-ser/{id}",headers=headers)
+    except Exception as e:
+        print(f"Exception in delete user: {str(e)}",flush=True)
+    return redirect(url_for('user-management.index'))
+    

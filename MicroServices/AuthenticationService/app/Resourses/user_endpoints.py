@@ -65,3 +65,15 @@ def validate_token():
         return jsonify({"valid":True,"user":decoded_token['sub']}),200
     except Exception as e:
         return jsonify({"valid":False,"error":str(e)}),401
+    
+@user_bp.route('/delete-user/<string:id>',methods=['DELETE'])
+def delete_user(id):
+    try:
+        verify_token(required_roles=['Admin'])
+        result = mongo.db.Users.delete_one({"_id": id})
+        if result.deleted_count:
+            return jsonify(description="User deleted successfully."), 200
+        else:
+            abort(404, description="User not found")
+    except Exception as e:
+        return jsonify(description=str(e)), 400

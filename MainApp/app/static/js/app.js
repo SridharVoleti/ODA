@@ -123,3 +123,14 @@ profile_btn.addEventListener("click", () => {
   console.log(user_card.classList);
   user_card.classList.toggle("hidden");
 });
+
+// ---------------------------------------------------------------
+function openInviteModal() {
+  document.getElementById("inviteModal").classList.remove("hidden");
+  document.getElementById("inviteModal").classList.add("flex");
+}
+
+// Function to close the modal
+function closeInviteModal() {
+  document.getElementById("inviteModal").classList.add("hidden");
+}
